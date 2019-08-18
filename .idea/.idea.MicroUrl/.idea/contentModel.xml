@@ -79,6 +79,40 @@
             <e p="node_modules/tsickle" t="IncludeRecursive" />
             <e p="node_modules/tslib" t="IncludeRecursive" />
             <e p="node_modules/tslint" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.dom.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.dom.iterable.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.collection.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.core.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.generator.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.iterable.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.promise.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.proxy.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.reflect.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.symbol.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2015.symbol.wellknown.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2016.array.include.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2016.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2016.full.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.full.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.intl.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.object.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.sharedmemory.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.string.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2017.typedarrays.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2018.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es2018.full.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es5.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.es6.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.esnext.array.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.esnext.asynciterable.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.esnext.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.esnext.full.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.esnext.promise.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.scripthost.d.ts" t="IncludeRecursive" />
+            <e p="node_modules/typescript/lib/lib.webworker.d.ts" t="IncludeRecursive" />
             <e p="node_modules/uri-js" t="IncludeRecursive" />
             <e p="node_modules/webdriver-js-extender" t="IncludeRecursive" />
             <e p="node_modules/zone.js" t="IncludeRecursive" />
@@ -133,14 +167,23 @@
             <e p="tslint.json" t="Include" />
           </e>
           <e p="Controllers" t="Include">
-            <e p="SampleDataController.cs" t="Include" />
+            <e p="UrlController.cs" t="Include" />
           </e>
           <e p="MicroUrl.csproj" t="IncludeRecursive" />
+          <e p="Middlewares" t="Include">
+            <e p="RedirectMiddleware.cs" t="Include" />
+          </e>
           <e p="Program.cs" t="Include" />
           <e p="Properties" t="Include">
             <e p="launchSettings.json" t="Include" />
           </e>
           <e p="Startup.cs" t="Include" />
+          <e p="Storage" t="Include">
+            <e p="IUrlKeyValueStorage.cs" t="Include" />
+            <e p="Implementation" t="Include">
+              <e p="GoogleCloudDatastoreKeyValueStorage.cs" t="Include" />
+            </e>
+          </e>
           <e p="appsettings.Development.json" t="Include" />
           <e p="appsettings.json" t="Include" />
           <e p="bin" t="ExcludeRecursive" />

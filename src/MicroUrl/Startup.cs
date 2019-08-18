@@ -5,7 +5,8 @@ namespace MicroUrl
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
-    
+    using MicroUrl.Middlewares;
+
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -47,6 +48,8 @@ namespace MicroUrl
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            app.UseMiddleware<RedirectMiddleware>();
         }
     }
 }
