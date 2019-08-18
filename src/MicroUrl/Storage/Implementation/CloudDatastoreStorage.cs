@@ -2,7 +2,7 @@ namespace DefaultNamespace
 {
     using MicroUrl.Storage;
 
-    public class GoogleCloudDatastoreKeyValueStorage : IUrlKeyValueStorage
+    public class CloudDatastoreStorage : IUrlKeyValueStorage
     {
         
     }
