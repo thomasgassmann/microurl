@@ -187,6 +187,12 @@
             <e p="launchSettings.json" t="Include" />
           </e>
           <e p="Startup.cs" t="Include" />
+          <e p="Storage" t="Include">
+            <e p="IStorageFactory.cs" t="Include" />
+            <e p="Implementation" t="Include">
+              <e p="StorageFactory.cs" t="Include" />
+            </e>
+          </e>
           <e p="Urls" t="Include">
             <e p="IUrlService.cs" t="Include" />
             <e p="IUrlStorageService.cs" t="Include" />
@@ -195,6 +201,12 @@
               <e p="UrlStorageService.cs" t="Include" />
             </e>
             <e p="MicroUrlEntity.cs" t="Include" />
+            <e p="Visit" t="Include">
+              <e p="IVisitorTracker.cs" t="Include" />
+              <e p="Implementation" t="Include">
+                <e p="VisitorTracker.cs" t="Include" />
+              </e>
+            </e>
           </e>
           <e p="appsettings.Development.json" t="Include" />
           <e p="appsettings.json" t="Include" />

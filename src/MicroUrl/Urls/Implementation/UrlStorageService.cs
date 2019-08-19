@@ -3,24 +3,24 @@ namespace MicroUrl.Urls.Implementation
     using System.Linq;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
-    using Microsoft.Extensions.Options;
-    using MicroUrl.Infrastructure.Settings;
+    using MicroUrl.Storage;
 
     public class UrlStorageService : IUrlStorageService
     {
-        private readonly DatastoreDb _datastore;
+        private readonly IStorageFactory _storageFactory;
         
         private const string Kind = "MicroUrl";
 
-        public UrlStorageService(IOptions<MicroUrlSettings> options)
+        public UrlStorageService(IStorageFactory storageFactory)
         {
-            _datastore = DatastoreDb.Create(options.Value.Storage.Project);
+            _storageFactory = storageFactory;
         }
 
         public async Task<string> SaveAsync(MicroUrlEntity url)
         {
-            var key = _datastore.CreateKeyFactory(Kind).CreateKey(url.Key);
-            await _datastore.InsertAsync(new Entity
+            var datastore = _storageFactory.GetStorage();
+            var key = datastore.CreateKeyFactory(Kind).CreateKey(url.Key);
+            await datastore.InsertAsync(new Entity
             {
                 Key = key,
                 Properties =
@@ -35,7 +35,8 @@ namespace MicroUrl.Urls.Implementation
 
         public async Task<MicroUrlEntity> LoadAsync(string key)
         {
-            var result = await _datastore.LookupAsync(GetKey(key));
+            var datastore = _storageFactory.GetStorage();
+            var result = await datastore.LookupAsync(GetKey(key));
             if (result == null)
             {
                 return null;
@@ -52,7 +53,8 @@ namespace MicroUrl.Urls.Implementation
 
         public async Task<bool> ExistsAsync(string key)
         {
-            var result = await _datastore.LookupAsync(GetKey(key));
+            var datastore = _storageFactory.GetStorage();
+            var result = await datastore.LookupAsync(GetKey(key));
             return result != null;
         }
 

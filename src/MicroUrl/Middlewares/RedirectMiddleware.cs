@@ -16,7 +16,7 @@ namespace MicroUrl.Middlewares
         public async Task Invoke(HttpContext context, IUrlService urlService)
         {
             var path = context.Request.Path.Value?.TrimStart('/');
-            var redirectUrl = !string.IsNullOrEmpty(path) ? await urlService.GetRedirectUrl(path) : null;
+            var redirectUrl = !string.IsNullOrEmpty(path) ? await urlService.GetRedirectUrlAndTrackAsync(path, context) : null;
             if (redirectUrl != null)
             {
                 context.Response.Redirect(redirectUrl);   

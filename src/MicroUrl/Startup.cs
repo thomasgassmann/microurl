@@ -7,8 +7,12 @@ namespace MicroUrl
     using Microsoft.Extensions.DependencyInjection;
     using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Middlewares;
+    using MicroUrl.Storage;
+    using MicroUrl.Storage.Implementation;
     using MicroUrl.Urls;
     using MicroUrl.Urls.Implementation;
+    using MicroUrl.Urls.Visit;
+    using MicroUrl.Urls.Visit.Implementation;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 
@@ -36,6 +40,8 @@ namespace MicroUrl
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<IUrlService, UrlService>();
+            services.AddSingleton<IStorageFactory, StorageFactory>();
+            services.AddScoped<IVisitorTracker, VisitorTracker>();
 
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
         }

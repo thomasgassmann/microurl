@@ -1,11 +1,12 @@
 namespace MicroUrl.Urls
 {
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Http;
 
     public interface IUrlService
     {
         Task<string> SaveAsync(string url);
 
-        Task<string> GetRedirectUrl(string key);
+        Task<string> GetRedirectUrlAndTrackAsync(string key, HttpContext context);
     }
 }
