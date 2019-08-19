@@ -5,5 +5,7 @@ namespace MicroUrl.Urls
     public interface IUrlService
     {
         Task<string> SaveAsync(string url);
+
+        Task<string> GetRedirectUrl(string key);
     }
 }

@@ -30,7 +30,6 @@ namespace MicroUrl.Urls.Implementation
                     { "created", url.Created }
                 }
             });
-            _datastore.
             return key.Path.First().Name;
         }
 
@@ -46,7 +45,7 @@ namespace MicroUrl.Urls.Implementation
             {
                 Created = result["created"].TimestampValue,
                 Enabled = result["enabled"].BooleanValue,
-                Key = result["key"].StringValue,
+                Key = key,
                 Url = result["url"].StringValue
             };
         }

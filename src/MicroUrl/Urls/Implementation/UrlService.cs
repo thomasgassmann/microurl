@@ -29,11 +29,17 @@ namespace MicroUrl.Urls.Implementation
             return key;
         }
 
+        public async Task<string> GetRedirectUrl(string key)
+        {
+            var microUrl = await _storageService.LoadAsync(key);
+            return microUrl?.Url;
+        }
+
         private async Task<string> GenerateKey()
         {
             for (var i = 1;; i++)
             {
-                var key = GenerateKeyOfLength(i++);
+                var key = GenerateKeyOfLength(i);
                 if (!await _storageService.ExistsAsync(key))
                 {
                     return key;

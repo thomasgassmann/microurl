@@ -52,6 +52,7 @@ namespace MicroUrl
             app.UseSpaStaticFiles();
 
             app.UseMvc();
+            app.UseMiddleware<RedirectMiddleware>();
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
@@ -62,7 +63,6 @@ namespace MicroUrl
                 }
             });
 
-            app.UseMiddleware<RedirectMiddleware>();
         }
     }
 }
