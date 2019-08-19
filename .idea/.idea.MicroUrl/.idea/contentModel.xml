@@ -169,6 +169,12 @@
           <e p="Controllers" t="Include">
             <e p="UrlController.cs" t="Include" />
           </e>
+          <e p="Infrastructure" t="Include">
+            <e p="Settings" t="Include">
+              <e p="DataStorageSettings.cs" t="Include" />
+              <e p="UrlSettings.cs" t="Include" />
+            </e>
+          </e>
           <e p="MicroUrl.csproj" t="IncludeRecursive" />
           <e p="Middlewares" t="Include">
             <e p="RedirectMiddleware.cs" t="Include" />

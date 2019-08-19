@@ -5,6 +5,7 @@ namespace MicroUrl
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Middlewares;
 
     public class Startup
@@ -20,6 +21,8 @@ namespace MicroUrl
         {
             services.AddMvcCore()
                 .AddNewtonsoftJson();
+            
+            services.Configure<UrlSettings>(Configuration.GetSection(nameof(UrlSettings)));
 
             services.AddSpaStaticFiles(configuration =>
             {
