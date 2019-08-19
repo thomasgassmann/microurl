@@ -13,7 +13,7 @@ namespace MicroUrl.Urls.Implementation
 
         public UrlStorageService(IOptions<MicroUrlSettings> options)
         {
-//            _datastore = DatastoreDb.Create(options.Value.Storage.Project);
+            _datastore = DatastoreDb.Create(options.Value.Storage.Project);
         }
 
         public async Task SaveAsync(MicroUrlEntity url)

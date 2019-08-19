@@ -15,7 +15,7 @@ namespace MicroUrl.Urls.Implementation
 
         public async Task<string> SaveAsync(string url)
         {
-            await _storageService.Save(new MicroUrlEntity
+            await _storageService.SaveAsync(new MicroUrlEntity
             {
                 Created = Timestamp.FromDateTime(DateTime.Now),
                 Enabled = true,
