@@ -13,10 +13,10 @@ namespace MicroUrl.Urls.Implementation
 
         public UrlStorageService(IOptions<MicroUrlSettings> options)
         {
-            _datastore = DatastoreDb.Create(options.Value.Storage.Project);
+//            _datastore = DatastoreDb.Create(options.Value.Storage.Project);
         }
 
-        public async Task Save(MicroUrlEntity url)
+        public async Task SaveAsync(MicroUrlEntity url)
         {
             var key = _datastore.CreateKeyFactory(Kind).CreateKey(url.Key);
             await _datastore.InsertAsync(new Entity
@@ -31,7 +31,7 @@ namespace MicroUrl.Urls.Implementation
             });
         }
 
-        public async Task<MicroUrlEntity> Load(string key)
+        public async Task<MicroUrlEntity> LoadAsync(string key)
         {
             var result = await _datastore.LookupAsync(new Key().WithElement(Kind, key));
             if (result == null)

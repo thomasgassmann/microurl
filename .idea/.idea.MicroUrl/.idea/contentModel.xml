@@ -167,6 +167,9 @@
             <e p="tslint.json" t="Include" />
           </e>
           <e p="Controllers" t="Include">
+            <e p="Models" t="Include">
+              <e p="CreateUrlModel.cs" t="Include" />
+            </e>
             <e p="UrlController.cs" t="Include" />
           </e>
           <e p="Infrastructure" t="Include">
@@ -185,8 +188,10 @@
           </e>
           <e p="Startup.cs" t="Include" />
           <e p="Urls" t="Include">
+            <e p="IUrlService.cs" t="Include" />
             <e p="IUrlStorageService.cs" t="Include" />
             <e p="Implementation" t="Include">
+              <e p="UrlService.cs" t="Include" />
               <e p="UrlStorageService.cs" t="Include" />
             </e>
             <e p="MicroUrlEntity.cs" t="Include" />

@@ -7,6 +7,8 @@ namespace MicroUrl
     using Microsoft.Extensions.DependencyInjection;
     using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Middlewares;
+    using MicroUrl.Urls;
+    using MicroUrl.Urls.Implementation;
 
     public class Startup
     {
@@ -20,10 +22,14 @@ namespace MicroUrl
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvcCore()
+                .AddDataAnnotations()
                 .AddNewtonsoftJson();
             
             services.Configure<MicroUrlSettings>(Configuration.GetSection(nameof(MicroUrlSettings)));
 
+            services.AddScoped<IUrlStorageService, UrlStorageService>();
+            services.AddScoped<IUrlService, UrlService>();
+            
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
@@ -35,9 +41,9 @@ namespace MicroUrl
             if (!env.IsDevelopment())
             {
                 app.UseHsts();
+                app.UseHttpsRedirection();
             }
 
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
