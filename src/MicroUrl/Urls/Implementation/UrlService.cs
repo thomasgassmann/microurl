@@ -15,14 +15,14 @@ namespace MicroUrl.Urls.Implementation
 
         public async Task<string> SaveAsync(string url)
         {
-            await _storageService.SaveAsync(new MicroUrlEntity
+            var key = await _storageService.SaveAsync(new MicroUrlEntity
             {
-                Created = Timestamp.FromDateTime(DateTime.Now),
+                Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,
-                Key = "",
-                Url = url
+                Url = url,
+                Id = -1
             });
-            return "";
+            return "empty";
         }
     }
 }

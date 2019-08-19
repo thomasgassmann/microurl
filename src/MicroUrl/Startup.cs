@@ -9,6 +9,8 @@ namespace MicroUrl
     using MicroUrl.Middlewares;
     using MicroUrl.Urls;
     using MicroUrl.Urls.Implementation;
+    using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
 
     public class Startup
     {
@@ -23,17 +25,20 @@ namespace MicroUrl
         {
             services.AddMvcCore()
                 .AddDataAnnotations()
-                .AddNewtonsoftJson();
-            
+                .AddJsonFormatters()
+                .AddJsonOptions(x =>
+                {
+                    x.SerializerSettings.Formatting = Formatting.Indented;
+                    x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                });
+
             services.Configure<MicroUrlSettings>(Configuration.GetSection(nameof(MicroUrlSettings)));
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<IUrlService, UrlService>();
-            
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddSingleton<IKeyConvertor, KeyConvertor>();
+
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)

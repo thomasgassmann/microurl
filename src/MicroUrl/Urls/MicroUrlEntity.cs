@@ -5,7 +5,7 @@ namespace MicroUrl.Urls
 
     public class MicroUrlEntity
     {
-        public string Key { get; set; }
+        public long Id { get; set; }
         
         public string Url { get; set; }
 

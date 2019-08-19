@@ -1,5 +1,6 @@
 namespace MicroUrl.Urls.Implementation
 {
+    using System.Linq;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Microsoft.Extensions.Options;
@@ -16,10 +17,10 @@ namespace MicroUrl.Urls.Implementation
             _datastore = DatastoreDb.Create(options.Value.Storage.Project);
         }
 
-        public async Task SaveAsync(MicroUrlEntity url)
+        public async Task<long> SaveAsync(MicroUrlEntity url)
         {
-            var key = _datastore.CreateKeyFactory(Kind).CreateKey(url.Key);
-            await _datastore.InsertAsync(new Entity
+            var key = _datastore.CreateKeyFactory(Kind).CreateIncompleteKey();
+            var createdKey = await _datastore.InsertAsync(new Entity
             {
                 Key = key,
                 Properties =
@@ -29,11 +30,12 @@ namespace MicroUrl.Urls.Implementation
                     { "created", url.Created }
                 }
             });
+            return createdKey.Path.First().Id;
         }
 
-        public async Task<MicroUrlEntity> LoadAsync(string key)
+        public async Task<MicroUrlEntity> LoadAsync(long id)
         {
-            var result = await _datastore.LookupAsync(new Key().WithElement(Kind, key));
+            var result = await _datastore.LookupAsync(new Key().WithElement(Kind, id));
             if (result == null)
             {
                 return null;
@@ -43,7 +45,7 @@ namespace MicroUrl.Urls.Implementation
             {
                 Created = result["created"].TimestampValue,
                 Enabled = result["enabled"].BooleanValue,
-                Key = result["key"].StringValue,
+                Id = result["key"].IntegerValue,
                 Url = result["url"].StringValue
             };
         }

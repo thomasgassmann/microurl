@@ -4,8 +4,8 @@ namespace MicroUrl.Urls
 
     public interface IUrlStorageService
     {
-        Task SaveAsync(MicroUrlEntity url);
+        Task<long> SaveAsync(MicroUrlEntity url);
 
-        Task<MicroUrlEntity> LoadAsync(string key);
+        Task<MicroUrlEntity> LoadAsync(long id);
     }
 }
