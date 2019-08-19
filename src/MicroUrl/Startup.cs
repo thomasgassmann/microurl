@@ -36,7 +36,6 @@ namespace MicroUrl
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<IUrlService, UrlService>();
-            services.AddSingleton<IKeyConvertor, KeyConvertor>();
 
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
         }

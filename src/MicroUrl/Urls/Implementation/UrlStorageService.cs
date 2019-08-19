@@ -17,10 +17,10 @@ namespace MicroUrl.Urls.Implementation
             _datastore = DatastoreDb.Create(options.Value.Storage.Project);
         }
 
-        public async Task<long> SaveAsync(MicroUrlEntity url)
+        public async Task<string> SaveAsync(MicroUrlEntity url)
         {
-            var key = _datastore.CreateKeyFactory(Kind).CreateIncompleteKey();
-            var createdKey = await _datastore.InsertAsync(new Entity
+            var key = _datastore.CreateKeyFactory(Kind).CreateKey(url.Key);
+            await _datastore.InsertAsync(new Entity
             {
                 Key = key,
                 Properties =
@@ -30,12 +30,13 @@ namespace MicroUrl.Urls.Implementation
                     { "created", url.Created }
                 }
             });
-            return createdKey.Path.First().Id;
+            _datastore.
+            return key.Path.First().Name;
         }
 
-        public async Task<MicroUrlEntity> LoadAsync(long id)
+        public async Task<MicroUrlEntity> LoadAsync(string key)
         {
-            var result = await _datastore.LookupAsync(new Key().WithElement(Kind, id));
+            var result = await _datastore.LookupAsync(GetKey(key));
             if (result == null)
             {
                 return null;
@@ -45,9 +46,17 @@ namespace MicroUrl.Urls.Implementation
             {
                 Created = result["created"].TimestampValue,
                 Enabled = result["enabled"].BooleanValue,
-                Id = result["key"].IntegerValue,
+                Key = result["key"].StringValue,
                 Url = result["url"].StringValue
             };
         }
+
+        public async Task<bool> ExistsAsync(string key)
+        {
+            var result = await _datastore.LookupAsync(GetKey(key));
+            return result != null;
+        }
+
+        private static Key GetKey(string key) => new Key().WithElement(Kind, key);
     }
 }
