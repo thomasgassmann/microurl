@@ -1,6 +1,6 @@
 namespace MicroUrl.Infrastructure.Settings
 {
-    public class UrlSettings
+    public class MicroUrlSettings
     {
         public DataStorageSettings Storage { get; set; }
     }

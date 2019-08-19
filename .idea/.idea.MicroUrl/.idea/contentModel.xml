@@ -184,14 +184,12 @@
             <e p="launchSettings.json" t="Include" />
           </e>
           <e p="Startup.cs" t="Include" />
-          <e p="Storage" t="Include">
-            <e p="IUrlKeyValueStorage.cs" t="Include" />
-            <e p="Implementation" t="Include">
-              <e p="CloudDatastoreStorage.cs" t="Include" />
-            </e>
-          </e>
           <e p="Urls" t="Include">
-            <e p="MicroUrl.cs" t="Include" />
+            <e p="IUrlStorageService.cs" t="Include" />
+            <e p="Implementation" t="Include">
+              <e p="UrlStorageService.cs" t="Include" />
+            </e>
+            <e p="MicroUrlEntity.cs" t="Include" />
           </e>
           <e p="appsettings.Development.json" t="Include" />
           <e p="appsettings.json" t="Include" />

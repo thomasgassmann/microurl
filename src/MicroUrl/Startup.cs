@@ -22,7 +22,7 @@ namespace MicroUrl
             services.AddMvcCore()
                 .AddNewtonsoftJson();
             
-            services.Configure<UrlSettings>(Configuration.GetSection(nameof(UrlSettings)));
+            services.Configure<MicroUrlSettings>(Configuration.GetSection(nameof(MicroUrlSettings)));
 
             services.AddSpaStaticFiles(configuration =>
             {

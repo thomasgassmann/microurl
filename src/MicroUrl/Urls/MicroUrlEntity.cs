@@ -1,14 +1,15 @@
 namespace MicroUrl.Urls
 {
     using System;
+    using Google.Protobuf.WellKnownTypes;
 
-    public class MicroUrl
+    public class MicroUrlEntity
     {
         public string Key { get; set; }
         
         public string Url { get; set; }
 
-        public DateTime Created { get; set; }
+        public Timestamp Created { get; set; }
 
         public bool Enabled { get; set; }
     }
