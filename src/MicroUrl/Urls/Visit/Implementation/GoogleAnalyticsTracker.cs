@@ -4,11 +4,8 @@ namespace MicroUrl.Urls.Visit.Implementation
     using System.Linq;
     using System.Net;
     using System.Net.Http;
-    using System.Net.Http.Headers;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.AspNetCore.Server.Kestrel.Core;
-    using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Infrastructure;
     using Microsoft.Extensions.Options;
     using MicroUrl.Infrastructure.Settings;
 
