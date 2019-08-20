@@ -13,8 +13,8 @@ namespace MicroUrl
 
         private static IWebHostBuilder CreateWebHostBuilder(string[] args)
         {
-            string port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
-            string url = string.Concat("http://0.0.0.0:", port);
+            var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+            var url = string.Concat("http://0.0.0.0:", port);
             return WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .UseUrls(url);
