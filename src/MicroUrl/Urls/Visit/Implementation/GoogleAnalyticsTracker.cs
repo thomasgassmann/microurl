@@ -23,19 +23,18 @@ namespace MicroUrl.Urls.Visit.Implementation
         
         public async Task TrackAsync(MicroUrlEntity entity, HttpContext context)
         {
-            var headerList = new[]
+            var blockedHeaderList = new[]
             {
-                "Accept",
-                "Accept-Encoding",
-                "Accept-Language",
-                "Cookie",
-                "User-Agent"
+                "Connection",
+                "DNT",
+                "Upgrade-Insecure-Requests",
+                "Host"
             };
             
             using var client = new HttpClient {BaseAddress = new Uri("https://www.google-analytics.com")};
             foreach (var (key, value) in context.Request.Headers)
             {
-                if (headerList.Contains(key))
+                if (!blockedHeaderList.Contains(key))
                 {
                     client.DefaultRequestHeaders.Add(key, value.ToArray());
                 }
