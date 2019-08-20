@@ -43,8 +43,8 @@ namespace MicroUrl.Urls.Visit.Implementation
 
         private async Task TrackGoogleAnalytics(MicroUrlEntity entity)
         {
-//            using var tracker = new SimpleTracker(_options.Value.AnalyticsId);
-//            await tracker.TrackPageViewAsync(entity.Url, entity.Key);
+            using var tracker = new SimpleTracker(_options.Value.AnalyticsId);
+            await tracker.TrackPageViewAsync(entity.Url, entity.Key);
         }
 
         private static string GetHeaders(HttpContext context)
