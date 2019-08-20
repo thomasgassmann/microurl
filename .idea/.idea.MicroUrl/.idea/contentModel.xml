@@ -202,8 +202,10 @@
             </e>
             <e p="MicroUrlEntity.cs" t="Include" />
             <e p="Visit" t="Include">
+              <e p="IGoogleAnalyticsTracker.cs" t="Include" />
               <e p="IVisitorTracker.cs" t="Include" />
               <e p="Implementation" t="Include">
+                <e p="GoogleAnalyticsTracker.cs" t="Include" />
                 <e p="VisitorTracker.cs" t="Include" />
               </e>
             </e>

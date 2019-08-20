@@ -41,6 +41,7 @@ namespace MicroUrl
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<IUrlService, UrlService>();
             services.AddSingleton<IStorageFactory, StorageFactory>();
+            services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
 
             services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });

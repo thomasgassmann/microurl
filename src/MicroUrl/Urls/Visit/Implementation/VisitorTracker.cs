@@ -3,7 +3,6 @@ namespace MicroUrl.Urls.Visit.Implementation
     using System.Text;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
-    using GoogleAnalyticsTracker.WebAPI2;
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Options;
     using MicroUrl.Infrastructure.Settings;
@@ -13,20 +12,26 @@ namespace MicroUrl.Urls.Visit.Implementation
     {
         private readonly IStorageFactory _storageFactory;
 
+        private readonly IGoogleAnalyticsTracker _googleAnalyticsTracker;
+
         private readonly IOptions<MicroUrlSettings> _options;
         
         private const string Kind = "Visit";
         
-        public VisitorTracker(IStorageFactory storageFactory, IOptions<MicroUrlSettings> options)
+        public VisitorTracker(
+            IStorageFactory storageFactory,
+            IOptions<MicroUrlSettings> options,
+            IGoogleAnalyticsTracker googleAnalyticsTracker)
         {
             _storageFactory = storageFactory;
             _options = options;
+            _googleAnalyticsTracker = googleAnalyticsTracker;
         }
         
         public async Task SaveVisitAsync(MicroUrlEntity entity, HttpContext context)
         {
             var storage = _storageFactory.GetStorage();
-            await TrackGoogleAnalytics(entity);
+            await TrackGoogleAnalytics(entity, context);
             await storage.InsertAsync(new Entity
             {
                 Key = storage.CreateKeyFactory(Kind).CreateIncompleteKey(),
@@ -41,10 +46,9 @@ namespace MicroUrl.Urls.Visit.Implementation
         private string GetIpAddress(HttpContext context) =>
             context.Connection.RemoteIpAddress.ToString();
 
-        private async Task TrackGoogleAnalytics(MicroUrlEntity entity)
+        private async Task TrackGoogleAnalytics(MicroUrlEntity entity, HttpContext context)
         {
-            using var tracker = new SimpleTracker(_options.Value.AnalyticsId);
-            await tracker.TrackPageViewAsync(entity.Url, entity.Key);
+            await _googleAnalyticsTracker.TrackAsync(entity, context);
         }
 
         private static string GetHeaders(HttpContext context)
