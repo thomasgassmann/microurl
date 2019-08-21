@@ -28,7 +28,8 @@ namespace MicroUrl.Urls.Visit.Implementation
                 "Connection",
                 "DNT",
                 "Upgrade-Insecure-Requests",
-                "Host"
+                "Host",
+                "Content-Length"
             };
             
             using var client = new HttpClient {BaseAddress = new Uri("https://www.google-analytics.com")};
