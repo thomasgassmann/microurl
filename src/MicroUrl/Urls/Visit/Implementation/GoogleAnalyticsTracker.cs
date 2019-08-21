@@ -6,16 +6,19 @@ namespace MicroUrl.Urls.Visit.Implementation
     using System.Net.Http;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using MicroUrl.Infrastructure.Settings;
 
     public class GoogleAnalyticsTracker : IGoogleAnalyticsTracker
     {
         private readonly IOptions<MicroUrlSettings> _options;
+        private readonly ILogger<GoogleAnalyticsTracker> _logger;
         
-        public GoogleAnalyticsTracker(IOptions<MicroUrlSettings> options)
+        public GoogleAnalyticsTracker(IOptions<MicroUrlSettings> options, ILogger<GoogleAnalyticsTracker> logger)
         {
             _options = options;
+            _logger = logger;
         }
         
         public async Task TrackAsync(MicroUrlEntity entity, HttpContext context)
@@ -33,7 +36,14 @@ namespace MicroUrl.Urls.Visit.Implementation
             {
                 if (!blockedHeaderList.Contains(key))
                 {
-                    client.DefaultRequestHeaders.Add(key, value.ToArray());
+                    try
+                    {
+                        client.DefaultRequestHeaders.Add(key, value.ToArray());
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        _logger.LogError($"{key} is not a valid header value (set manually)!");
+                    }
                 }
             }
             
