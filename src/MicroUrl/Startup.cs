@@ -49,6 +49,7 @@ namespace MicroUrl
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseMiddleware<RedirectMiddleware>();
             if (!env.IsDevelopment())
             {
                 app.UseHsts();
@@ -59,7 +60,6 @@ namespace MicroUrl
             app.UseSpaStaticFiles();
 
             app.UseMvc();
-            app.UseMiddleware<RedirectMiddleware>();
             app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";

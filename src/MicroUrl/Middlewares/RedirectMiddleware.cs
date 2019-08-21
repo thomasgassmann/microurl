@@ -15,16 +15,21 @@ namespace MicroUrl.Middlewares
 
         public async Task Invoke(HttpContext context, IUrlService urlService)
         {
+            if (context.Request.Method != "GET")
+            {
+                await _next(context);
+                return;
+            }
+            
             var path = context.Request.Path.Value?.TrimStart('/');
             var redirectUrl = !string.IsNullOrEmpty(path) ? await urlService.GetRedirectUrlAndTrackAsync(path, context) : null;
             if (redirectUrl != null)
             {
-                context.Response.Redirect(redirectUrl);   
+                context.Response.Redirect(redirectUrl);
+                return;
             }
-            else
-            {
-                await _next(context);
-            }
+            
+            await _next(context);
         }
     }
 }
