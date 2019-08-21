@@ -56,7 +56,6 @@ namespace MicroUrl
                 app.UseHttpsRedirection();
             }
 
-            app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
             app.UseMvc();
