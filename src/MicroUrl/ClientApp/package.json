@@ -24,6 +24,7 @@
     "@angular/router": "~8.2.3",
     "@angular/service-worker": "~8.2.3",
     "core-js": "^2.5.4",
+    "ngx-monaco-editor": "^8.0.0",
     "rxjs": "~6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

@@ -14,16 +14,16 @@ import {
   MatIconModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ShortenUrlComponent } from './components/shorten-url/shorten-url.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { StatsComponent } from './components/stats/stats.component';
-import { EditorComponent } from './components/editor/editor.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor';
+import { ShortenUrlComponent, StatsComponent, EditorComponent, DiffComponent } from './components';
 
 @NgModule({
-  declarations: [AppComponent, ShortenUrlComponent, StatsComponent, EditorComponent],
+  declarations: [AppComponent, ShortenUrlComponent, StatsComponent, EditorComponent, DiffComponent],
   imports: [
+    MonacoEditorModule.forRoot(),
     MatIconModule,
     HttpClientModule,
     FormsModule,

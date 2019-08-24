@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShortenUrlComponent, EditorComponent, StatsComponent } from './components';
+import { ShortenUrlComponent, EditorComponent, StatsComponent, DiffComponent } from './components';
 
 const routes: Routes = [
   {
@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'editor',
     component: EditorComponent
+  },
+  {
+    path: 'diff',
+    component: DiffComponent
   },
   {
     path: '**',
