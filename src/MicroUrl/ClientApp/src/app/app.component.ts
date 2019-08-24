@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
 
+declare function ga(param1?: any, param2?: any, param3?: any): void;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',

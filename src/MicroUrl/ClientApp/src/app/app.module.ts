@@ -10,17 +10,20 @@ import {
   MatToolbarModule,
   MatCardModule,
   MatFormFieldModule,
-  MatInputModule
+  MatInputModule,
+  MatIconModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShortenUrlComponent } from './components/shorten-url/shorten-url.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
-  declarations: [AppComponent, ShortenUrlComponent],
+  declarations: [AppComponent, ShortenUrlComponent, StatsComponent],
   imports: [
+    MatIconModule,
     HttpClientModule,
     FormsModule,
     MatInputModule,
