@@ -16,10 +16,12 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ShortenUrlComponent } from "./components/shorten-url/shorten-url.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
+import { HttpClientModule } from "@angular/common/http";
 
 @NgModule({
   declarations: [AppComponent, ShortenUrlComponent],
   imports: [
+    HttpClientModule,
     FormsModule,
     MatInputModule,
     CommonModule,

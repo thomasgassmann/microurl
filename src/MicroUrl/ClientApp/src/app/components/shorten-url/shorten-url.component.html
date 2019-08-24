@@ -4,11 +4,20 @@
     <mat-card-subtitle>Paste your url down below</mat-card-subtitle>
     <mat-card-content>
       <mat-form-field>
-        <input class="url-input" type="url" matInput placeholder="Url" />
+        <input
+          class="url-input"
+          type="url"
+          matInput
+          placeholder="Url"
+          [(ngModel)]="url"
+        />
       </mat-form-field>
+      <p *ngIf="shortenedUrl">{{ shortenedUrl }}</p>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary">Shorten</button>
+      <button mat-raised-button color="primary" (click)="shorten()">
+        Shorten
+      </button>
     </mat-card-actions>
   </mat-card>
 </div>
