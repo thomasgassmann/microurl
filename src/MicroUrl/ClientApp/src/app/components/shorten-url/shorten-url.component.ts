@@ -1,28 +1,28 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
-  selector: "app-shorten-url",
-  templateUrl: "./shorten-url.component.html",
-  styleUrls: ["./shorten-url.component.scss"]
+  selector: 'app-shorten-url',
+  templateUrl: './shorten-url.component.html',
+  styleUrls: ['./shorten-url.component.scss']
 })
 export class ShortenUrlComponent {
   public url: string;
   public errored = false;
   public shortenedUrl: string;
 
-  constructor(private httpClient: HttpClient) {}
+  constructor(private httpClient: HttpClient) { }
 
   public async shorten(): Promise<void> {
-    this.shortenedUrl = "";
+    this.shortenedUrl = '';
     this.errored = false;
     const response = await this.httpClient
       .post(
-        "/api/microurl",
+        '/api/microurl',
         {
           Url: this.url
         },
-        { observe: "response" }
+        { observe: 'response' }
       )
       .toPromise();
 
@@ -34,6 +34,6 @@ export class ShortenUrlComponent {
   }
 
   private getShortenedUrl(key: string): string {
-    return "https://" + window.location.host + "/" + key;
+    return 'https://' + window.location.host + '/' + key;
   }
 }

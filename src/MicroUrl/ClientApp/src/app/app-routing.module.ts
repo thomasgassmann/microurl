@@ -1,11 +1,15 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { ShortenUrlComponent } from "./components";
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { ShortenUrlComponent } from './components';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     component: ShortenUrlComponent
+  },
+  {
+    path: '**',
+    redirectTo: ''
   }
 ];
 
@@ -13,4 +17,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
