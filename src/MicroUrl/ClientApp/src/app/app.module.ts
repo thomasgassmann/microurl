@@ -19,9 +19,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { StatsComponent } from './components/stats/stats.component';
+import { EditorComponent } from './components/editor/editor.component';
 
 @NgModule({
-  declarations: [AppComponent, ShortenUrlComponent, StatsComponent],
+  declarations: [AppComponent, ShortenUrlComponent, StatsComponent, EditorComponent],
   imports: [
     MatIconModule,
     HttpClientModule,
