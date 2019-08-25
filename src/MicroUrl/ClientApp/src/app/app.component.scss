@@ -12,3 +12,18 @@
 mat-toolbar {
   height: $toolbar-height;
 }
+
+.link-menu {
+  display: none;
+  width: 100%;
+}
+
+@media only screen and (max-width: $breakpoint) {
+  .link-list {
+    display: none;
+  }
+
+  .link-menu {
+    display: inherit;
+  }
+}

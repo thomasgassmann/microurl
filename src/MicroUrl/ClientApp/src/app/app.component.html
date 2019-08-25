@@ -1,18 +1,26 @@
 <mat-toolbar>
   <img [routerLink]="['/']" src="/assets/icon.png" class="app-image" alt="microurl" />
   <span [routerLink]="['/']">microurl</span>
-  <button class="navigation-button" mat-button [routerLink]="['/']">
-    <mat-icon>link</mat-icon>
-  </button>
-  <button class="navigation-button" mat-button [routerLink]="['/editor']">
-    <mat-icon>code</mat-icon>
-  </button>
-  <button class="navigation-button" mat-button [routerLink]="['/diff']">
-    <mat-icon>compare</mat-icon>
-  </button>
-  <button class="navigation-button" mat-button [routerLink]="['/stats']">
-    <mat-icon>trending_up</mat-icon>
-  </button>
+  <div class="link-list">
+    <button class="navigation-button" mat-button [routerLink]="['/']">
+      <mat-icon>link</mat-icon>
+    </button>
+    <button class="navigation-button" mat-button [routerLink]="['/editor']">
+      <mat-icon>code</mat-icon>
+    </button>
+    <button class="navigation-button" mat-button [routerLink]="['/diff']">
+      <mat-icon>compare</mat-icon>
+    </button>
+    <button class="navigation-button" mat-button [routerLink]="['/stats']">
+      <mat-icon>trending_up</mat-icon>
+    </button>
+  </div>
+
+  <div class="link-menu">
+    <button class="navigation-button" mat-button [routerLink]="['/stats']">
+      <mat-icon>trending_up</mat-icon>
+    </button>
+  </div>
 
 </mat-toolbar>
 <main>
