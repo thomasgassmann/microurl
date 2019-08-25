@@ -7,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorComponent implements OnInit {
 
-  public editorOptions = { theme: 'vs-dark', language: 'javascript' };
+  public editorOptions = {
+    theme: 'vs-dark',
+    language: 'javascript'
+  };
   public code = '';
 
   constructor() { }
