@@ -8,7 +8,7 @@
         <a *ngFor="let entry of navigationEntries" mat-list-item (click)="sidenav.close()" routerLinkActive
           #routerLinkActiveInstanceSettings="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
           [class.list-item-active]="routerLinkActiveInstanceSettings.isActive" [routerLink]="[entry.route]">
-          <mat-icon matListIcon class="app-nav-list-icon">{{entry.icon}}</mat-icon>
+          <mat-icon matListIcon>{{entry.icon}}</mat-icon>
           {{entry.name}}
         </a>
       </mat-nav-list>
@@ -26,10 +26,12 @@
       </div>
 
       <div class="nav-buttons">
-        <button *ngFor="let button of navigationEntries" mat-button [routerLink]="[button.route]">
+        <a *ngFor="let button of navigationEntries" mat-button routerLinkActive
+          #routerLinkActiveInstanceSettings="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+          [class.list-item-active]="routerLinkActiveInstanceSettings.isActive" [routerLink]="[button.route]">
           <mat-icon>{{button.icon}}</mat-icon>
           {{button.name}}
-        </button>
+        </a>
       </div>
 
     </mat-toolbar>
