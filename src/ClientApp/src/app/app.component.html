@@ -14,17 +14,9 @@
       </div>
 
       <div class="nav-buttons">
-        <button class="navigation-button" mat-button [routerLink]="['/']">
-          <mat-icon>link</mat-icon>
-        </button>
-        <button class="navigation-button" mat-button [routerLink]="['/editor']">
-          <mat-icon>code</mat-icon>
-        </button>
-        <button class="navigation-button" mat-button [routerLink]="['/diff']">
-          <mat-icon>compare</mat-icon>
-        </button>
-        <button class="navigation-button" mat-button [routerLink]="['/stats']">
-          <mat-icon>trending_up</mat-icon>
+        <button *ngFor="let button of this.navigationEntries" mat-button [routerLink]="[button.route]">
+          <mat-icon>{{button.icon}}</mat-icon>
+          {{button.name}}
         </button>
       </div>
 
