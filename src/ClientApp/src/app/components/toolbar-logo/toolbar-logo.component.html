@@ -1,0 +1,10 @@
+<div class="menu-container">
+  <div *ngIf="showMenu">
+    <button class="navigation-button" mat-icon-button (click)="toggled()">
+      <mat-icon>menu</mat-icon>
+    </button>
+  </div>
+
+  <img [routerLink]="['/']" src="/assets/icon.png" class="app-image" alt="microurl" />
+  <span [routerLink]="['/']">microurl</span>
+</div>

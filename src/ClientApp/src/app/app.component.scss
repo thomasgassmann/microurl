@@ -3,33 +3,27 @@
 
 .toolbar {
   @include mat-elevation(8);
-  display: flex;
-}
-
-.spacer {
-  flex: 1 1 auto;
-}
-
-.app-image {
-  height: 60%;
-  margin-right: 10px;
-}
-
-.navigation-button {
-  margin: 0 10px;
 }
 
 mat-toolbar {
   height: $toolbar-height;
 }
 
+.link-list {
+  height: 100%;
+}
+
 .link-menu {
   display: none;
-  width: 100%;
+  height: 100%;
 }
 
 @media only screen and (max-width: $breakpoint) {
   .link-list {
+    display: none;
+  }
+
+  .nav-buttons {
     display: none;
   }
 

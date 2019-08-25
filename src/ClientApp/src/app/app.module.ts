@@ -11,18 +11,33 @@ import {
   MatCardModule,
   MatFormFieldModule,
   MatInputModule,
-  MatIconModule
+  MatIconModule,
+  MatSidenavModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MonacoEditorModule } from 'ngx-monaco-editor';
-import { ShortenUrlComponent, StatsComponent, EditorComponent, DiffComponent } from './components';
+import {
+  ShortenUrlComponent,
+  StatsComponent,
+  EditorComponent,
+  DiffComponent,
+  ToolbarLogoComponent
+} from './components';
 
 @NgModule({
-  declarations: [AppComponent, ShortenUrlComponent, StatsComponent, EditorComponent, DiffComponent],
+  declarations: [
+    AppComponent,
+    ShortenUrlComponent,
+    StatsComponent,
+    EditorComponent,
+    DiffComponent,
+    ToolbarLogoComponent
+  ],
   imports: [
+    MatSidenavModule,
     MonacoEditorModule.forRoot(),
     MatIconModule,
     HttpClientModule,

@@ -1,31 +1,37 @@
-<mat-toolbar class="toolbar">
-  <img [routerLink]="['/']" src="/assets/icon.png" class="app-image" alt="microurl" />
-  <span [routerLink]="['/']">microurl</span>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="over">
+    test
+  </mat-sidenav>
 
-  <div class="link-list">
-    <button class="navigation-button" mat-button [routerLink]="['/']">
-      <mat-icon>link</mat-icon>
-    </button>
-    <button class="navigation-button" mat-button [routerLink]="['/editor']">
-      <mat-icon>code</mat-icon>
-    </button>
-    <button class="navigation-button" mat-button [routerLink]="['/diff']">
-      <mat-icon>compare</mat-icon>
-    </button>
-    <button class="navigation-button" mat-button [routerLink]="['/stats']">
-      <mat-icon>trending_up</mat-icon>
-    </button>
-  </div>
+  <mat-sidenav-content>
+    <mat-toolbar class="toolbar">
+      <div class="link-menu">
+        <app-toolbar-logo [showMenu]="true" (toggle)="sidenav.toggle()"></app-toolbar-logo>
+      </div>
 
-  <div class="link-menu">
-    <div class="spacer"></div>
+      <div class="link-list">
+        <app-toolbar-logo [showMenu]="false" (toggle)="sidenav.toggle()"></app-toolbar-logo>
+      </div>
 
-    <button class="navigation-button" mat-button [routerLink]="['/stats']">
-      <mat-icon>trending_up</mat-icon>
-    </button>
-  </div>
+      <div class="nav-buttons">
+        <button class="navigation-button" mat-button [routerLink]="['/']">
+          <mat-icon>link</mat-icon>
+        </button>
+        <button class="navigation-button" mat-button [routerLink]="['/editor']">
+          <mat-icon>code</mat-icon>
+        </button>
+        <button class="navigation-button" mat-button [routerLink]="['/diff']">
+          <mat-icon>compare</mat-icon>
+        </button>
+        <button class="navigation-button" mat-button [routerLink]="['/stats']">
+          <mat-icon>trending_up</mat-icon>
+        </button>
+      </div>
 
-</mat-toolbar>
-<main>
-  <router-outlet></router-outlet>
-</main>
+    </mat-toolbar>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
