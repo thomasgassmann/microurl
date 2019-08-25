@@ -3,6 +3,11 @@
 
 .toolbar {
   @include mat-elevation(8);
+  display: flex;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }
 
 .app-image {

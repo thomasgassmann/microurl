@@ -1,6 +1,7 @@
 <mat-toolbar class="toolbar">
   <img [routerLink]="['/']" src="/assets/icon.png" class="app-image" alt="microurl" />
   <span [routerLink]="['/']">microurl</span>
+
   <div class="link-list">
     <button class="navigation-button" mat-button [routerLink]="['/']">
       <mat-icon>link</mat-icon>
@@ -17,6 +18,8 @@
   </div>
 
   <div class="link-menu">
+    <div class="spacer"></div>
+
     <button class="navigation-button" mat-button [routerLink]="['/stats']">
       <mat-icon>trending_up</mat-icon>
     </button>

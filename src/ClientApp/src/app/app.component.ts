@@ -7,7 +7,7 @@ import { Router, RouterEvent, NavigationEnd } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor(private router: Router) {
+  constructor(router: Router) {
     router.events.subscribe((event: RouterEvent) => {
       if (event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);
