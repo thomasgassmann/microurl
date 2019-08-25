@@ -12,7 +12,8 @@ import {
   MatFormFieldModule,
   MatInputModule,
   MatIconModule,
-  MatSidenavModule
+  MatSidenavModule,
+  MatListModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -37,6 +38,7 @@ import {
     ToolbarLogoComponent
   ],
   imports: [
+    MatListModule,
     MatSidenavModule,
     MonacoEditorModule.forRoot(),
     MatIconModule,

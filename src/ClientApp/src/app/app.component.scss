@@ -5,6 +5,10 @@
   @include mat-elevation(8);
 }
 
+.list-item-active {
+  background-color: grey;
+}
+
 mat-toolbar {
   height: $toolbar-height;
 }
