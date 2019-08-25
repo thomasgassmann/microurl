@@ -11,7 +11,6 @@ if (environment.production) {
   enableProdMode();
 }
 
-
 ga('create', (appSettings as Config).MicroUrlSettings.AnalyticsId, 'auto');
 
 platformBrowserDynamic([{ provide: CONFIG_TOKEN, useValue: appSettings }])

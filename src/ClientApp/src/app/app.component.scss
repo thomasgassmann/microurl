@@ -1,4 +1,9 @@
 @import 'src/variables.scss';
+@import '~@angular/material/theming';
+
+.toolbar {
+  @include mat-elevation(8);
+}
 
 .app-image {
   height: 60%;

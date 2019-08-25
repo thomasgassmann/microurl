@@ -44,7 +44,10 @@ namespace MicroUrl
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
 
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -55,7 +58,10 @@ namespace MicroUrl
                 app.UseHttpsRedirection();
             }
 
-            app.UseSpaStaticFiles();
+            app.UseSpaStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true
+            });
 
             app.UseMvc();
 
