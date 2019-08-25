@@ -1,6 +1,17 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
+@import 'src/variables.scss';
 
 body {
   margin: 0;
+}
+
+main {
+  height: calc(100vh - #{$toolbar-height});
+}
+
+.code-editor {
+  .editor-container {
+    height: calc(100vh - #{$toolbar-height}) !important;
+  }
 }
