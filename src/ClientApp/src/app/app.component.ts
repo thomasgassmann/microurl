@@ -1,11 +1,6 @@
 import { Component } from '@angular/core';
 import { Router, RouterEvent, NavigationEnd } from '@angular/router';
-
-interface NavigationOption {
-  route: string;
-  name: string;
-  icon: string;
-}
+import { NavigationEntry } from './models';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +9,7 @@ interface NavigationOption {
 })
 export class AppComponent {
 
-  public navigationEntries: NavigationOption[] = [
+  public navigationEntries: NavigationEntry[] = [
     {
       icon: 'link',
       name: 'Link',
