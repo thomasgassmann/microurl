@@ -23,7 +23,6 @@
         </div>
       </div>
       <mat-list *ngIf="shortenedUrls.length > 0">
-        <h3 mat-subheader>Urls</h3>
         <app-url-result *ngFor="let url of shortenedUrls" [url]="url"></app-url-result>
       </mat-list>
     </mat-card-content>
