@@ -14,8 +14,8 @@ import {
   MatIconModule,
   MatSidenavModule,
   MatListModule,
-  MatProgressBarModule,
-  MatProgressSpinnerModule
+  MatProgressSpinnerModule,
+  MatGridListModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -43,7 +43,7 @@ import {
   ],
   imports: [
     MatProgressSpinnerModule,
-    MatProgressBarModule,
+    MatGridListModule,
     MatListModule,
     MatSidenavModule,
     MonacoEditorModule.forRoot(),

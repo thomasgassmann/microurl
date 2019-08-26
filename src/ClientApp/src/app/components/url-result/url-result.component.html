@@ -1,1 +1,6 @@
-<a [href]="url">{{url}}</a>
+<mat-list-item>
+  <button mat-icon-button (click)="copy(url)">
+    <mat-icon mat-list-icon>file_copy</mat-icon>
+  </button>
+  <h4 mat-line><a [href]="url">{{url}}</a></h4>
+</mat-list-item>

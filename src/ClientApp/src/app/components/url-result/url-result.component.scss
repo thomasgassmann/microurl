@@ -1,0 +1,18 @@
+.url-result {
+  margin-top: 10px;
+  padding: 10px;
+}
+
+.content-result {
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+a {
+  color: white;
+}
+
+a:hover, a:active {
+  color: darken(white, 20%);
+}

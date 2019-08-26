@@ -13,7 +13,7 @@ export class ShortenUrlComponent {
 
   public loading = false;
   public errored = false;
-  public shortenedUrl: string;
+  public shortenedUrls: string[] = [];
 
   constructor(private httpClient: HttpClient) { }
 
@@ -25,7 +25,6 @@ export class ShortenUrlComponent {
     const normalizedUrl = normalizeUrl(this.url);
     this.loading = true;
 
-    this.shortenedUrl = '';
     this.errored = false;
     const response = await this.httpClient
       .post(
@@ -38,7 +37,8 @@ export class ShortenUrlComponent {
       .toPromise();
 
     if (response.status === 201) {
-      this.shortenedUrl = this.getShortenedUrl((response.body as any).key);
+      const newUrl = this.getShortenedUrl((response.body as any).key);
+      this.shortenedUrls = [newUrl, ...this.shortenedUrls];
       this.url = '';
     } else if (response.status === 400) {
       this.errored = true;
