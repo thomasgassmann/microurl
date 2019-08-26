@@ -10,9 +10,9 @@
       "request": "launch",
       "preLaunchTask": "build",
       // If you have changed target frameworks, make sure to update the program path.
-      "program": "${workspaceFolder}/src/MicroUrl/bin/Debug/netcoreapp3.0/MicroUrl.dll",
+      "program": "${workspaceFolder}/src/bin/Debug/netcoreapp3.0/MicroUrl.dll",
       "args": [],
-      "cwd": "${workspaceFolder}/src/MicroUrl",
+      "cwd": "${workspaceFolder}/src",
       "stopAtEntry": false,
       // Enable launching a web browser when ASP.NET Core starts. For more information: https://aka.ms/VSCode-CS-LaunchJson-WebBrowser
       "serverReadyAction": {

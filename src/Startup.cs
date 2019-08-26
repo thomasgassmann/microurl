@@ -27,6 +27,8 @@ namespace MicroUrl
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
             services.AddMvcCore()
                 .AddDataAnnotations()
                 .AddJsonFormatters()

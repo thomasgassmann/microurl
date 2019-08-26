@@ -1,5 +1,6 @@
 namespace MicroUrl.Controllers
 {
+    using System;
     using System.Net;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
@@ -10,7 +11,7 @@ namespace MicroUrl.Controllers
     public class UrlController : Controller
     {
         private readonly IUrlService _urlService;
-        
+
         public UrlController(IUrlService urlService)
         {
             _urlService = urlService;
@@ -25,7 +26,7 @@ namespace MicroUrl.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             var key = await _urlService.SaveAsync(urlModel.Url);
             return new JsonResult(new { Key = key }) { StatusCode = (int)HttpStatusCode.Created };
         }
