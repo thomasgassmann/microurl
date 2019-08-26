@@ -13,7 +13,7 @@ namespace MicroUrl.Controllers.Validation
 
             if (Uri.TryCreate(value?.ToString(), UriKind.Absolute, out Uri createdUri))
             {
-                if (hostValue == createdUri.Host)
+                if (hostValue == createdUri.Authority)
                 {
                     return new ValidationResult("Cannot shorten a link on the same host");
                 }
