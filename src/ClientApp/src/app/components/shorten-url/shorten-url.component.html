@@ -22,7 +22,14 @@
           </button>
         </div>
       </div>
-      <mat-list *ngIf="shortenedUrls.length > 0">
+
+      <div *ngIf="errored && errors">
+        <div *ngFor="let message of errors">
+          {{message}}
+        </div>
+      </div>
+
+      <mat-list *ngIf="shortenedUrls.length > 0 && !errored">
         <app-url-result *ngFor="let url of shortenedUrls" [url]="url"></app-url-result>
       </mat-list>
     </mat-card-content>

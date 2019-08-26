@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import normalizeUrl from 'normalize-url';
 import isUrl from 'is-url-superb';
 
@@ -13,6 +13,7 @@ export class ShortenUrlComponent {
 
   public loading = false;
   public errored = false;
+  public errors: string[] = [];
   public shortenedUrls: string[] = [];
 
   constructor(private httpClient: HttpClient) { }
@@ -26,25 +27,37 @@ export class ShortenUrlComponent {
     this.loading = true;
 
     this.errored = false;
-    const response = await this.httpClient
-      .post(
-        '/api/microurl',
-        {
-          Url: normalizedUrl
-        },
-        { observe: 'response' }
-      )
-      .toPromise();
 
-    if (response.status === 201) {
-      const newUrl = this.getShortenedUrl((response.body as any).key);
-      this.shortenedUrls = [newUrl, ...this.shortenedUrls];
-      this.url = '';
-    } else if (response.status === 400) {
+    try {
+      const response = await this.httpClient
+        .post(
+          '/api/microurl',
+          {
+            Url: normalizedUrl
+          },
+          { observe: 'response' }
+        )
+        .toPromise();
+
+      if (response.status === 201) {
+        const newUrl = this.getShortenedUrl((response.body as any).key);
+        this.shortenedUrls = [newUrl, ...this.shortenedUrls];
+        this.url = '';
+      }
+    } catch (error) {
+      const errorResponse = error as HttpErrorResponse;
       this.errored = true;
+      this.errors = [];
+      if (errorResponse.status === 400) {
+        for (const key of Object.keys(errorResponse.error)) {
+          for (const message of errorResponse.error[key]) {
+            this.errors.push(`${key}: ${message}`);
+          }
+        }
+      }
+    } finally {
+      this.loading = false;
     }
-
-    this.loading = false;
   }
 
   private getShortenedUrl(key: string): string {
