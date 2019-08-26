@@ -1,0 +1,5 @@
+@import 'src/variables.scss';
+
+@mixin non-toolbar-height {
+  height: calc(100vh - #{$toolbar-height}) !important;
+}

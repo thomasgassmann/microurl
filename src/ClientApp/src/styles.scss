@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
-@import 'src/variables.scss';
+@import 'src/mixins.scss';
 
 body {
   height: 100%;
@@ -11,11 +11,11 @@ body {
 
 main {
   overflow-y: auto;
-  height: calc(100vh - #{$toolbar-height});
+  @include non-toolbar-height;
 }
 
 .code-editor {
   .editor-container {
-    height: calc(100vh - #{$toolbar-height}) !important;
+    @include non-toolbar-height;
   }
 }
