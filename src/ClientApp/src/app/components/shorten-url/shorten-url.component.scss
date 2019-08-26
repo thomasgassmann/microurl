@@ -3,6 +3,23 @@
   height: 100%;
 }
 
+.prefix {
+  display: flex;
+  flex-direction: row;
+}
+
+.prefix mat-icon {
+  margin-right: 5px;
+}
+
+.url-input {
+  width: 100%;
+}
+
 mat-card {
   margin: 10px;
+}
+
+.loading {
+  position: fixed;
 }

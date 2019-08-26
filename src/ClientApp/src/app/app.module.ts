@@ -13,7 +13,8 @@ import {
   MatInputModule,
   MatIconModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -25,7 +26,8 @@ import {
   StatsComponent,
   EditorComponent,
   DiffComponent,
-  ToolbarLogoComponent
+  ToolbarLogoComponent,
+  UrlResultComponent
 } from './components';
 
 @NgModule({
@@ -35,9 +37,11 @@ import {
     StatsComponent,
     EditorComponent,
     DiffComponent,
-    ToolbarLogoComponent
+    ToolbarLogoComponent,
+    UrlResultComponent
   ],
   imports: [
+    MatProgressBarModule,
     MatListModule,
     MatSidenavModule,
     MonacoEditorModule.forRoot(),

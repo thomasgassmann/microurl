@@ -1,23 +1,25 @@
 <div class="shorten-url">
   <mat-card>
     <mat-card-title>Shorten</mat-card-title>
-    <mat-card-subtitle>Paste your url down below</mat-card-subtitle>
+    <mat-card-subtitle>
+      <mat-progress-bar class="loading" *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+    </mat-card-subtitle>
     <mat-card-content>
-      <mat-form-field>
-        <input
-          class="url-input"
-          type="url"
-          matInput
-          placeholder="Url"
-          [(ngModel)]="url"
-        />
-      </mat-form-field>
-      <p *ngIf="shortenedUrl">{{ shortenedUrl }}</p>
+      <div class="shorten-line">
+        <mat-form-field class="url-input" appearance="fill">
+          <mat-label>URI</mat-label>
+          <input type="url" matInput placeholder="paste here" [(ngModel)]="url">
+          <div matPrefix class="prefix">
+            <mat-icon matPrefix>link</mat-icon>
+          </div>
+        </mat-form-field>
+      </div>
+      <button [disabled]="!validUrl" mat-raised-button color="primary" (click)="shorten()">
+        SHORTEN URL
+      </button>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-raised-button color="primary" (click)="shorten()">
-        Shorten
-      </button>
+      <app-url-result *ngIf="shortenedUrl" [url]="shortenedUrl"></app-url-result>
     </mat-card-actions>
   </mat-card>
 </div>
