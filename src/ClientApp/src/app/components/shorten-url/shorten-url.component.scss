@@ -3,9 +3,8 @@
   height: 100%;
 }
 
-.prefix {
-  display: flex;
-  flex-direction: row;
+.spacer {
+  flex: 1 1 auto;
 }
 
 .prefix mat-icon {
@@ -20,6 +19,11 @@ mat-card {
   margin: 10px;
 }
 
-.loading {
-  position: fixed;
+.shorten-line {
+  display: flex;
+  align-items: center;
+}
+
+.spinner {
+  margin-right: 10px;
 }

@@ -39,6 +39,7 @@ export class ShortenUrlComponent {
 
     if (response.status === 201) {
       this.shortenedUrl = this.getShortenedUrl((response.body as any).key);
+      this.url = '';
     } else if (response.status === 400) {
       this.errored = true;
     }
