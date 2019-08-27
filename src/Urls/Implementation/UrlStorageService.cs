@@ -7,9 +7,9 @@ namespace MicroUrl.Urls.Implementation
 
     public class UrlStorageService : IUrlStorageService
     {
-        private readonly IStorageFactory _storageFactory;
-        
         private const string Kind = "MicroUrl";
+        
+        private readonly IStorageFactory _storageFactory;
 
         public UrlStorageService(IStorageFactory storageFactory)
         {

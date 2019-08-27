@@ -47,6 +47,7 @@ namespace MicroUrl
             services.AddSingleton<IStorageFactory, StorageFactory>();
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
+            services.AddScoped<IVisitorStorageService, VisitorStorageService>();
             services.AddScoped<IStatsService, StatsService>();
 
             services.AddSpaStaticFiles(configuration =>

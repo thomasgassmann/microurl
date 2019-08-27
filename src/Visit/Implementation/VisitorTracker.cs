@@ -1,48 +1,38 @@
 namespace MicroUrl.Visit.Implementation
 {
+    using System;
     using System.Text;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
+    using Google.Protobuf.WellKnownTypes;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Options;
-    using MicroUrl.Infrastructure.Settings;
-    using MicroUrl.Storage;
     using MicroUrl.Urls;
 
     public class VisitorTracker : IVisitorTracker
     {
-        private readonly IStorageFactory _storageFactory;
+        private readonly IVisitorStorageService _visitorStorageService;
 
         private readonly IGoogleAnalyticsTracker _googleAnalyticsTracker;
-
-        private readonly IOptions<MicroUrlSettings> _options;
-        
-        private const string Kind = "Visit";
         
         public VisitorTracker(
-            IStorageFactory storageFactory,
-            IOptions<MicroUrlSettings> options,
+            IVisitorStorageService visitorStorageService,
             IGoogleAnalyticsTracker googleAnalyticsTracker)
         {
-            _storageFactory = storageFactory;
-            _options = options;
+            _visitorStorageService = visitorStorageService;
             _googleAnalyticsTracker = googleAnalyticsTracker;
         }
         
         public async Task SaveVisitAsync(MicroUrlEntity entity, HttpContext context)
         {
-            var storage = _storageFactory.GetStorage();
-            await TrackGoogleAnalytics(entity, context);
-            await storage.InsertAsync(new Entity
+            var gaTask = TrackGoogleAnalytics(entity, context);
+            var storageTask = _visitorStorageService.SaveAsync(new UrlVisitEntity
             {
-                Key = storage.CreateKeyFactory(Kind).CreateIncompleteKey(),
-                Properties =
-                {
-                    { "key", entity.Key },
-                    { "headers", GetHeaders(context) },
-                    { "ip", GetIpAddress(context) }
-                }
+                Created = Timestamp.FromDateTime(DateTime.UtcNow),
+                Headers = GetHeaders(context),
+                Ip = GetIpAddress(context),
+                Key = entity.Key
             });
+            await Task.WhenAll(new[] {gaTask, storageTask});
         }
 
         private string GetIpAddress(HttpContext context) =>
