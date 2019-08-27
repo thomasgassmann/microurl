@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import normalizeUrl from 'normalize-url';
 import isUrl from 'is-url-superb';
 import { ShortenedUrl } from 'src/app/models';
+import { ClipboardService } from 'src/app/services';
 
 @Component({
   selector: 'app-shorten-url',
@@ -17,7 +18,7 @@ export class ShortenUrlComponent {
   public errors: string[] = [];
   public shortenedUrls: ShortenedUrl[] = [];
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private clipboardService: ClipboardService) { }
 
   public get validUrl(): boolean {
     return isUrl(this.url);
@@ -28,7 +29,7 @@ export class ShortenUrlComponent {
   }
 
   public async pasteFromClipboard(): Promise<void> {
-    this.url = await navigator.clipboard.readText();
+    this.url = await this.clipboardService.get();
   }
 
   public async shorten(): Promise<void> {

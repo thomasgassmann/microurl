@@ -23,6 +23,7 @@
     "@angular/pwa": "^0.803.0",
     "@angular/router": "~8.2.3",
     "@angular/service-worker": "~8.2.3",
+    "clipboard-polyfill": "^2.8.6",
     "core-js": "^2.5.4",
     "is-url-superb": "^3.0.0",
     "ngx-monaco-editor": "^8.0.0",

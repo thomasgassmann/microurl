@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { SnackbarService } from 'src/app/services';
+import { SnackbarService, ClipboardService } from 'src/app/services';
 
 @Component({
   selector: 'app-url-result',
@@ -11,21 +11,11 @@ export class UrlResultComponent {
   @Input() public url: string;
   @Input() public targetUrl: string;
 
-  constructor(private snackbarService: SnackbarService) {
+  constructor(private snackbarService: SnackbarService, private clipboardService: ClipboardService) {
   }
 
-  public copy(val: string): void {
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = val;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
+  public async copy(val: string): Promise<void> {
+    await this.clipboardService.set(val);
     this.snackbarService.show('Copied!');
   }
 }
