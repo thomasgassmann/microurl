@@ -23,6 +23,14 @@ export class ShortenUrlComponent {
     return isUrl(this.url);
   }
 
+  public get canPaste(): boolean {
+    return !!navigator.clipboard;
+  }
+
+  public async pasteFromClipboard(): Promise<void> {
+    this.url = await navigator.clipboard.readText();
+  }
+
   public async shorten(): Promise<void> {
     const normalizedUrl = normalizeUrl(this.url);
     this.loading = true;
