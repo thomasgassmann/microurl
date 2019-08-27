@@ -30,7 +30,8 @@
       </div>
 
       <mat-list *ngIf="shortenedUrls.length > 0 && !errored">
-        <app-url-result *ngFor="let url of shortenedUrls" [url]="url"></app-url-result>
+        <app-url-result *ngFor="let shortenedUrl of shortenedUrls" [url]="shortenedUrl.url"
+          [targetUrl]="shortenedUrl.targetUrl"></app-url-result>
       </mat-list>
     </mat-card-content>
     <mat-card-actions>

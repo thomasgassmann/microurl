@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { SnackbarService } from 'src/app/services';
 
 @Component({
   selector: 'app-url-result',
@@ -8,6 +9,10 @@ import { Component, Input } from '@angular/core';
 export class UrlResultComponent {
 
   @Input() public url: string;
+  @Input() public targetUrl: string;
+
+  constructor(private snackbarService: SnackbarService) {
+  }
 
   public copy(val: string): void {
     const selBox = document.createElement('textarea');
@@ -21,5 +26,6 @@ export class UrlResultComponent {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+    this.snackbarService.show('Copied!');
   }
 }

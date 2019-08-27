@@ -15,7 +15,8 @@ import {
   MatSidenavModule,
   MatListModule,
   MatProgressSpinnerModule,
-  MatGridListModule
+  MatGridListModule,
+  MatSnackBarModule
 } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -42,6 +43,7 @@ import {
     UrlResultComponent
   ],
   imports: [
+    MatSnackBarModule,
     MatProgressSpinnerModule,
     MatGridListModule,
     MatListModule,

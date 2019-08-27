@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import normalizeUrl from 'normalize-url';
 import isUrl from 'is-url-superb';
+import { ShortenedUrl } from 'src/app/models';
 
 @Component({
   selector: 'app-shorten-url',
@@ -14,7 +15,7 @@ export class ShortenUrlComponent {
   public loading = false;
   public errored = false;
   public errors: string[] = [];
-  public shortenedUrls: string[] = [];
+  public shortenedUrls: ShortenedUrl[] = [];
 
   constructor(private httpClient: HttpClient) { }
 
@@ -41,7 +42,7 @@ export class ShortenUrlComponent {
 
       if (response.status === 201) {
         const newUrl = this.getShortenedUrl((response.body as any).key);
-        this.shortenedUrls = [newUrl, ...this.shortenedUrls];
+        this.shortenedUrls = [{ url: newUrl, targetUrl: normalizedUrl }, ...this.shortenedUrls];
         this.url = '';
       }
     } catch (error) {
