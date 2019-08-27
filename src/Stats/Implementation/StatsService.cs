@@ -1,15 +1,25 @@
 namespace MicroUrl.Stats.Implementation
 {
+    using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using MicroUrl.Urls;
+    using MicroUrl.Visit;
 
     public class StatsService : IStatsService
     {
-        private readonly IUrlStorageService _urlStorageService;
+        private const int LastXDays = 7;
         
-        public StatsService(IUrlStorageService urlStorageService)
+        private readonly IUrlStorageService _urlStorageService;
+
+        private readonly IVisitorStorageService _visitorStorageService;
+        
+        public StatsService(
+            IUrlStorageService urlStorageService,
+            IVisitorStorageService visitorStorageService)
         {
             _urlStorageService = urlStorageService;
+            _visitorStorageService = visitorStorageService;
         }
 
         public async Task<MicroUrlStats> GetStats(string key)
@@ -19,6 +29,16 @@ namespace MicroUrl.Stats.Implementation
             {
                 return null;
             }
+
+//            var hits = new Dictionary<string, long>();
+//            var queryResult = _visitorStorageService.GetVisitorCountAsync(
+//                key,
+//                microUrl.Created.ToDateTime(),
+//                DateTime.UtcNow);
+//            await foreach (var item in queryResult)
+//            {
+//                
+//            }
             
             return new MicroUrlStats
             {

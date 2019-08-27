@@ -20,36 +20,30 @@ namespace MicroUrl.Visit.Implementation
             _storageFactory = storageFactory;
         }
 
-        public async Task<VisitorNumbers> GetVisitorCount(string key, DateTime from, DateTime to)
-        {
-            var storage = _storageFactory.GetStorage();
-            var query = new Query(Kind)
-            {
-                Filter = Filter.And(
-                    Filter.GreaterThanOrEqual("created", Timestamp.FromDateTime(@from)),
-                    Filter.LessThanOrEqual("created", Timestamp.FromDateTime(to)),
-                    Filter.Equal("key", key))
-            };
-
-            var enumerator = storage.RunQueryLazilyAsync(query).GetEnumerator();
-            var hits = new Dictionary<string, long>();
-            while (await enumerator.MoveNext())
-            {
-                var currentIp = enumerator.Current["ip"].StringValue;
-                if (!hits.ContainsKey(currentIp))
-                {
-                    hits.Add(currentIp, 0);
-                }
-
-                hits[currentIp]++;
-            }
-
-            return new VisitorNumbers
-            {
-                VisitorCount = hits.Sum(x => x.Value),
-                UniqueVisitorCount = hits.Keys.Count
-            };
-        }
+//        public async IAsyncEnumerable<UrlVisitEntity> GetVisitorCountAsync(string key, DateTime from, DateTime to)
+//        {
+//            var storage = _storageFactory.GetStorage();
+//            var query = new Query(Kind)
+//            {
+//                Filter = Filter.And(
+//                    Filter.GreaterThanOrEqual("created", Timestamp.FromDateTime(@from)),
+//                    Filter.LessThanOrEqual("created", Timestamp.FromDateTime(to)),
+//                    Filter.Equal("key", key))
+//            };
+//
+//            var enumerator = storage.RunQueryLazilyAsync(query).GetEnumerator();
+//            while (await enumerator.MoveNext())
+//            {
+//                yield return new UrlVisitEntity
+//                {
+//                    Id = enumerator.Current.Key.Path.First().Id,
+//                    Created = enumerator.Current.Properties["created"].TimestampValue,
+//                    Headers = enumerator.Current.Properties["headers"].StringValue,
+//                    Ip = enumerator.Current.Properties["ip"].StringValue,
+//                    Key = key
+//                };
+//            }
+//        }
         
         public async Task SaveAsync(UrlVisitEntity entity)
         {

@@ -33,8 +33,7 @@ namespace MicroUrl
 
             services.AddMvcCore()
                 .AddDataAnnotations()
-                .AddJsonFormatters()
-                .AddJsonOptions(x =>
+                .AddNewtonsoftJson(x =>
                 {
                     x.SerializerSettings.Formatting = Formatting.Indented;
                     x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

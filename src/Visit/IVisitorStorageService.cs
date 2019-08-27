@@ -1,12 +1,13 @@
 namespace MicroUrl.Visit
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
 
     public interface IVisitorStorageService
     {
         Task SaveAsync(UrlVisitEntity entity);
 
-        Task<VisitorNumbers> GetVisitorCount(string key, DateTime from, DateTime to);
+//        IAsyncEnumerable<UrlVisitEntity> GetVisitorCountAsync(string key, DateTime from, DateTime to);
     }
 }
