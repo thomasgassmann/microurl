@@ -1,4 +1,4 @@
-namespace MicroUrl.Urls.Visit.Implementation
+namespace MicroUrl.Visit.Implementation
 {
     using System.Text;
     using System.Threading.Tasks;
@@ -7,6 +7,7 @@ namespace MicroUrl.Urls.Visit.Implementation
     using Microsoft.Extensions.Options;
     using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Storage;
+    using MicroUrl.Urls;
 
     public class VisitorTracker : IVisitorTracker
     {
@@ -37,6 +38,7 @@ namespace MicroUrl.Urls.Visit.Implementation
                 Key = storage.CreateKeyFactory(Kind).CreateIncompleteKey(),
                 Properties =
                 {
+                    { "key", entity.Key },
                     { "headers", GetHeaders(context) },
                     { "ip", GetIpAddress(context) }
                 }

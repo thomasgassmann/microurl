@@ -5,7 +5,7 @@ namespace MicroUrl.Urls.Implementation
     using System.Threading.Tasks;
     using Google.Protobuf.WellKnownTypes;
     using Microsoft.AspNetCore.Http;
-    using MicroUrl.Urls.Visit;
+    using MicroUrl.Visit;
 
     public class UrlService : IUrlService
     {
