@@ -1,7 +1,7 @@
 namespace MicroUrl
 {
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +31,7 @@ namespace MicroUrl
         {
             services.AddHttpContextAccessor();
 
-            services.AddMvcCore()
+            services.AddMvcCore(x => x.EnableEndpointRouting = false)
                 .AddDataAnnotations()
                 .AddNewtonsoftJson(x =>
                 {
@@ -55,7 +55,7 @@ namespace MicroUrl
             });
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (!env.IsDevelopment())
             {
@@ -67,6 +67,11 @@ namespace MicroUrl
             {
                 ServeUnknownFileTypes = true
             });
+
+            if (!env.IsDevelopment())
+            {
+                app.UseCors();
+            }
 
             app.UseMvc();
 

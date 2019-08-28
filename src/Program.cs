@@ -1,8 +1,8 @@
 namespace MicroUrl
 {
     using System;
-    using Microsoft.AspNetCore;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Hosting;
 
     public static class Program
     {
@@ -11,13 +11,16 @@ namespace MicroUrl
             CreateWebHostBuilder(args).Build().Run();
         }
 
-        private static IWebHostBuilder CreateWebHostBuilder(string[] args)
+        private static IHostBuilder CreateWebHostBuilder(string[] args)
         {
             var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
             var url = string.Concat("http://0.0.0.0:", port);
-            return WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseUrls(url);
+            return Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                    webBuilder.UseUrls(url);
+                });
         }
     }
 }
