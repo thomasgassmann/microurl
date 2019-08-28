@@ -3,6 +3,7 @@ namespace MicroUrl.Stats.Implementation
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using MicroUrl.Urls;
     using MicroUrl.Visit;
@@ -31,11 +32,11 @@ namespace MicroUrl.Stats.Implementation
                 return null;
             }
 
-            var hits = new Dictionary<string, long>();
             var from = microUrl.Created.ToDateTime();
             var to = DateTime.UtcNow;
+            // TODO: use IAsyncEnumerable
             var queryResult = await _visitorStorageService.GetVisitorCountAsync(key, from, to);
-            
+
             return new MicroUrlStats
             {
                 Key = key,
@@ -45,8 +46,23 @@ namespace MicroUrl.Stats.Implementation
                     From = from,
                     To = to,
                     Visitors = queryResult.LongCount(),
-                    UniqueVisitors = queryResult.GroupBy(x => x.Ip).Count()
-                }
+                    UniqueVisitors = queryResult.GroupBy(x => x.Ip).LongCount()
+                },
+                Recents = Enumerable.Range(0, 7).Select(x => DateTime.UtcNow.Date.AddDays(-x))
+                    .Select(day =>
+                    {
+                        var dayEnd = day.AddDays(1);
+                        var queriesOnDay = queryResult.Where(x => 
+                            x.Created.ToDateTime() >= day && 
+                            x.Created.ToDateTime() <= dayEnd);
+                        return new HitStats
+                        {
+                            From = day,
+                            To = dayEnd,
+                            Visitors = queriesOnDay.LongCount(),
+                            UniqueVisitors = queriesOnDay.GroupBy(x => x.Ip).LongCount()
+                        };
+                    }).ToArray()
             };
         }
     }
