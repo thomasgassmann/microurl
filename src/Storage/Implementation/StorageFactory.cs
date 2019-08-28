@@ -16,12 +16,7 @@ namespace MicroUrl.Storage.Implementation
         
         public DatastoreDb GetStorage()
         {
-            if (_cachedDatastore == null)
-            {
-                _cachedDatastore = DatastoreDb.Create(_options.Value.Storage.Project);
-            }
-
-            return _cachedDatastore;
+            return _cachedDatastore ?? (_cachedDatastore = DatastoreDb.Create(_options.Value.Storage.Project));
         }
     }
 }
