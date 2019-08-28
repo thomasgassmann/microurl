@@ -4,6 +4,6 @@ namespace MicroUrl.Stats
 
     public interface IStatsService
     {
-        Task<MicroUrlStats> GetStats(string key);
+        Task<MicroUrlStats> GetStatsAsync(string key);
     }
 }

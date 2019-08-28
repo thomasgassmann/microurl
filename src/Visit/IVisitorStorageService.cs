@@ -8,6 +8,6 @@ namespace MicroUrl.Visit
     {
         Task SaveAsync(UrlVisitEntity entity);
 
-//        IAsyncEnumerable<UrlVisitEntity> GetVisitorCountAsync(string key, DateTime from, DateTime to);
+        Task<IEnumerable<UrlVisitEntity>> GetVisitorCountAsync(string key, DateTime from, DateTime to);
     }
 }

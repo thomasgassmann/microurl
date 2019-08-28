@@ -1,5 +1,6 @@
 namespace MicroUrl.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
     using MicroUrl.Stats;
 
@@ -14,9 +15,9 @@ namespace MicroUrl.Controllers
         }
 
         [HttpGet("{key}/stats")]
-        public IActionResult GetAsync(string key)
+        public async Task<IActionResult> GetAsync(string key)
         {
-            var stats = _statsService.GetStats(key);
+            var stats = await _statsService.GetStatsAsync(key);
             if (stats == null)
             {
                 return NotFound();
