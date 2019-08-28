@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd } from '@angular/router';
+import { Router, RouterEvent, NavigationEnd, Event } from '@angular/router';
 import { NavigationEntry } from './models';
 
 @Component({
@@ -33,7 +33,7 @@ export class AppComponent {
   ];
 
   constructor(router: Router) {
-    router.events.subscribe((event: RouterEvent) => {
+    router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);
         ga('send', 'pageview');

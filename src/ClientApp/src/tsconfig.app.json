@@ -6,5 +6,8 @@
   "exclude": [
     "test.ts",
     "**/*.spec.ts"
-  ]
+  ],
+  "typeAcquisition": {
+    "enable": true
+  }
 }

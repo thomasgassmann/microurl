@@ -7,7 +7,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 })
 export class ToolbarLogoComponent {
   @Output() public toggle: EventEmitter<void> = new EventEmitter<void>();
-  @Input() public showMenu: boolean;
+  @Input() public showMenu = false;
 
   public toggled(): void {
     this.toggle.emit();

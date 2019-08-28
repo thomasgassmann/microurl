@@ -8,8 +8,8 @@ import { SnackbarService, ClipboardService } from 'src/app/services';
 })
 export class UrlResultComponent {
 
-  @Input() public url: string;
-  @Input() public targetUrl: string;
+  @Input() public url = '';
+  @Input() public targetUrl = '';
 
   constructor(private snackbarService: SnackbarService, private clipboardService: ClipboardService) {
   }

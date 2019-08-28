@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import normalizeUrl from 'normalize-url';
-import isUrl from 'is-url-superb';
 import { ShortenedUrl } from 'src/app/models';
-import { ClipboardService } from 'src/app/services';
+import { ClipboardService, UrlShortenService } from 'src/app/services';
+import { ApiError } from 'src/app/services/models';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { urlValidator } from 'src/app/validators';
 
 @Component({
   selector: 'app-shorten-url',
@@ -11,17 +11,19 @@ import { ClipboardService } from 'src/app/services';
   styleUrls: ['./shorten-url.component.scss']
 })
 export class ShortenUrlComponent {
-  public url = '';
-
   public loading = false;
-  public errored = false;
-  public errors: string[] = [];
+
   public shortenedUrls: ShortenedUrl[] = [];
 
-  constructor(private httpClient: HttpClient, private clipboardService: ClipboardService) { }
+  public readonly urlForm: FormGroup;
 
-  public get validUrl(): boolean {
-    return isUrl(this.url);
+  constructor(
+    formBuilder: FormBuilder,
+    private urlShortenService: UrlShortenService,
+    private clipboardService: ClipboardService) {
+    this.urlForm = formBuilder.group({
+      url: new FormControl('', [Validators.required, urlValidator])
+    });
   }
 
   public get canPaste(): boolean {
@@ -29,48 +31,28 @@ export class ShortenUrlComponent {
   }
 
   public async pasteFromClipboard(): Promise<void> {
-    this.url = await this.clipboardService.get();
+    const url = await this.clipboardService.get();
+    this.urlField.setValue(url);
   }
 
   public async shorten(): Promise<void> {
-    const normalizedUrl = normalizeUrl(this.url);
     this.loading = true;
-
-    this.errored = false;
+    const url = this.urlField.value as string;
 
     try {
-      const response = await this.httpClient
-        .post(
-          '/api/microurl',
-          {
-            Url: normalizedUrl
-          },
-          { observe: 'response' }
-        )
-        .toPromise();
-
-      if (response.status === 201) {
-        const newUrl = this.getShortenedUrl((response.body as any).key);
-        this.shortenedUrls = [{ url: newUrl, targetUrl: normalizedUrl }, ...this.shortenedUrls];
-        this.url = '';
-      }
+      const response = await this.urlShortenService.shorten(url);
+      this.shortenedUrls = [{ url: response.url, targetUrl: response.targetUrl }, ...this.shortenedUrls];
+      this.urlField.setValue('');
+      this.urlField.markAsUntouched();
     } catch (error) {
-      const errorResponse = error as HttpErrorResponse;
-      this.errored = true;
-      this.errors = [];
-      if (errorResponse.status === 400) {
-        for (const key of Object.keys(errorResponse.error)) {
-          for (const message of errorResponse.error[key]) {
-            this.errors.push(`${key}: ${message}`);
-          }
-        }
-      }
+      const errorResponse = error as ApiError;
+      this.urlField.setErrors({ server: errorResponse.message });
     } finally {
       this.loading = false;
     }
   }
 
-  private getShortenedUrl(key: string): string {
-    return normalizeUrl(window.location.host + '/' + key, { forceHttps: true });
+  private get urlField(): FormControl {
+    return this.urlForm.controls['url'] as FormControl;
   }
 }
