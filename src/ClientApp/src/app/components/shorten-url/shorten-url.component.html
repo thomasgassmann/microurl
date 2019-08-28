@@ -13,14 +13,14 @@
               <mat-icon matPrefix>link</mat-icon>
             </div>
             <mat-hint>Paste URI to get started!</mat-hint>
-            <mat-error *ngIf="urlForm.get('url').hasError('required')">
+            <mat-error *ngIf="urlForm.get('url')!.hasError('required')">
               This field is required
             </mat-error>
-            <mat-error *ngIf="urlForm.get('url').hasError('url')">
+            <mat-error *ngIf="urlForm.get('url')!.hasError('url')">
               Please provide a valid URL
             </mat-error>
-            <mat-error *ngIf="urlForm.get('url').hasError('server')">
-              {{urlForm.get('url').getError('server')}}
+            <mat-error *ngIf="urlForm.get('url')!.hasError('server')">
+              {{urlForm.get('url')!.getError('server')}}
             </mat-error>
           </mat-form-field>
           <button *ngIf="canPaste" mat-icon-button (click)="pasteFromClipboard()">
@@ -38,14 +38,6 @@
             </button>
           </div>
         </div>
-
-        <ul *ngIf="errored && errors">
-          <li *ngFor="let message of errors">
-            <mat-error>
-              {{message}}
-            </mat-error>
-          </li>
-        </ul>
 
         <mat-list *ngIf="shortenedUrls.length > 0">
           <app-url-result *ngFor="let shortenedUrl of shortenedUrls" [url]="shortenedUrl.url"
