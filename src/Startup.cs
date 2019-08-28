@@ -68,11 +68,7 @@ namespace MicroUrl
                 ServeUnknownFileTypes = true
             });
 
-            if (!env.IsDevelopment())
-            {
-                app.UseCors();
-            }
-
+            // TODO: consider cors
             app.UseMvc();
 
             app.UseMiddleware<RedirectMiddleware>();
