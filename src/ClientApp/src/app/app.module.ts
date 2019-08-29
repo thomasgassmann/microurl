@@ -29,7 +29,8 @@ import {
   EditorComponent,
   DiffComponent,
   ToolbarLogoComponent,
-  UrlResultComponent
+  UrlResultComponent,
+  TitledCardComponent
 } from './components';
 
 @NgModule({
@@ -40,7 +41,8 @@ import {
     EditorComponent,
     DiffComponent,
     ToolbarLogoComponent,
-    UrlResultComponent
+    UrlResultComponent,
+    TitledCardComponent
   ],
   imports: [
     MatSnackBarModule,
