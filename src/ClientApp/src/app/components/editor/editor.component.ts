@@ -9,7 +9,7 @@ export class EditorComponent implements OnInit {
 
   public editorOptions = {
     theme: 'vs-dark',
-    language: 'javascript'
+    language: 'csharp'
   };
   public code = '';
 

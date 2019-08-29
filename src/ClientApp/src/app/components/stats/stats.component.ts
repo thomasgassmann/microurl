@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { StatsService, SnackbarService } from 'src/app/services';
 import { Toggler } from 'src/app/common/toggler';
@@ -11,17 +11,21 @@ import { MultiSeries, DataItem } from '@swimlane/ngx-charts';
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']
 })
-export class StatsComponent {
+export class StatsComponent implements OnInit {
 
   public loading = false;
   public stats: Stats | undefined = undefined;
   public data: MultiSeries | undefined = undefined;
   public statsForm: FormGroup;
 
-  constructor(formBuilder: FormBuilder,
+  constructor(
+    private formBuilder: FormBuilder,
     private statsService: StatsService,
     private snackbarService: SnackbarService) {
-    this.statsForm = formBuilder.group({
+  }
+
+  public ngOnInit(): void {
+    this.statsForm = this.formBuilder.group({
       key: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9]{1,}')])
     });
   }
