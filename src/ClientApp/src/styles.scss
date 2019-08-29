@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/pink-bluegrey.css";
 @import 'src/mixins.scss';
+@import '~@angular/material/theming';
 
 body {
   height: 100%;
@@ -16,7 +17,7 @@ main {
 
 .code-editor {
   .editor-container {
-    @include non-toolbar-height;
+    @include editor-height;
   }
 }
 
@@ -26,4 +27,8 @@ a {
 
 a:hover, a:active {
   color: darken(white, 20%);
+}
+
+.editor-toolbar {
+  height: $editor-toolbar-height;
 }

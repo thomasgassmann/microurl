@@ -3,3 +3,7 @@
 @mixin non-toolbar-height {
   height: calc(100vh - #{$toolbar-height}) !important;
 }
+
+@mixin editor-height {
+  height: calc(100vh - #{$editor-toolbar-height} - #{$toolbar-height}) !important;
+}
