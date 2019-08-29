@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { StatsService, SnackbarService } from 'src/app/services';
 import { Toggler } from 'src/app/common/toggler';
@@ -11,20 +11,17 @@ import { MultiSeries, DataItem } from '@swimlane/ngx-charts';
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent {
 
   public loading = false;
   public stats: Stats | undefined = undefined;
   public data: MultiSeries | undefined = undefined;
-  public statsForm: FormGroup;
+  public readonly statsForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private statsService: StatsService,
     private snackbarService: SnackbarService) {
-  }
-
-  public ngOnInit(): void {
     this.statsForm = this.formBuilder.group({
       key: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9]{1,}')])
     });
@@ -33,7 +30,7 @@ export class StatsComponent implements OnInit {
   @Toggler<StatsComponent>('loading')
   public async loadStats(): Promise<void> {
     const key = this.statsForm.controls['key'].value;
-    let stats: Stats = null;
+    let stats: Stats | null = null;
     try {
       stats = await this.statsService.getStats(key);
     } catch (error) {

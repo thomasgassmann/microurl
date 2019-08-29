@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ShortenedUrl } from 'src/app/models';
 import { ClipboardService, UrlShortenService } from 'src/app/services';
 import { ApiError } from 'src/app/services/models';
@@ -11,20 +11,17 @@ import { Toggler } from 'src/app/common';
   templateUrl: './shorten-url.component.html',
   styleUrls: ['./shorten-url.component.scss']
 })
-export class ShortenUrlComponent implements OnInit {
+export class ShortenUrlComponent {
   public loading = false;
 
   public shortenedUrls: ShortenedUrl[] = [];
 
-  public urlForm: FormGroup;
+  public readonly urlForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private urlShortenService: UrlShortenService,
     private clipboardService: ClipboardService) {
-  }
-
-  public ngOnInit(): void {
     this.urlForm = this.formBuilder.group({
       url: new FormControl('', [Validators.required, urlValidator])
     });

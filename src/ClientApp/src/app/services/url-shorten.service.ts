@@ -13,7 +13,7 @@ export class UrlShortenService {
 
   constructor(private httpClient: HttpClient, private apiService: ApiService) { }
 
-  public async shorten(url: string): Promise<ShortenedUrl> {
+  public async shorten(url: string, key?: string): Promise<ShortenedUrl> {
     if (!isUrl(url)) {
       throw new Error('Invalid url');
     }
@@ -25,7 +25,8 @@ export class UrlShortenService {
         .post(
           '/api/microurl',
           {
-            Url: normalizedUrl
+            Url: normalizedUrl,
+            Key: key
           },
           { observe: 'response' }
         )
