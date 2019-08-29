@@ -18,6 +18,7 @@ import {
   MatGridListModule,
   MatSnackBarModule
 } from '@angular/material';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -32,6 +33,8 @@ import {
   UrlResultComponent,
   TitledCardComponent
 } from './components';
+import { RouteReuseStrategy } from '@angular/router';
+import { CacheRouteReuseStrategy } from './common';
 
 @NgModule({
   declarations: [
@@ -45,6 +48,7 @@ import {
     TitledCardComponent
   ],
   imports: [
+    NgxChartsModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
     MatGridListModule,
@@ -68,7 +72,12 @@ import {
       enabled: environment.production
     })
   ],
-  providers: [],
+  providers: [
+    {
+      provide: RouteReuseStrategy,
+      useClass: CacheRouteReuseStrategy
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -6,3 +6,13 @@
 .stats-form-container > * {
   margin: 0 10px;
 }
+
+.stats-form-container .key-input {
+  flex: 1 1 auto;
+  max-width: 300px;
+}
+
+.chart-container {
+  width: 100%;
+  height: 500px;
+}

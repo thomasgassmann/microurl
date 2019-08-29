@@ -1,7 +1,7 @@
 <app-titled-card title="Stats">
   <form [formGroup]="statsForm">
     <div class="stats-form-container">
-      <mat-form-field>
+      <mat-form-field class="key-input">
         <mat-label>Key</mat-label>
         <input matInput placeholder="Key..." formControlName="key">
         <mat-hint>Paste URL key</mat-hint>
@@ -12,9 +12,20 @@
           Please only enter lowercase letters and numbers.
         </mat-error>
       </mat-form-field>
-      <button [disabled]="!statsForm.valid" mat-fab color="primary" (click)="loadStats()">
+      <button [disabled]="!statsForm.valid || loading" mat-fab color="primary" (click)="loadStats()">
         <mat-icon>send</mat-icon>
       </button>
     </div>
   </form>
+  <div *ngIf="stats">
+    <div>
+      <h2>{{stats.key}}</h2>
+      <p>{{stats.targetUrl}}</p>
+    </div>
+    <div class="chart-container">
+      <ngx-charts-area-chart [results]="data" [showXAxisLabel]="true" [showYAxisLabel]="true"
+        [yAxisLabel]="'Visitor Count'" [legend]="true" [gradient]="true" [showGridLines]="true">
+      </ngx-charts-area-chart>
+    </div>
+  </div>
 </app-titled-card>

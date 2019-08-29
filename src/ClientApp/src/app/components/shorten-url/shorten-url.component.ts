@@ -4,6 +4,7 @@ import { ClipboardService, UrlShortenService } from 'src/app/services';
 import { ApiError } from 'src/app/services/models';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { urlValidator } from 'src/app/validators';
+import { Toggler } from 'src/app/common';
 
 @Component({
   selector: 'app-shorten-url',
@@ -35,8 +36,8 @@ export class ShortenUrlComponent {
     this.urlField.setValue(url);
   }
 
+  @Toggler<ShortenUrlComponent>('loading')
   public async shorten(): Promise<void> {
-    this.loading = true;
     const url = this.urlField.value as string;
 
     try {
@@ -47,8 +48,6 @@ export class ShortenUrlComponent {
     } catch (error) {
       const errorResponse = error as ApiError;
       this.urlField.setErrors({ server: errorResponse.message });
-    } finally {
-      this.loading = false;
     }
   }
 
