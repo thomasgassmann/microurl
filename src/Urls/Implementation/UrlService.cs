@@ -22,16 +22,21 @@ namespace MicroUrl.Urls.Implementation
             _visitorTracker = visitorTracker;
         }
 
-        public async Task<string> SaveAsync(string url)
+        public async Task<string> SaveAsync(string url, string key = null)
         {
-            var key = await _storageService.SaveAsync(new MicroUrlEntity
+            if (key != null && await _storageService.ExistsAsync(key))
+            {
+                throw new ExistingKeyException(key);
+            }
+            
+            var createdKey = await _storageService.SaveAsync(new MicroUrlEntity
             {
                 Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,
                 Url = url,
-                Key = await GenerateKey()
+                Key = key ?? await GenerateKey()
             });
-            return key;
+            return createdKey;
         }
 
         public async Task<string> GetRedirectUrlAndTrackAsync(string key, HttpContext context)

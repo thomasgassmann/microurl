@@ -9,5 +9,7 @@ namespace MicroUrl.Controllers.Models
         [Url]
         [DifferentHostAttribute]
         public string Url { get; set; }
+        
+        public string Key { get; set; }
     }
 }

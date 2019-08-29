@@ -27,8 +27,15 @@ namespace MicroUrl.Controllers
                 return BadRequest(ModelState);
             }
 
-            var key = await _urlService.SaveAsync(urlModel.Url);
-            return new JsonResult(new { Key = key }) { StatusCode = (int)HttpStatusCode.Created };
+            try
+            {
+                var key = await _urlService.SaveAsync(urlModel.Url);
+                return new JsonResult(new {Key = key}) {StatusCode = (int) HttpStatusCode.Created};
+            }
+            catch (ExistingKeyException)
+            {
+                return new ConflictResult();
+            }
         }
     }
 }
