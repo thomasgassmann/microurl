@@ -1,3 +1,20 @@
 <app-titled-card title="Stats">
-
+  <form [formGroup]="statsForm">
+    <div class="stats-form-container">
+      <mat-form-field>
+        <mat-label>Key</mat-label>
+        <input matInput placeholder="Key..." formControlName="key">
+        <mat-hint>Paste URL key</mat-hint>
+        <mat-error *ngIf="statsForm.get('key')!.hasError('required')">
+          This field is required
+        </mat-error>
+        <mat-error *ngIf="statsForm.get('key')!.hasError('pattern')">
+          Please only enter lowercase letters and numbers.
+        </mat-error>
+      </mat-form-field>
+      <button [disabled]="!statsForm.valid" mat-fab color="primary" (click)="loadStats()">
+        <mat-icon>send</mat-icon>
+      </button>
+    </div>
+  </form>
 </app-titled-card>

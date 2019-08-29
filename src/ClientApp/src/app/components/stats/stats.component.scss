@@ -1,0 +1,8 @@
+.stats-form-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.stats-form-container > * {
+  margin: 0 10px;
+}
