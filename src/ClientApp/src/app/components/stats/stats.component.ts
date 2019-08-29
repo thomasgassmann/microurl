@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { StatsService } from 'src/app/services';
+import { StatsService, SnackbarService } from 'src/app/services';
 import { Toggler } from 'src/app/common/toggler';
 import { Stats, VisitorRanking } from 'src/app/services/models';
 import { format } from 'date-fns/fp';
@@ -18,7 +18,9 @@ export class StatsComponent {
   public data: MultiSeries | undefined = undefined;
   public statsForm: FormGroup;
 
-  constructor(formBuilder: FormBuilder, private statsService: StatsService) {
+  constructor(formBuilder: FormBuilder,
+    private statsService: StatsService,
+    private snackbarService: SnackbarService) {
     this.statsForm = formBuilder.group({
       key: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9]{1,}')])
     });
@@ -27,7 +29,13 @@ export class StatsComponent {
   @Toggler<StatsComponent>('loading')
   public async loadStats(): Promise<void> {
     const key = this.statsForm.controls['key'].value;
-    const stats = await this.statsService.getStats(key);
+    let stats: Stats = null;
+    try {
+      stats = await this.statsService.getStats(key);
+    } catch (error) {
+      this.snackbarService.show(error.message);
+      return;
+    }
 
     this.stats = stats;
     this.data = [
@@ -43,6 +51,10 @@ export class StatsComponent {
   }
 
   private getSeries(propertySelector: (ranking: VisitorRanking) => number): DataItem[] {
+    if (!this.stats) {
+      return [];
+    }
+
     return this.stats.recents.map(x => {
       return {
         name: format('yyyy/MM/dd', x.from),

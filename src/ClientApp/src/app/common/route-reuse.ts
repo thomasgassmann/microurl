@@ -26,7 +26,7 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
 
   private getPath(route: ActivatedRouteSnapshot): string {
     if (route.routeConfig !== null && route.routeConfig.path !== null) {
-      return route.routeConfig.path;
+      return route.routeConfig.path as string;
     }
 
     return '';

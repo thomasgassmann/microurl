@@ -19,6 +19,9 @@ export class ApiService {
           }
         }
         break;
+      case 404:
+        errors.push('Resource not found');
+        break;
       default:
         errors.push('Unknown error!');
         break;

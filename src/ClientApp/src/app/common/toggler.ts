@@ -2,11 +2,16 @@ export function Toggler<T>(toggleProperty: keyof T) {
   return function (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) {
     const originalMethod = descriptor.value;
     descriptor.value = function (...args: any[]) {
-      const setValue = (val: boolean) => this[toggleProperty] = val;
+      const setValue = (val: boolean) => (this as any)[toggleProperty as string] = val;
       setValue(true);
-      const result = originalMethod.apply(this, args);
+      let result = null;
+      try {
+        result = originalMethod.apply(this, args);
+      } catch (er) {
+        result = er;
+      }
       if (result.then) {
-        result.then(() => setValue(false));
+        result.then(() => setValue(false)).catch(() => setValue(false));
       } else {
         setValue(false);
       }
