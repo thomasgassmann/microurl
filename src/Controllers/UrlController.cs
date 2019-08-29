@@ -29,7 +29,7 @@ namespace MicroUrl.Controllers
 
             try
             {
-                var key = await _urlService.SaveAsync(urlModel.Url);
+                var key = await _urlService.SaveAsync(urlModel.Url, urlModel.Key);
                 return new JsonResult(new {Key = key}) {StatusCode = (int) HttpStatusCode.Created};
             }
             catch (ExistingKeyException)
