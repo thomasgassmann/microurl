@@ -8,11 +8,3 @@
   display: flex;
   flex-direction: row;
 }
-
-a {
-  color: white;
-}
-
-a:hover, a:active {
-  color: darken(white, 20%);
-}

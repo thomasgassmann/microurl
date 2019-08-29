@@ -19,3 +19,11 @@ main {
     @include non-toolbar-height;
   }
 }
+
+a {
+  color: white;
+}
+
+a:hover, a:active {
+  color: darken(white, 20%);
+}
