@@ -23,8 +23,8 @@
       <p>{{stats.targetUrl}}</p>
     </div>
     <div class="chart-container">
-      <ngx-charts-area-chart [results]="data" [showXAxisLabel]="true" [showYAxisLabel]="true"
-        [yAxisLabel]="'Visitor Count'" [legend]="true" [gradient]="true" [showGridLines]="true">
+      <ngx-charts-area-chart [results]="data" [autoScale]="true" [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true"
+        [showYAxisLabel]="true" yAxisLabel="Visitor Count" [legend]="true" [gradient]="true" [showGridLines]="true">
       </ngx-charts-area-chart>
     </div>
   </div>
