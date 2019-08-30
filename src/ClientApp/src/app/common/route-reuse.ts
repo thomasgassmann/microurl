@@ -4,6 +4,8 @@ import { ActivatedRouteSnapshot, DetachedRouteHandle } from '@angular/router';
 export class CacheRouteReuseStrategy implements RouteReuseStrategy {
   private storedRouteHandles = new Map<string, DetachedRouteHandle>();
 
+  private cached = ['stats', ''];
+
   public shouldReuseRoute(before: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
     return before.routeConfig === curr.routeConfig;
   }
@@ -16,8 +18,8 @@ export class CacheRouteReuseStrategy implements RouteReuseStrategy {
     return this.storedRouteHandles.has(this.getPath(route));
   }
 
-  public shouldDetach(_route: ActivatedRouteSnapshot): boolean {
-    return true;
+  public shouldDetach(route: ActivatedRouteSnapshot): boolean {
+    return this.cached.indexOf(this.getPath(route)) > -1;
   }
 
   public store(route: ActivatedRouteSnapshot, detachedTree: DetachedRouteHandle): void {
