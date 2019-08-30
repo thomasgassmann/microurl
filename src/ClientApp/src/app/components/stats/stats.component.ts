@@ -30,15 +30,14 @@ export class StatsComponent {
   @Toggler<StatsComponent>('loading')
   public async loadStats(): Promise<void> {
     const key = this.statsForm.controls['key'].value;
-    let stats: Stats | null = null;
     try {
-      stats = await this.statsService.getStats(key);
+      this.stats = await this.statsService.getStats(key);
     } catch (error) {
+      this.stats = undefined;
       this.snackbarService.show(error.message);
       return;
     }
 
-    this.stats = stats;
     this.data = [
       {
         name: 'Total',
