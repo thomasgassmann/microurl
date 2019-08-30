@@ -26,7 +26,7 @@ export class UrlShortenService {
           '/api/microurl',
           {
             Url: normalizedUrl,
-            Key: key
+            Key: (key || undefined)
           },
           { observe: 'response' }
         )

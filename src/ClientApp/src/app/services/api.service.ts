@@ -22,6 +22,9 @@ export class ApiService {
       case 404:
         errors.push('Resource not found');
         break;
+      case 409:
+        errors.push('Value already exists');
+        break;
       default:
         errors.push('Unknown error!');
         break;

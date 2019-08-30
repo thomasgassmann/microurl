@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ShortenedUrl } from 'src/app/models';
-import { ClipboardService, UrlShortenService } from 'src/app/services';
+import { ClipboardService, UrlShortenService, SnackbarService } from 'src/app/services';
 import { ApiError } from 'src/app/services/models';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { urlValidator } from 'src/app/validators';
@@ -13,6 +13,7 @@ import { Toggler } from 'src/app/common';
 })
 export class ShortenUrlComponent {
   public loading = false;
+  public optionsExpanded = false;
 
   public shortenedUrls: ShortenedUrl[] = [];
 
@@ -21,9 +22,11 @@ export class ShortenUrlComponent {
   constructor(
     private formBuilder: FormBuilder,
     private urlShortenService: UrlShortenService,
-    private clipboardService: ClipboardService) {
+    private clipboardService: ClipboardService,
+    private snackbarService: SnackbarService) {
     this.urlForm = this.formBuilder.group({
-      url: new FormControl('', [Validators.required, urlValidator])
+      url: new FormControl('', [Validators.required, urlValidator]),
+      key: new FormControl('')
     });
   }
 
@@ -36,22 +39,35 @@ export class ShortenUrlComponent {
     this.urlField.setValue(url);
   }
 
+  public toggleExpand(): void {
+    this.optionsExpanded = !this.optionsExpanded;
+  }
+
   @Toggler<ShortenUrlComponent>('loading')
   public async shorten(): Promise<void> {
     const url = this.urlField.value as string;
+    const key = this.keyField.value as string;
 
     try {
-      const response = await this.urlShortenService.shorten(url);
+      const response = await this.urlShortenService.shorten(url, key);
       this.shortenedUrls = [{ url: response.url, targetUrl: response.targetUrl }, ...this.shortenedUrls];
-      this.urlField.setValue('');
+      this.urlForm.setValue({
+        key: '',
+        url: ''
+      });
       this.urlField.markAsUntouched();
     } catch (error) {
       const errorResponse = error as ApiError;
-      this.urlField.setErrors({ server: errorResponse.message });
+      this.urlForm.setErrors({ tmp: null });
+      this.snackbarService.show(errorResponse.message);
     }
   }
 
   private get urlField(): FormControl {
     return this.urlForm.controls['url'] as FormControl;
+  }
+
+  private get keyField(): FormControl {
+    return this.urlForm.controls['key'] as FormControl;
   }
 }

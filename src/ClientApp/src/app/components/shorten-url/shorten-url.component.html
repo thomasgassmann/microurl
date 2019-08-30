@@ -1,7 +1,7 @@
 <app-titled-card title="Shorten">
   <form [formGroup]="urlForm" class="url-form">
     <div class="input-line-container">
-      <mat-form-field class="url-input" appearance="fill">
+      <mat-form-field class="form-input" appearance="fill">
         <mat-label>URI</mat-label>
         <input type="url" matInput placeholder="paste here" formControlName="url">
         <div matPrefix class="prefix">
@@ -14,18 +14,28 @@
         <mat-error *ngIf="urlForm.get('url')!.hasError('url')">
           Please provide a valid URL
         </mat-error>
-        <mat-error *ngIf="urlForm.get('url')!.hasError('server')">
-          {{urlForm.get('url')!.getError('server')}}
-        </mat-error>
       </mat-form-field>
       <button *ngIf="canPaste" mat-icon-button (click)="pasteFromClipboard()">
         <mat-icon>note</mat-icon>
       </button>
     </div>
+    <div class="input-line-container" *ngIf="optionsExpanded">
+      <mat-form-field class="form-input" appearance="fill">
+        <mat-label>Custom Key</mat-label>
+        <input matInput placeholder="key" formControlName="key">
+        <mat-hint>Enter custom key here</mat-hint>
+      </mat-form-field>
+    </div>
     <div class="shorten-line">
       <div class="spacer"></div>
       <div class="spinner" *ngIf="loading">
         <mat-spinner [diameter]="30"></mat-spinner>
+      </div>
+      <div>
+        <button mat-icon-button (click)="toggleExpand()">
+          <mat-icon *ngIf="!optionsExpanded">keyboard_arrow_down</mat-icon>
+          <mat-icon *ngIf="optionsExpanded">keyboard_arrow_up</mat-icon>
+        </button>
       </div>
       <div>
         <button [disabled]="!urlForm.valid || loading" mat-raised-button color="primary" (click)="shorten()">
