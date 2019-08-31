@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { StatsService, SnackbarService } from 'src/app/services';
 import { Stats } from 'src/app/services/models';
@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']
 })
-export class StatsComponent {
+export class StatsComponent implements AfterViewInit {
 
   public readonly statsForm: FormGroup;
 
@@ -20,6 +20,10 @@ export class StatsComponent {
     this.statsForm = this.formBuilder.group({
       key: new FormControl('', [Validators.required, Validators.pattern('[a-z0-9]{1,}')])
     });
+  }
+
+  ngAfterViewInit(): void {
+    console.log('test');
   }
 
   public loadStats(): void {

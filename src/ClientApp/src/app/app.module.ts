@@ -35,8 +35,6 @@ import {
   TitledCardComponent,
   StatsInfoComponent
 } from './components';
-import { RouteReuseStrategy } from '@angular/router';
-import { CacheRouteReuseStrategy } from './common';
 
 @NgModule({
   declarations: [
@@ -77,10 +75,6 @@ import { CacheRouteReuseStrategy } from './common';
     })
   ],
   providers: [
-    {
-      provide: RouteReuseStrategy,
-      useClass: CacheRouteReuseStrategy
-    }
   ],
   bootstrap: [AppComponent]
 })
