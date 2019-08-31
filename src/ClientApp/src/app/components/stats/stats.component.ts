@@ -1,17 +1,16 @@
-import { Component, AfterViewInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
-import { StatsService, SnackbarService } from 'src/app/services';
-import { Stats } from 'src/app/services/models';
-import { MultiSeries, DataItem } from '@swimlane/ngx-charts';
 import { Router } from '@angular/router';
+import { Toggler } from 'src/app/common';
 
 @Component({
   selector: 'app-stats',
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']
 })
-export class StatsComponent implements AfterViewInit {
+export class StatsComponent {
 
+  public loading = false;
   public readonly statsForm: FormGroup;
 
   constructor(
@@ -22,13 +21,11 @@ export class StatsComponent implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit(): void {
-    console.log('test');
-  }
-
-  public loadStats(): void {
+  @Toggler<StatsComponent>('loading')
+  public async loadStats(): Promise<void> {
     const key = this.statsForm.controls['key'].value;
-    this.router.navigate(['/stats/' + key]);
+    await this.router.navigate(['/stats/' + key]);
+    this.statsForm.markAsPristine();
   }
 
 }

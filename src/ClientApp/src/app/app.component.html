@@ -16,7 +16,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-progress-bar *ngIf="loading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
+    <mat-progress-bar *ngIf="loading" color="secondary" class="progress-bar" mode="indeterminate"></mat-progress-bar>
     <mat-toolbar class="toolbar">
       <div class="link-menu">
         <app-toolbar-logo [showMenu]="true" (toggle)="sidenav.toggle()"></app-toolbar-logo>

@@ -12,7 +12,8 @@
           Please only enter lowercase letters and numbers.
         </mat-error>
       </mat-form-field>
-      <button [disabled]="!statsForm.valid" mat-fab color="primary" (click)="loadStats()">
+      <button [disabled]="!statsForm.valid || !statsForm.dirty || loading" mat-fab color="primary"
+        (click)="loadStats()">
         <mat-icon>send</mat-icon>
       </button>
     </div>

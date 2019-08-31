@@ -22,6 +22,11 @@ mat-toolbar {
   height: 100%;
 }
 
+.nav-buttons > * {
+  width: 100px;
+  margin-right: 5px;
+}
+
 @media only screen and (max-width: $breakpoint) {
   .link-list {
     display: none;
@@ -40,4 +45,5 @@ mat-toolbar {
   position: fixed;
   top: 0;
   left: 0;
+  height: 3px;
 }
