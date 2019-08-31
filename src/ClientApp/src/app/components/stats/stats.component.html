@@ -12,22 +12,10 @@
           Please only enter lowercase letters and numbers.
         </mat-error>
       </mat-form-field>
-      <button [disabled]="!statsForm.valid || loading" mat-fab color="primary" (click)="loadStats()">
+      <button [disabled]="!statsForm.valid" mat-fab color="primary" (click)="loadStats()">
         <mat-icon>send</mat-icon>
       </button>
     </div>
   </form>
-  <div class="info-container" *ngIf="stats">
-    <div class="info-text-bar">
-      <a [href]="stats.targetUrl">{{stats.targetUrl}}</a>
-      <span>Unique visitors (all-time):<br />{{stats.allTime.uniqueVisitors}}</span>
-      <span>Visitors (all-time):<br />{{stats.allTime.visitors}}</span>
-    </div>
-    <div class="chart-container">
-      <ngx-charts-area-chart [results]="data" [autoScale]="true" [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true"
-        [showYAxisLabel]="true" [legend]="true" legendTitle="Visitors (7 days)" [gradient]="true"
-        [showGridLines]="true">
-      </ngx-charts-area-chart>
-    </div>
-  </div>
+  <router-outlet></router-outlet>
 </app-titled-card>

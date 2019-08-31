@@ -7,31 +7,7 @@
   margin: 0 10px;
 }
 
-.info-container {
-  margin: 10px;
-}
-
 .stats-form-container .key-input {
   flex: 1 1 auto;
   max-width: 300px;
-}
-
-.chart-container {
-  width: 100%;
-  height: 500px;
-  margin-top: 5px;
-}
-
-::ng-deep text {
-  fill: white;
-}
-
-.info-text-bar {
-  display: flex;
-  flex-direction: row;
-}
-
-.info-text-bar > * {
-  margin: 5px 15px;
-  margin-left: 0;
 }

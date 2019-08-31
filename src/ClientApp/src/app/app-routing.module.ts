@@ -1,6 +1,13 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { ShortenUrlComponent, EditorComponent, StatsComponent, DiffComponent } from './components';
+import {
+  ShortenUrlComponent,
+  EditorComponent,
+  StatsComponent,
+  DiffComponent,
+  StatsInfoComponent
+} from './components';
+import { StatsInfoResolver } from './resolvers';
 
 const routes: Routes = [
   {
@@ -9,7 +16,16 @@ const routes: Routes = [
   },
   {
     path: 'stats',
-    component: StatsComponent
+    component: StatsComponent,
+    children: [
+      {
+        path: ':key',
+        component: StatsInfoComponent,
+        resolve: {
+          stats: StatsInfoResolver
+        }
+      }
+    ]
   },
   {
     path: 'editor',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd, Event } from '@angular/router';
+import { Router, RouterEvent, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
 import { NavigationEntry } from './models';
 
 @Component({
@@ -13,7 +13,8 @@ export class AppComponent {
     {
       icon: 'link',
       name: 'Link',
-      route: '/'
+      route: '/',
+      matchExact: true
     },
     {
       icon: 'code',
@@ -32,8 +33,23 @@ export class AppComponent {
     }
   ];
 
+  public loading = false;
+
   constructor(router: Router) {
     router.events.subscribe((event: Event) => {
+      switch (true) {
+        case event instanceof NavigationStart:
+          this.loading = true;
+          break;
+        case event instanceof NavigationEnd:
+        case event instanceof NavigationCancel:
+        case event instanceof NavigationError:
+          this.loading = false;
+          break;
+        default:
+          break;
+      }
+
       if (event instanceof NavigationEnd) {
         ga('set', 'page', event.urlAfterRedirects);
         ga('send', 'pageview');

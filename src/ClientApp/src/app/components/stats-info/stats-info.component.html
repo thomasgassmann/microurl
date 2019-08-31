@@ -1,0 +1,12 @@
+<div class="info-container" *ngIf="stats">
+  <div class="info-text-bar">
+    <a [href]="stats.targetUrl">{{stats.targetUrl}}</a>
+    <span>Unique visitors (all-time):<br />{{stats.allTime.uniqueVisitors}}</span>
+    <span>Visitors (all-time):<br />{{stats.allTime.visitors}}</span>
+  </div>
+  <div class="chart-container">
+    <ngx-charts-area-chart [results]="data" [autoScale]="true" [xAxis]="true" [yAxis]="true" [showXAxisLabel]="true"
+      [showYAxisLabel]="true" [legend]="true" legendTitle="Visitors (7 days)" [gradient]="true" [showGridLines]="true">
+    </ngx-charts-area-chart>
+  </div>
+</div>

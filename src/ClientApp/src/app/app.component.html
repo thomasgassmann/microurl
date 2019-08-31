@@ -16,6 +16,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
+    <mat-progress-bar *ngIf="loading" class="progress-bar" mode="indeterminate"></mat-progress-bar>
     <mat-toolbar class="toolbar">
       <div class="link-menu">
         <app-toolbar-logo [showMenu]="true" (toggle)="sidenav.toggle()"></app-toolbar-logo>
@@ -27,7 +28,7 @@
 
       <div class="nav-buttons">
         <a *ngFor="let button of navigationEntries" mat-button routerLinkActive
-          #routerLinkActiveInstanceSettings="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+          #routerLinkActiveInstanceSettings="routerLinkActive" [routerLinkActiveOptions]="{exact: button.matchExact}"
           [class.list-item-active]="routerLinkActiveInstanceSettings.isActive" [routerLink]="[button.route]">
           <mat-icon>{{button.icon}}</mat-icon>
           {{button.name}}

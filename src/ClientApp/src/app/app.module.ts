@@ -16,7 +16,8 @@ import {
   MatListModule,
   MatProgressSpinnerModule,
   MatGridListModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatProgressBarModule
 } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -31,7 +32,8 @@ import {
   DiffComponent,
   ToolbarLogoComponent,
   UrlResultComponent,
-  TitledCardComponent
+  TitledCardComponent,
+  StatsInfoComponent
 } from './components';
 import { RouteReuseStrategy } from '@angular/router';
 import { CacheRouteReuseStrategy } from './common';
@@ -45,9 +47,11 @@ import { CacheRouteReuseStrategy } from './common';
     DiffComponent,
     ToolbarLogoComponent,
     UrlResultComponent,
-    TitledCardComponent
+    TitledCardComponent,
+    StatsInfoComponent
   ],
   imports: [
+    MatProgressBarModule,
     NgxChartsModule,
     MatSnackBarModule,
     MatProgressSpinnerModule,
