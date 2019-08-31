@@ -26,7 +26,7 @@ export class ShortenUrlComponent {
     private snackbarService: SnackbarService) {
     this.urlForm = this.formBuilder.group({
       url: new FormControl('', [Validators.required, urlValidator]),
-      key: new FormControl('')
+      key: new FormControl('', [Validators.pattern('[a-z0-9]{1,}')])
     });
   }
 
@@ -55,7 +55,7 @@ export class ShortenUrlComponent {
         key: '',
         url: ''
       });
-      this.urlField.markAsUntouched();
+      this.urlForm.markAsUntouched();
     } catch (error) {
       const errorResponse = error as ApiError;
       this.urlForm.setErrors({ tmp: null });

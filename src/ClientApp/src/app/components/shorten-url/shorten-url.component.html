@@ -24,6 +24,9 @@
         <mat-label>Custom Key</mat-label>
         <input matInput placeholder="key" formControlName="key">
         <mat-hint>Enter custom key here</mat-hint>
+        <mat-error *ngIf="urlForm.get('key')!.hasError('pattern')">
+          Please only enter numbers and lowercase letters
+        </mat-error>
       </mat-form-field>
     </div>
     <div class="shorten-line">
