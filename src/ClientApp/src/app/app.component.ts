@@ -60,6 +60,6 @@ export class AppComponent {
   }
 
   public prepareRoute(outlet: RouterOutlet): any {
-    return outlet.activatedRoute;
+    return outlet.isActivated && outlet.activatedRoute;
   }
 }
