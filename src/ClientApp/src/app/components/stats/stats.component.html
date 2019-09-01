@@ -1,5 +1,5 @@
 <app-titled-card title="Stats">
-  <form [formGroup]="statsForm">
+  <form *ngIf="statsForm" [formGroup]="statsForm">
     <div class="stats-form-container">
       <mat-form-field class="key-input">
         <mat-label>Key</mat-label>
