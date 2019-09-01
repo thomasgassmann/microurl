@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterOutlet } from '@angular/router';
+import { Router, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterOutlet } from '@angular/router';
 import { NavigationEntry } from './models';
 import { fadeAnimation } from './animations';
 
