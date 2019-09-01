@@ -6,7 +6,7 @@
     <div>
       <mat-nav-list>
         <a *ngFor="let entry of navigationEntries" mat-list-item (click)="sidenav.close()" routerLinkActive
-          #routerLinkActiveInstanceSettings="routerLinkActive" [routerLinkActiveOptions]="{exact: true}"
+          #routerLinkActiveInstanceSettings="routerLinkActive" [routerLinkActiveOptions]="{exact: button.matchExact}"
           [class.list-item-active]="routerLinkActiveInstanceSettings.isActive" [routerLink]="[entry.route]">
           <mat-icon matListIcon>{{entry.icon}}</mat-icon>
           {{entry.name}}
