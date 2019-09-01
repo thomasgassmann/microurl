@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { Router, RouterEvent, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError } from '@angular/router';
+import { Router, RouterEvent, NavigationEnd, Event, NavigationStart, NavigationCancel, NavigationError, RouterOutlet } from '@angular/router';
 import { NavigationEntry } from './models';
+import { fadeAnimation } from './animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  animations: [fadeAnimation]
 })
 export class AppComponent {
 
@@ -55,5 +57,9 @@ export class AppComponent {
         ga('send', 'pageview');
       }
     });
+  }
+
+  public prepareRoute(outlet: RouterOutlet): string {
+    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
   }
 }
