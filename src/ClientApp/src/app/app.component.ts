@@ -59,7 +59,7 @@ export class AppComponent {
     });
   }
 
-  public prepareRoute(outlet: RouterOutlet): string {
-    return outlet && outlet.activatedRouteData && outlet.activatedRouteData['animation'];
+  public prepareRoute(outlet: RouterOutlet): any {
+    return outlet.activatedRoute;
   }
 }

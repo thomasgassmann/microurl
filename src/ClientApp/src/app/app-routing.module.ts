@@ -12,17 +12,11 @@ import { StatsInfoResolver } from './resolvers';
 const routes: Routes = [
   {
     path: '',
-    component: ShortenUrlComponent,
-    data: {
-      animation: 'home'
-    }
+    component: ShortenUrlComponent
   },
   {
     path: 'stats',
     component: StatsComponent,
-    data: {
-      animation: 'stats'
-    },
     children: [
       {
         path: ':key',
