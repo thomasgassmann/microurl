@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { Toggler } from 'src/app/common';
@@ -9,7 +9,7 @@ import { StatsKeyStoreService } from './services';
   templateUrl: './stats.component.html',
   styleUrls: ['./stats.component.scss']
 })
-export class StatsComponent implements OnInit {
+export class StatsComponent implements OnInit, AfterViewInit, OnDestroy {
   public loading = false;
   public readonly statsForm: FormGroup;
 
@@ -23,29 +23,45 @@ export class StatsComponent implements OnInit {
     });
   }
 
-  public async ngOnInit(): Promise<void> {
-    const lastKey = this.statsKeyStoreService.getLastKey();
-    if (lastKey !== null) {
-      await this.navigateToKey(lastKey);
-    }
-
+  public ngOnInit(): void {
     if (this.activatedRoute.firstChild) {
       this.activatedRoute.firstChild.paramMap.subscribe((paramMap: ParamMap) => {
-        this.statsForm.controls['key'].setValue(paramMap.get('key'));
+        this.setKeyTextValue(paramMap.get('key') as string);
       });
     }
   }
 
+  public ngAfterViewInit(): void {
+    setTimeout(async () => {
+      const lastKey = this.statsKeyStoreService.getLastKey();
+      if (lastKey !== null) {
+        this.setKeyTextValue(lastKey);
+        await this.navigateToKey(lastKey);
+      }
+    });
+  }
+
+  public ngOnDestroy(): void {
+    this.statsKeyStoreService.storeLastKey(this.getKeyTextValue());
+  }
+
   @Toggler<StatsComponent>('loading')
   public async loadStats(): Promise<void> {
-    const key = this.statsForm.controls['key'].value;
-    await this.navigateToKey(key);
+    await this.navigateToKey(this.getKeyTextValue());
     this.statsForm.markAsPristine();
-    this.statsKeyStoreService.storeLastKey(key);
   }
 
   public async navigateToKey(key: string): Promise<void> {
     await this.router.navigate(['/stats/' + key]);
+  }
+
+  private getKeyTextValue(): string {
+    const key = this.statsForm.controls['key'].value;
+    return key;
+  }
+
+  private setKeyTextValue(key: string): void {
+    this.statsForm.controls['key'].setValue(key);
   }
 
 }
