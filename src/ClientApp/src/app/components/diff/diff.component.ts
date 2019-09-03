@@ -8,7 +8,6 @@ import * as monaco from 'monaco-editor';
 })
 export class DiffComponent implements OnInit {
 
-
   constructor() { }
 
   ngOnInit() {
