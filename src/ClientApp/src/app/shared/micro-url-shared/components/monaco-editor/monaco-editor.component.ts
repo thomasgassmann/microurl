@@ -8,7 +8,7 @@ import { Subscription, fromEvent } from 'rxjs';
   styleUrls: ['./monaco-editor.component.scss']
 })
 export class MonacoEditorComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild('#editor-container', { static: true }) private _editorContainer: ElementRef | null = null;
+  @ViewChild('editorContainer', { static: true }) private _editorContainer: ElementRef | null = null;
 
   private _editor: monaco.editor.IStandaloneCodeEditor | null = null;
   private _windowResizeSubscription: Subscription | null = null;

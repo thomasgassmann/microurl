@@ -1,9 +1,11 @@
+@import 'src/mixins.scss';
+
 :host {
   display: block;
-  height: 200px;
+  @include editor-height;
 }
 
 #editor-container {
   width: 100%;
-  height: 98%;
+  height: 100%;
 }

@@ -15,12 +15,6 @@ main {
   @include non-toolbar-height;
 }
 
-.code-editor {
-  .editor-container {
-    @include editor-height;
-  }
-}
-
 a {
   color: white;
 }
