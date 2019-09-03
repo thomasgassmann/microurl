@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DiffEditorModel } from 'ngx-monaco-editor';
 
 @Component({
   selector: 'app-diff',
@@ -8,15 +7,6 @@ import { DiffEditorModel } from 'ngx-monaco-editor';
 })
 export class DiffComponent implements OnInit {
 
-  public editorOptions = { theme: 'vs-dark', language: 'javascript' };
-  public originalModel: DiffEditorModel = {
-    language: 'javascript',
-    code: 'function x() {\nconsole.log("Hello world!");\n}'
-  };
-  public modifiedModel: DiffEditorModel = {
-    language: 'javascript',
-    code: 'function x() {\nconsole.log("Hello world!");\n}'
-  };
 
   constructor() { }
 

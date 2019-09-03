@@ -24,7 +24,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MonacoEditorModule } from 'ngx-monaco-editor';
 import {
   ShortenUrlComponent,
   StatsComponent,
@@ -35,6 +34,7 @@ import {
   TitledCardComponent,
   StatsInfoComponent
 } from './components';
+import { MicroUrlSharedModule } from './shared/micro-url-shared';
 
 @NgModule({
   declarations: [
@@ -49,6 +49,8 @@ import {
     StatsInfoComponent
   ],
   imports: [
+    MicroUrlSharedModule,
+
     MatProgressBarModule,
     NgxChartsModule,
     MatSnackBarModule,
@@ -56,7 +58,6 @@ import {
     MatGridListModule,
     MatListModule,
     MatSidenavModule,
-    MonacoEditorModule.forRoot(),
     MatIconModule,
     HttpClientModule,
     FormsModule,

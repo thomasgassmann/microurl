@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import * as monaco from 'monaco-editor';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-editor',
@@ -7,15 +9,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EditorComponent implements OnInit {
 
-  public editorOptions = {
-    theme: 'vs-dark',
-    language: 'csharp'
-  };
-  public code = '';
 
   constructor() { }
 
-  ngOnInit() {
+  public ngOnInit() {
   }
 
 }
