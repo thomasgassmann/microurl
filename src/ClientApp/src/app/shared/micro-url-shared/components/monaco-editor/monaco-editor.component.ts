@@ -1,26 +1,26 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy, Input } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import { Subscription, fromEvent } from 'rxjs';
+import { EditorCreator } from './editor-creator';
 
 @Component({
   selector: 'app-monaco-editor',
   templateUrl: './monaco-editor.component.html',
   styleUrls: ['./monaco-editor.component.scss']
 })
-export class MonacoEditorComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MonacoEditorComponent implements OnInit, OnDestroy {
   @ViewChild('editorContainer', { static: true }) private _editorContainer: ElementRef | null = null;
 
-  private _editor: monaco.editor.IStandaloneCodeEditor | null = null;
+  private _editor: monaco.editor.IEditor | null = null;
   private _windowResizeSubscription: Subscription | null = null;
+
+  @Input() public creator: EditorCreator | null = null;
 
   public ngOnInit() {
     (<any>window).require.config({ paths: { 'vs': '/assets/monaco/vs' } });
     (<any>window).require(['vs/editor/editor.main'], () => {
       this.initializeMonaco();
     });
-  }
-
-  public ngAfterViewInit(): void {
   }
 
   public ngOnDestroy(): void {
@@ -35,12 +35,11 @@ export class MonacoEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initializeMonaco(): void {
-    if (!this._editorContainer || !this._editorContainer.nativeElement) {
-      throw new Error('nativeElement not defined');
+    if (!this._editorContainer || !this._editorContainer.nativeElement || !this.creator) {
+      throw new Error('Not properly initialized');
     }
 
-    this._editor = monaco.editor.create(this._editorContainer.nativeElement, {
-    });
+    this._editor = this.creator(this._editorContainer.nativeElement);
 
     if (this._windowResizeSubscription) {
       this._windowResizeSubscription.unsubscribe();

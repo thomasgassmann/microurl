@@ -15,4 +15,10 @@ export class EditorComponent implements OnInit {
   public ngOnInit() {
   }
 
+  public editorCreator(domElement: HTMLElement): monaco.editor.IEditor {
+    return monaco.editor.create(domElement, {
+      theme: 'vs-dark'
+    });
+  }
+
 }
