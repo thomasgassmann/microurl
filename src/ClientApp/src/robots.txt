@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Sitemap: https://m.tg.tc/sitemap.xml
+Host: https://m.tg.tc

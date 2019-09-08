@@ -48,12 +48,7 @@ namespace MicroUrl.Urls.Implementation
             }
 
             await _visitorTracker.SaveVisitAsync(microUrl, context);           
-            if (!microUrl.Enabled)
-            {
-                return null;
-            }
-            
-            return microUrl.Url;
+            return !microUrl.Enabled ? null : microUrl.Url;
         }
 
         private async Task<string> GenerateKey()

@@ -1,6 +1,5 @@
 namespace MicroUrl.Controllers
 {
-    using System;
     using System.Net;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
