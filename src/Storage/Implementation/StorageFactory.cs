@@ -7,7 +7,7 @@ namespace MicroUrl.Storage.Implementation
     public class StorageFactory : IStorageFactory
     {
         private readonly IOptions<MicroUrlSettings> _options;
-        private DatastoreDb _cachedDatastore;
+        private DatastoreDb _cachedDataStore;
         
         public StorageFactory(IOptions<MicroUrlSettings> options)
         {
@@ -16,7 +16,7 @@ namespace MicroUrl.Storage.Implementation
         
         public DatastoreDb GetStorage()
         {
-            return _cachedDatastore ?? (_cachedDatastore = DatastoreDb.Create(_options.Value.Storage.Project));
+            return _cachedDataStore ??= DatastoreDb.Create(_options.Value.Storage.Project);
         }
     }
 }

@@ -1,76 +1,28 @@
-namespace MicroUrl.Urls.Implementation
+namespace MicroUrl.Storage.Implementation
 {
-    using System.Linq;
-    using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
-    using MicroUrl.Storage;
-    using MicroUrl.Urls.Models;
+    using MicroUrl.Storage.Entities;
 
-    public abstract class BaseStorageService<T> where T : MicroUrlBaseEntity, new()
+    public class UrlStorageService : BaseStorageService<MicroUrlEntity>
     {
-        private readonly IStorageFactory _storageFactory;
-        private const string EnabledKey = "enabled";
-        private const string CreatedKey = "created";
-        private const string TypeKey = "type";
-
-        public BaseStorageService(IStorageFactory storageFactory)
-        {
-            _storageFactory = storageFactory;
-        }
-
-        protected abstract string Kind { get; }
-
-        protected void MapToProperties(T entity, MapField<string, Value> properties);
-
-        protected void MapToEntity(MapField<string, Value> properties, T entity);
-
-        public async Task<string> CreateAsync(T entity)
-        {
-            var dataStore = _storageFactory.GetStorage();
-            var key = dataStore.CreateKeyFactory(Kind).CreateKey(entity.Key);
-            var newEntity = new Entity { Key = key };
-            
-            newEntity.Properties.Add(EnabledKey, entity.Enabled);
-            newEntity.Properties.Add(CreatedKey, entity.Created);
-            newEntity.Properties.Add(TypeKey, Kind);
-
-            MapToProperties(entity, newEntity.Properties);
-
-            await dataStore.InsertAsync(newEntity);
-            return key.Path.First().Name;
-        }
-
-        public async Task<T> LoadAsync(string key)
-        {
-            var dataStore = _storageFactory.GetStorage();
-            var result = await dataStore.LookupAsync(GetKey(key));
-            if (!Exists(result))
-            {
-                return null;
-            }
-
-            var instance = new T
-            {
-                Created = result[CreatedKey].TimestampValue, Enabled = result[EnabledKey].BooleanValue,
-                Key = result.Key.Path.First().Name
-            };
-
-            MapToEntity(result.Properties, instance);
-
-            return instance;
-        }
-
-        public async Task<bool> ExistsAsync(string key)
-        {
-            var dataStore = _storageFactory.GetStorage();
-            var result = await dataStore.LookupAsync(GetKey(key));
-            return Exists(result);
-        }
+        private const string KindKey = "url";
+        private const string UrlKey = "url";
         
-        private bool Exists(Entity entity) => 
-            entity != null && entity[TypeKey].StringValue == Kind;
+        public UrlStorageService(IStorageFactory storageFactory) : base(storageFactory)
+        {
+        }
 
-        private Key GetKey(string key) => new Key().WithElement(Kind, key);
+        protected override string Kind => KindKey;
+
+        protected override void MapToProperties(MicroUrlEntity entity, MapField<string, Value> properties)
+        {
+            properties.Add(UrlKey, entity.Url);
+        }
+
+        protected override void MapToEntity(MapField<string, Value> properties, MicroUrlEntity entity)
+        {
+            entity.Url = properties[UrlKey].StringValue;
+        }
     }
 }

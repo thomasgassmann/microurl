@@ -1,4 +1,4 @@
-namespace MicroUrl.Urls.Models
+namespace MicroUrl.Storage.Entities
 {
     using Google.Protobuf.WellKnownTypes;
 
