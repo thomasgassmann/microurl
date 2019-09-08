@@ -4,19 +4,18 @@ namespace MicroUrl.Urls.Implementation
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using MicroUrl.Storage;
+    using MicroUrl.Urls.Models;
 
-    public class UrlStorageService : IUrlStorageService
+    public abstract class MicroUrlBaseStorageService
     {
-        private const string Kind = "MicroUrl";
-        
         private readonly IStorageFactory _storageFactory;
 
-        public UrlStorageService(IStorageFactory storageFactory)
+        public MicroUrlBaseStorageService(IStorageFactory storageFactory)
         {
             _storageFactory = storageFactory;
         }
 
-        public async Task<string> SaveAsync(MicroUrlEntity url)
+        public async Task<string> SaveAsync(MicroUrlBaseEntity entity)
         {
             var datastore = _storageFactory.GetStorage();
             var key = datastore.CreateKeyFactory(Kind).CreateKey(url.Key);

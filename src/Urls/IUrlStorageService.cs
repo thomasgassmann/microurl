@@ -1,6 +1,7 @@
 namespace MicroUrl.Urls
 {
     using System.Threading.Tasks;
+    using MicroUrl.Urls.Models;
 
     public interface IUrlStorageService
     {

@@ -1,13 +1,10 @@
-namespace MicroUrl.Urls
+namespace MicroUrl.Urls.Models
 {
-    using System;
     using Google.Protobuf.WellKnownTypes;
 
-    public class MicroUrlEntity
+    public class MicroUrlBaseEntity
     {
         public string Key { get; set; }
-        
-        public string Url { get; set; }
 
         public Timestamp Created { get; set; }
 
