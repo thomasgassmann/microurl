@@ -23,7 +23,7 @@ namespace MicroUrl.Storage.Implementation
 
         protected abstract void MapToProperties(T entity, MapField<string, Value> properties);
 
-        protected abstract void MapToEntity(MapField<string, Value> properties, T entity);
+        protected abstract void MapToEntity(MapField<string, Value> properties, T entity, Key key);
         
         public async Task<string> CreateAsync(T entity)
         {
@@ -45,12 +45,12 @@ namespace MicroUrl.Storage.Implementation
             var result = await dataStore.LookupAsync(elementKey);
             if (!LogicalExists(result))
             {
-                return default(T);
+                return default;
             }
 
             var instance = new T();
 
-            MapToEntity(result.Properties, instance);
+            MapToEntity(result.Properties, instance, elementKey);
 
             return instance;
         }
