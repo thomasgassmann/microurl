@@ -2,12 +2,12 @@ namespace MicroUrl.Storage
 {
     using System.Threading.Tasks;
 
-    public interface IEntityStorageService<T> where T : new()
+    public interface IEntityStorageService<T, TKey> where T : new()
     {
-        Task<string> CreateAsync(T entity);
+        Task<TKey> CreateAsync(T entity);
 
-        Task<T> LoadAsync(string key);
+        Task<T> LoadAsync(TKey key);
 
-        Task<bool> ExistsAsync(string key);
+        Task<bool> ExistsAsync(TKey key);
     }
 }

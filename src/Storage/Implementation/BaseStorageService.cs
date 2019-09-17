@@ -1,10 +1,11 @@
 namespace MicroUrl.Storage.Implementation
 {
+    using System;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
 
-    public abstract class BaseStorageService<T> : IEntityStorageService<T> where T : new()
+    public abstract class BaseStorageService<T, TKey> : IEntityStorageService<T, TKey> where T : new()
     {
         private readonly IStorageFactory _storageFactory;
 
@@ -17,7 +18,7 @@ namespace MicroUrl.Storage.Implementation
 
         protected abstract Key GetNewKey(KeyFactory keyFactory, T entity);
 
-        protected abstract string GetKeyString(Key key);
+        protected abstract TKey GetKey(Key key);
 
         protected abstract bool LogicalExists(Entity entity);
 
@@ -25,7 +26,7 @@ namespace MicroUrl.Storage.Implementation
 
         protected abstract void MapToEntity(MapField<string, Value> properties, T entity, Key key);
         
-        public async Task<string> CreateAsync(T entity)
+        public async Task<TKey> CreateAsync(T entity)
         {
             var dataStore = _storageFactory.GetStorage();
             var keyFactory = dataStore.CreateKeyFactory(StorageKey);
@@ -35,14 +36,13 @@ namespace MicroUrl.Storage.Implementation
             MapToProperties(entity, newEntity.Properties);
 
             await dataStore.InsertAsync(newEntity);
-            return GetKeyString(key);
+            return GetKey(key);
         }
 
-        public async Task<T> LoadAsync(string key)
+        public async Task<T> LoadAsync(TKey key)
         {
             var dataStore = _storageFactory.GetStorage();
-            var elementKey = new Key().WithElement(StorageKey, key);
-            var result = await dataStore.LookupAsync(elementKey);
+            var result = await dataStore.LookupAsync(GetKeyFromObject(key));
             if (!LogicalExists(result))
             {
                 return default;
@@ -55,12 +55,26 @@ namespace MicroUrl.Storage.Implementation
             return instance;
         }
 
-        public async Task<bool> ExistsAsync(string key)
+        public async Task<bool> ExistsAsync(TKey key)
         {
             var dataStore = _storageFactory.GetStorage();
-            var elementKey = new Key().WithElement(StorageKey, key);
-            var result = await dataStore.LookupAsync(elementKey);
+            var result = await dataStore.LookupAsync(GetKeyFromObject(key));
             return LogicalExists(result);
+        }
+
+        private Key GetKeyFromObject(TKey key)
+        {
+            if (key.GetType() == typeof(long))
+            {
+                return new Key().WithElement(StorageKey, long.Parse(key.ToString()));
+            }
+            
+            if (key.GetType() == typeof(string))
+            {
+                return new Key().WithElement(StorageKey, key.ToString());
+            }
+            
+            throw new ArgumentException(nameof(key));
         }
     }
 }
