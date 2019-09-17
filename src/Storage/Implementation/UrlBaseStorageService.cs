@@ -5,7 +5,7 @@ namespace MicroUrl.Storage.Implementation
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
 
-    public abstract class UrlBaseStorageService<T> : BaseStorageService<T> where T : MicroUrlBaseEntity, new()
+    public abstract class UrlBaseStorageService<T> : BaseStorageService<T, string> where T : MicroUrlBaseEntity, new()
     {
         private const string EnabledKey = "enabled";
         private const string CreatedKey = "created";
@@ -22,7 +22,7 @@ namespace MicroUrl.Storage.Implementation
         protected override Key GetNewKey(KeyFactory keyFactory, T entity) =>
             keyFactory.CreateKey(entity.Key);
 
-        protected override string GetKeyString(Key key) =>
+        protected override string GetKey(Key key) =>
             key.Path.First().Name;
 
         protected override bool LogicalExists(Entity entity) =>
@@ -37,7 +37,7 @@ namespace MicroUrl.Storage.Implementation
 
         protected override void MapToEntity(MapField<string, Value> properties, T entity, Key key)
         {
-            entity.Key = GetKeyString(key);
+            entity.Key = GetKey(key);
             entity.Created = properties[CreatedKey].TimestampValue;
             entity.Enabled = properties[EnabledKey].BooleanValue;
         }
