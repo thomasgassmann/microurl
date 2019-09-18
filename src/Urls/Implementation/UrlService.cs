@@ -12,28 +12,26 @@ namespace MicroUrl.Urls.Implementation
     {
         private readonly IUrlStorageService _storageService;
         private readonly IVisitorTracker _visitorTracker;
+        private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
         
         private readonly Random _random = new Random();
 
-        public UrlService(IUrlStorageService storageService, IVisitorTracker visitorTracker)
+        public UrlService(IUrlStorageService storageService, IVisitorTracker visitorTracker, IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
             _storageService = storageService;
             _visitorTracker = visitorTracker;
+            _microUrlKeyGenerator = microUrlKeyGenerator;
         }
 
         public async Task<string> SaveAsync(string url, string key = null)
         {
-            if (key != null && await _storageService.ExistsAsync(key))
-            {
-                throw new ExistingKeyException(key);
-            }
-            
+            var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync(key);
             var createdKey = await _storageService.SaveAsync(new MicroUrlEntity
             {
                 Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,
                 Url = url,
-                Key = key ?? await GenerateKey()
+                Key = generatedKey
             });
             return createdKey;
         }

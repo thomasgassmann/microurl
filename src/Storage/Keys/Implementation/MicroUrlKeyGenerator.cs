@@ -22,9 +22,11 @@ namespace MicroUrl.Urls.Implementation
         
         public async Task<string> GenerateKeyAsync(string customKey = null)
         {
-            if (customKey != null && await ExistsAsync(customKey))
+            if (customKey != null)
             {
-                throw new KeyGenerationException($"Key already exists {customKey}.");
+                return await ExistsAsync(customKey)
+                    ? throw new KeyGenerationException($"Key already exists {customKey}.")
+                    : customKey;
             }
             
             for (var i = 1;; i++)
