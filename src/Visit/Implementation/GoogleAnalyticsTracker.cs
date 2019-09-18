@@ -9,7 +9,6 @@ namespace MicroUrl.Visit.Implementation
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
     using MicroUrl.Infrastructure.Settings;
-    using MicroUrl.Urls;
 
     public class GoogleAnalyticsTracker : IGoogleAnalyticsTracker
     {
@@ -22,7 +21,7 @@ namespace MicroUrl.Visit.Implementation
             _logger = logger;
         }
         
-        public async Task TrackAsync(MicroUrlEntity entity, HttpContext context)
+        public async Task TrackAsync(string key, HttpContext context)
         {
             var blockedHeaderList = new[]
             {
@@ -34,26 +33,27 @@ namespace MicroUrl.Visit.Implementation
             };
             
             using var client = new HttpClient {BaseAddress = new Uri("https://www.google-analytics.com")};
-            foreach (var (key, value) in context.Request.Headers)
+            foreach (var (headerKey, headerValue) in context.Request.Headers)
             {
-                if (!blockedHeaderList.Contains(key))
+                if (blockedHeaderList.Contains(headerKey))
                 {
-                    try
-                    {
-                        client.DefaultRequestHeaders.Add(key, value.ToArray());
-                    }
-                    catch (InvalidOperationException)
-                    {
-                        _logger.LogError($"{key} is not a valid header value (set manually)!");
-                    }
+                    continue;
+                }
+
+                try
+                {
+                    client.DefaultRequestHeaders.Add(headerKey, headerValue.ToArray());
+                }
+                catch (InvalidOperationException)
+                {
+                    _logger.LogError($"{key} is not a valid header value (set manually)!");
                 }
             }
             
             var host = context.Request.Host.Host;
             var connectionId = context.Connection.Id;
-            var urlEncoded = WebUtility.UrlEncode(entity.Url);
             var trackingUrl =
-                $"/collect?v=1&t=pageview&tid={_options.Value.AnalyticsId}&cid={connectionId}&dh={host}&dp={entity.Key}&dt={urlEncoded}";
+                $"/collect?v=1&t=pageview&tid={_options.Value.AnalyticsId}&cid={connectionId}&dh={host}&dp={key}";
             var response = await client.GetAsync(trackingUrl);
             if (response.StatusCode != HttpStatusCode.OK)
             {

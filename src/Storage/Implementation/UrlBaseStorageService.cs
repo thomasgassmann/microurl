@@ -7,6 +7,8 @@ namespace MicroUrl.Storage.Implementation
 
     public abstract class UrlBaseStorageService<T> : BaseStorageService<T, string> where T : MicroUrlBaseEntity, new()
     {
+        public const string MicroUrlStorageKey = "microurl";
+        
         private const string EnabledKey = "enabled";
         private const string CreatedKey = "created";
         private const string TypeKey = "type";
@@ -17,7 +19,7 @@ namespace MicroUrl.Storage.Implementation
         
         protected abstract string UrlKind { get; }
 
-        protected override string StorageKey => "microurl";
+        protected override string StorageKey => MicroUrlStorageKey;
         
         protected override Key GetNewKey(KeyFactory keyFactory, T entity) =>
             keyFactory.CreateKey(entity.Key);

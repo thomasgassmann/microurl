@@ -42,7 +42,8 @@ namespace MicroUrl.Storage.Implementation
         public async Task<T> LoadAsync(TKey key)
         {
             var dataStore = _storageFactory.GetStorage();
-            var result = await dataStore.LookupAsync(GetKeyFromObject(key));
+            var elementKey = GetKeyFromObject(key);
+            var result = await dataStore.LookupAsync(elementKey);
             if (!LogicalExists(result))
             {
                 return default;

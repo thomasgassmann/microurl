@@ -10,8 +10,6 @@ namespace MicroUrl.Urls.Implementation
 
     public class UrlService : IUrlService
     {
-        private const string Characters = "abcdefghiklmnopqrstuvwxyz0123456789";
-        
         private readonly IUrlStorageService _storageService;
         private readonly IVisitorTracker _visitorTracker;
         
