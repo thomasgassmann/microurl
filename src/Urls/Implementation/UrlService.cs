@@ -49,28 +49,5 @@ namespace MicroUrl.Urls.Implementation
             await _visitorTracker.SaveVisitAsync(microUrl, context);           
             return !microUrl.Enabled ? null : microUrl.Url;
         }
-
-        private async Task<string> GenerateKey()
-        {
-            for (var i = 1;; i++)
-            {
-                var key = GenerateKeyOfLength(i);
-                if (!await _storageService.ExistsAsync(key))
-                {
-                    return key;
-                }
-            }
-        }
-
-        private string GenerateKeyOfLength(int length)
-        {
-            var stringBuilder = new StringBuilder();
-            for (var i = 0; i < length; i++)
-            {
-                stringBuilder.Append(Characters[_random.Next(0, Characters.Length - 1)]);
-            }
-
-            return stringBuilder.ToString();
-        }
     }
 }

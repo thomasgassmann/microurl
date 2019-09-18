@@ -22,15 +22,15 @@ namespace MicroUrl.Visit.Implementation
             _googleAnalyticsTracker = googleAnalyticsTracker;
         }
         
-        public async Task SaveVisitAsync(MicroUrlEntity entity, HttpContext context)
+        public async Task SaveVisitAsync(string key, HttpContext context)
         {
-            var gaTask = TrackGoogleAnalytics(entity, context);
+            var gaTask = TrackGoogleAnalytics(key, context);
             var storageTask = _visitorStorageService.SaveAsync(new UrlVisitEntity
             {
                 Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Headers = GetHeaders(context),
                 Ip = GetIpAddress(context),
-                Key = entity.Key
+                Key = key
             });
             await Task.WhenAll(new[] {gaTask, storageTask});
         }
@@ -38,9 +38,9 @@ namespace MicroUrl.Visit.Implementation
         private string GetIpAddress(HttpContext context) =>
             context.Connection.RemoteIpAddress.ToString();
 
-        private async Task TrackGoogleAnalytics(MicroUrlEntity entity, HttpContext context)
+        private async Task TrackGoogleAnalytics(string key, HttpContext context)
         {
-            await _googleAnalyticsTracker.TrackAsync(entity, context);
+            await _googleAnalyticsTracker.TrackAsync(key, context);
         }
 
         private static string GetHeaders(HttpContext context)
