@@ -29,5 +29,11 @@ namespace MicroUrl.Text.Implementation
                 Text = content
             });
         }
+
+        public async Task<string> GetRawContentAsync(string key)
+        {
+            var result = await _textStorageService.LoadAsync(key);
+            return result?.Text;
+        }
     }
 }

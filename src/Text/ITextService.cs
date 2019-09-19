@@ -5,5 +5,7 @@ namespace MicroUrl.Text
     public interface ITextService
     {
         Task<string> SaveAsync(string language, string content);
+
+        Task<string> GetRawContentAsync(string key);
     }
 }

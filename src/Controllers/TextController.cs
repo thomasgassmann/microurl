@@ -1,6 +1,8 @@
 namespace MicroUrl.Controllers
 {
+    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
+    using MicroUrl.Controllers.Extensions;
     using MicroUrl.Controllers.Models;
     using MicroUrl.Text;
 
@@ -16,9 +18,10 @@ namespace MicroUrl.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAsync([FromBody] CreateTextModel createTextModel)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateTextModel createTextModel)
         {
-            return Ok();
+            var result = await _textService.SaveAsync(createTextModel.Language, createTextModel.Content);
+            return this.CreatedUrl(result);
         }
     }
 }

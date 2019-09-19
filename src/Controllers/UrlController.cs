@@ -5,6 +5,7 @@ namespace MicroUrl.Controllers
     using Microsoft.AspNetCore.Mvc;
     using MicroUrl.Controllers.Models;
     using MicroUrl.Urls;
+    using MicroUrl.Controllers.Extensions;
 
     [Route("api/microurl")]
     [ApiController]
@@ -23,7 +24,7 @@ namespace MicroUrl.Controllers
             try
             {
                 var key = await _urlService.SaveAsync(urlModel.Url, urlModel.Key);
-                return new JsonResult(new {Key = key}) {StatusCode = (int) HttpStatusCode.Created};
+                return this.CreatedUrl(key);
             }
             catch (KeyGenerationException)
             {
