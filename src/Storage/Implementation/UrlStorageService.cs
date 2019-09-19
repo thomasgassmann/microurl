@@ -4,7 +4,7 @@ namespace MicroUrl.Storage.Implementation
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
 
-    public class UrlStorageService : UrlBaseStorageService<MicroUrlEntity>
+    public class UrlStorageService : UrlBaseStorageService<MicroUrlEntity>, IUrlStorageService
     {
         private const string UrlKey = "url";
         

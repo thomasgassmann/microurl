@@ -14,10 +14,10 @@ namespace MicroUrl.Urls.Implementation
         
         private readonly Random _random = new Random();
         private readonly IStorageFactory _storageFactory;
-        
-        public Task<string> GetKeyAsync(string customKey = null)
+
+        public MicroUrlKeyGenerator(IStorageFactory storageFactory)
         {
-            throw new System.NotImplementedException();
+            _storageFactory = storageFactory;
         }
         
         public async Task<string> GenerateKeyAsync(string customKey = null)

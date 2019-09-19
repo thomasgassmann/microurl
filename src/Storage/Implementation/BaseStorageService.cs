@@ -1,6 +1,8 @@
 namespace MicroUrl.Storage.Implementation
 {
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
@@ -44,16 +46,7 @@ namespace MicroUrl.Storage.Implementation
             var dataStore = _storageFactory.GetStorage();
             var elementKey = GetKeyFromObject(key);
             var result = await dataStore.LookupAsync(elementKey);
-            if (!LogicalExists(result))
-            {
-                return default;
-            }
-
-            var instance = new T();
-
-            MapToEntity(result.Properties, instance, elementKey);
-
-            return instance;
+            return !LogicalExists(result) ? default : CreateEntity(result.Properties, elementKey);
         }
 
         public async Task<bool> ExistsAsync(TKey key)
@@ -61,6 +54,22 @@ namespace MicroUrl.Storage.Implementation
             var dataStore = _storageFactory.GetStorage();
             var result = await dataStore.LookupAsync(GetKeyFromObject(key));
             return LogicalExists(result);
+        }
+
+        protected async Task<IList<T>> ExecuteQueryAsync(Query query)
+        {
+            var queryResults = await _storageFactory.GetStorage().RunQueryAsync(query);
+
+            return queryResults.Entities
+                .Select(item => CreateEntity(item.Properties, item.Key))
+                .ToList();
+        }
+
+        protected T CreateEntity(MapField<string, Value> properties, Key key)
+        {            
+            var instance = new T();
+            MapToEntity(properties, instance, key);
+            return instance;
         }
 
         private Key GetKeyFromObject(TKey key)

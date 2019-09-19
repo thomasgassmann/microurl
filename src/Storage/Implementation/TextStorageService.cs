@@ -4,7 +4,7 @@ namespace MicroUrl.Storage.Implementation
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
 
-    public class TextStorageService : UrlBaseStorageService<MicroUrlTextEntity>
+    public class TextStorageService : UrlBaseStorageService<MicroUrlTextEntity>, ITextStorageService
     {
         private const string LanguageKey = "language";
         private const string TextKey = "text";

@@ -42,12 +42,14 @@ namespace MicroUrl
             services.Configure<MicroUrlSettings>(Configuration.GetSection(nameof(MicroUrlSettings)));
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
+            services.AddScoped<ITextStorageService, TextStorageService>();
             services.AddScoped<IUrlService, UrlService>();
             services.AddSingleton<IStorageFactory, StorageFactory>();
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
-            services.AddScoped<IVisitorStorageService, VisitorStorageService>();
+            services.AddScoped<IVisitStorageService, VisitStorageService>();
             services.AddScoped<IStatsService, StatsService>();
+            services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
 
             services.AddSpaStaticFiles(configuration =>
             {

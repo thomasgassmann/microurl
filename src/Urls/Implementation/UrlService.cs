@@ -1,10 +1,10 @@
 namespace MicroUrl.Urls.Implementation
 {
     using System;
-    using System.Text;
     using System.Threading.Tasks;
     using Google.Protobuf.WellKnownTypes;
     using Microsoft.AspNetCore.Http;
+    using MicroUrl.Storage;
     using MicroUrl.Storage.Entities;
     using MicroUrl.Visit;
 
@@ -26,7 +26,7 @@ namespace MicroUrl.Urls.Implementation
         public async Task<string> SaveAsync(string url, string key = null)
         {
             var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync(key);
-            var createdKey = await _storageService.SaveAsync(new MicroUrlEntity
+            var createdKey = await _storageService.CreateAsync(new MicroUrlEntity
             {
                 Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,
@@ -44,7 +44,7 @@ namespace MicroUrl.Urls.Implementation
                 return null;
             }
 
-            await _visitorTracker.SaveVisitAsync(microUrl, context);           
+            await _visitorTracker.SaveVisitAsync(key, context);           
             return !microUrl.Enabled ? null : microUrl.Url;
         }
     }

@@ -1,22 +1,39 @@
 namespace MicroUrl.Storage.Implementation
 {
+    using System;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
 
-    public class VisitStorageService : BaseStorageService<VisitEntity, long>
+    public class VisitStorageService : BaseStorageService<VisitEntity, long>, IVisitStorageService
     {
         private const string CreatedKey = "created";
         private const string KeyKey = "key";
         private const string HeadersKey = "headers";
         private const string IpKey = "ip";
+
+        private readonly IStorageFactory _storageFactory;
         
         public VisitStorageService(IStorageFactory storageFactory) : base(storageFactory)
         {
+            _storageFactory = storageFactory;
         }
 
         protected override string StorageKey => "visit";
+
+        public async Task<IEnumerable<VisitEntity>> GetVisitorCountAsync(string key, DateTime @from, DateTime to)
+        {            
+            var storage = _storageFactory.GetStorage();
+            var query = new Query(StorageKey)
+            {
+                Filter = Filter.And(Filter.Equal(KeyKey, key))
+            };
+
+            return await ExecuteQueryAsync(query);
+        }
 
         protected override Key GetNewKey(KeyFactory keyFactory, VisitEntity entity) =>
             keyFactory.CreateIncompleteKey();
