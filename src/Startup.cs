@@ -1,16 +1,20 @@
 namespace MicroUrl
 {
     using Microsoft.AspNetCore.Builder;
+    using Microsoft.AspNetCore.Mvc;
     using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using MicroUrl.Filters;
     using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Middlewares;
     using MicroUrl.Stats;
     using MicroUrl.Stats.Implementation;
     using MicroUrl.Storage;
     using MicroUrl.Storage.Implementation;
+    using MicroUrl.Text;
+    using MicroUrl.Text.Implementation;
     using MicroUrl.Urls;
     using MicroUrl.Urls.Implementation;
     using MicroUrl.Visit;
@@ -31,7 +35,11 @@ namespace MicroUrl
         {
             services.AddHttpContextAccessor();
 
-            services.AddMvcCore(x => x.EnableEndpointRouting = false)
+            services.AddMvcCore(x =>
+                {
+                    x.Filters.Add<ModelStateValidationFilter>();
+                    x.EnableEndpointRouting = false;
+                })
                 .AddDataAnnotations()
                 .AddNewtonsoftJson(x =>
                 {
@@ -43,18 +51,20 @@ namespace MicroUrl
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<ITextStorageService, TextStorageService>();
-            services.AddScoped<IUrlService, UrlService>();
             services.AddSingleton<IStorageFactory, StorageFactory>();
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
             services.AddScoped<IVisitStorageService, VisitStorageService>();
-            services.AddScoped<IStatsService, StatsService>();
             services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
 
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
-            });
+            services.AddScoped<IUrlService, UrlService>();
+            services.AddScoped<ITextService, TextService>();
+
+            services.AddScoped<IStatsService, StatsService>();
+
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/dist"; });
+
+            services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = false);
         }
 
         public void Configure(IApplicationBuilder app, IHostEnvironment env)

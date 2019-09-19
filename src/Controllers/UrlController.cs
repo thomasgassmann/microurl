@@ -7,6 +7,7 @@ namespace MicroUrl.Controllers
     using MicroUrl.Urls;
 
     [Route("api/microurl")]
+    [ApiController]
     public class UrlController : Controller
     {
         private readonly IUrlService _urlService;
@@ -19,13 +20,6 @@ namespace MicroUrl.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveAsync([FromBody] CreateUrlModel urlModel)
         {
-            urlModel ??= new CreateUrlModel();
-            TryValidateModel(urlModel);
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             try
             {
                 var key = await _urlService.SaveAsync(urlModel.Url, urlModel.Key);
