@@ -5,7 +5,7 @@ namespace MicroUrl.Storage.Implementation
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
 
-    public abstract class UrlBaseStorageService<T> : BaseStorageService<T, string> where T : MicroUrlBaseEntity, new()
+    public class UrlBaseStorageService<T> : BaseStorageService<T, string> where T : MicroUrlBaseEntity, new()
     {
         public const string MicroUrlStorageKey = "microurl";
         
@@ -16,8 +16,8 @@ namespace MicroUrl.Storage.Implementation
         protected UrlBaseStorageService(IStorageFactory storageFactory) : base(storageFactory)
         {
         }
-        
-        protected abstract string UrlKind { get; }
+
+        protected virtual string UrlKind { get; } = null;
 
         protected override string StorageKey => MicroUrlStorageKey;
         
@@ -28,7 +28,7 @@ namespace MicroUrl.Storage.Implementation
             key.Path.First().Name;
 
         protected override bool LogicalExists(Entity entity) =>
-            entity != null && entity[TypeKey].StringValue == UrlKind;
+            UrlKind == null || entity != null && entity[TypeKey].StringValue == UrlKind;
 
         protected override void MapToProperties(T entity, MapField<string, Value> properties)
         {
