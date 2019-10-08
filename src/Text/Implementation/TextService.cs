@@ -10,12 +10,17 @@ namespace MicroUrl.Text.Implementation
     public class TextService : ITextService
     {
         private readonly ITextStorageService _textStorageService;
+        private readonly IUrlStorageService _urlStorageService;
         private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
 
-        public TextService(ITextStorageService textStorageService, IMicroUrlKeyGenerator microUrlKeyGenerator)
+        public TextService(
+            ITextStorageService textStorageService,
+            IMicroUrlKeyGenerator microUrlKeyGenerator,
+            IUrlStorageService urlStorageService)
         {
             _textStorageService = textStorageService;
             _microUrlKeyGenerator = microUrlKeyGenerator;
+            _urlStorageService = urlStorageService;
         }
         
         public async Task<string> SaveAsync(string language, string content)
@@ -33,7 +38,7 @@ namespace MicroUrl.Text.Implementation
         public async Task<string> GetRawContentAsync(string key)
         {
             var result = await _textStorageService.LoadAsync(key);
-            return result?.Text;
+            return result?.Key ?? (await _urlStorageService.LoadAsync(key))?.Url;
         }
     }
 }
