@@ -26,7 +26,6 @@ namespace MicroUrl.Storage.Implementation
 
         public async Task<IEnumerable<VisitEntity>> GetVisitorCountAsync(string key, DateTime @from, DateTime to)
         {            
-            var storage = _storageFactory.GetStorage();
             var query = new Query(StorageKey)
             {
                 Filter = Filter.And(Filter.Equal(KeyKey, key))
