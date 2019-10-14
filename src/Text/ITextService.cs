@@ -5,5 +5,9 @@ namespace MicroUrl.Text
     public interface ITextService
     {
         Task<string> SaveAsync(string language, string content);
+
+        Task<TextWithLanguage> LoadAsync(string key);
+
+        Task<TextWithLanguageDiff> LoadDiffAsync(string key, string diffKey);
     }
 }

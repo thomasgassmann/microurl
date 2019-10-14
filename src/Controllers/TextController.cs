@@ -27,7 +27,25 @@ namespace MicroUrl.Controllers
         [HttpGet("{key}")]
         public async Task<IActionResult> GetAsync(string key)
         {
+            var result = await _textService.LoadAsync(key);
+            if (result == null)
+            {
+                return NotFound();
+            }
 
+            return Ok(result);
+        }
+
+        [HttpGet("{key}/diff/{diffKey}")]
+        public async Task<IActionResult> DiffAsync(string key, string diffKey)
+        {
+            var result = await _textService.LoadDiffAsync(key, diffKey);
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(result);
         }
     }
 }

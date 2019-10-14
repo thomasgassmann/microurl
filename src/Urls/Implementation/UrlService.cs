@@ -14,8 +14,6 @@ namespace MicroUrl.Urls.Implementation
         private readonly IVisitorTracker _visitorTracker;
         private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
         
-        private readonly Random _random = new Random();
-
         public UrlService(IUrlStorageService storageService, IVisitorTracker visitorTracker, IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
             _storageService = storageService;

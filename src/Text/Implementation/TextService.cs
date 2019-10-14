@@ -10,19 +10,38 @@ namespace MicroUrl.Text.Implementation
     public class TextService : ITextService
     {
         private readonly ITextStorageService _textStorageService;
-        private readonly IUrlStorageService _urlStorageService;
         private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
 
         public TextService(
             ITextStorageService textStorageService,
-            IMicroUrlKeyGenerator microUrlKeyGenerator,
-            IUrlStorageService urlStorageService)
+            IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
             _textStorageService = textStorageService;
             _microUrlKeyGenerator = microUrlKeyGenerator;
-            _urlStorageService = urlStorageService;
         }
-        
+
+        public async Task<TextWithLanguage> LoadAsync(string key) =>
+            await LoadSingleTextWithLanguageAsync(key);
+
+        public async Task<TextWithLanguageDiff> LoadDiffAsync(string key, string diffKey)
+        {
+            var diffItems = await Task.WhenAll(new[]
+            {
+                LoadSingleTextWithLanguageAsync(key),
+                LoadSingleTextWithLanguageAsync(diffKey)
+            });
+            if (diffItems[0] == null || diffItems[1] == null)
+            {
+                return null;
+            }
+
+            return new TextWithLanguageDiff
+            {
+                Left = diffItems[0],
+                Right = diffItems[1]
+            };
+        }
+
         public async Task<string> SaveAsync(string language, string content)
         {
             return await _textStorageService.CreateAsync(new MicroUrlTextEntity
@@ -33,6 +52,21 @@ namespace MicroUrl.Text.Implementation
                 Language = language,
                 Text = content
             });
+        }
+
+        private async Task<TextWithLanguage> LoadSingleTextWithLanguageAsync(string key)
+        {
+            var result = await _textStorageService.LoadAsync(key);
+            if (!result.Enabled)
+            {
+                return null;
+            }
+
+            return new TextWithLanguage
+            {
+                Content = result.Text,
+                Language = result.Language
+            };
         }
     }
 }
