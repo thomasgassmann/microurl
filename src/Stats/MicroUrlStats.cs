@@ -1,5 +1,7 @@
 namespace MicroUrl.Stats
 {
+    using System.Collections.Generic;
+
     public class MicroUrlStats
     {
         public string Key { get; set; }
@@ -8,6 +10,6 @@ namespace MicroUrl.Stats
 
         public HitStats AllTime { get; set; }
 
-        public HitStats[] Recents { get; set; }
+        public IList<HitStats> Recents { get; set; }
     }
 }

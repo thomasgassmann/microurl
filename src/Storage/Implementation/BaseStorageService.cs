@@ -3,6 +3,7 @@ namespace MicroUrl.Storage.Implementation
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
@@ -58,10 +59,11 @@ namespace MicroUrl.Storage.Implementation
 
         protected async IAsyncEnumerable<T> ExecuteQueryAsync(Query query)
         {
-
-            await foreach (var item in _storageFactory.GetStorage().RunQueryLazilyAsync(query))
+            var lazyResult = _storageFactory.GetStorage().RunQueryLazilyAsync(query);
+            var asyncEnumerator = lazyResult.GetEnumerator();
+            while (await asyncEnumerator.MoveNext(CancellationToken.None))
             {
-                yield return CreateEntity(item.Properties, item.Key);
+                yield return CreateEntity(asyncEnumerator.Current.Properties, asyncEnumerator.Current.Key);
             }
         }
 

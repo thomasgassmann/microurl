@@ -14,24 +14,21 @@ namespace MicroUrl.Storage.Implementation
         private const string KeyKey = "key";
         private const string HeadersKey = "headers";
         private const string IpKey = "ip";
-
-        private readonly IStorageFactory _storageFactory;
         
         public VisitStorageService(IStorageFactory storageFactory) : base(storageFactory)
         {
-            _storageFactory = storageFactory;
         }
 
         protected override string StorageKey => "visit";
 
-        public async Task<IEnumerable<VisitEntity>> GetVisitorCountAsync(string key, DateTime @from, DateTime to)
+        public IAsyncEnumerable<VisitEntity> GetVisitorCountAsync(string key, DateTime @from, DateTime to)
         {            
             var query = new Query(StorageKey)
             {
                 Filter = Filter.And(Filter.Equal(KeyKey, key))
             };
 
-            return await ExecuteQueryAsync(query);
+            return ExecuteQueryAsync(query);
         }
 
         protected override Key GetNewKey(KeyFactory keyFactory, VisitEntity entity) =>
