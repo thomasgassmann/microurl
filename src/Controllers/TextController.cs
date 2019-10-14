@@ -23,5 +23,11 @@ namespace MicroUrl.Controllers
             var result = await _textService.SaveAsync(createTextModel.Language, createTextModel.Content);
             return this.CreatedUrl(result);
         }
+
+        [HttpGet("{key}")]
+        public async Task<IActionResult> GetAsync(string key)
+        {
+
+        }
     }
 }

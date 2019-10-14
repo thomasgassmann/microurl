@@ -1,24 +1,24 @@
 namespace MicroUrl.Controllers
 {
-    using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using MicroUrl.Text;
+    using MicroUrl.Raw;
+    using System.Threading.Tasks;
 
     [ApiController]
     [Route("raw")]
     public class RawController : Controller
     {
-        private readonly ITextService _textService;
+        private readonly IRawService _rawService;
 
-        public RawController(ITextService textService)
+        public RawController(IRawService rawService)
         {
-            _textService = textService;
+            _rawService = rawService;
         }
         
         [HttpGet("{key}")]
         public async Task<IActionResult> GetRawAsync(string key)
         {
-            var raw = await _textService.GetRawContentAsync(key);
+            var raw = await _rawService.GetRawContentAsync(key);
             if (raw == null)
             {
                 return NotFound();

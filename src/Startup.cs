@@ -2,13 +2,15 @@ namespace MicroUrl
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Hosting;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
+    using Microsoft.Extensions.Hosting;
     using MicroUrl.Filters;
     using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Middlewares;
+    using MicroUrl.Raw;
+    using MicroUrl.Raw.Implementation;
     using MicroUrl.Stats;
     using MicroUrl.Stats.Implementation;
     using MicroUrl.Storage;
@@ -59,6 +61,7 @@ namespace MicroUrl
 
             services.AddScoped<IUrlService, UrlService>();
             services.AddScoped<ITextService, TextService>();
+            services.AddScoped<IRawService, RawService>();
 
             services.AddScoped<IStatsService, StatsService>();
 

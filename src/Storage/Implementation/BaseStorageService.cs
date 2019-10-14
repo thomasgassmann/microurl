@@ -56,13 +56,13 @@ namespace MicroUrl.Storage.Implementation
             return LogicalExists(result);
         }
 
-        protected async Task<IList<T>> ExecuteQueryAsync(Query query)
+        protected async IAsyncEnumerable<T> ExecuteQueryAsync(Query query)
         {
-            var queryResults = await _storageFactory.GetStorage().RunQueryAsync(query);
 
-            return queryResults.Entities
-                .Select(item => CreateEntity(item.Properties, item.Key))
-                .ToList();
+            await foreach (var item in _storageFactory.GetStorage().RunQueryLazilyAsync(query))
+            {
+                yield return CreateEntity(item.Properties, item.Key);
+            }
         }
 
         protected T CreateEntity(MapField<string, Value> properties, Key key)
