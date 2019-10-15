@@ -78,14 +78,12 @@ namespace MicroUrl
                 app.UseHttpsRedirection();
             }
 
-            app.UseSpaStaticFiles(new StaticFileOptions
-            {
-                ServeUnknownFileTypes = true
-            });
+            app.UseSpaStaticFiles(new StaticFileOptions { ServeUnknownFileTypes = true });
 
             // TODO: consider cors
             app.UseMvc();
 
+            // TODO: don't redirect SPA routes
             app.UseMiddleware<RedirectMiddleware>();
 
             app.UseSpa(spa =>

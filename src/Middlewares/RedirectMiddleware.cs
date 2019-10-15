@@ -28,7 +28,7 @@ namespace MicroUrl.Middlewares
                 context.Response.Redirect(redirectUrl);
                 return;
             }
-            
+
             await _next(context);
         }
     }
