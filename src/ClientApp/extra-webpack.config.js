@@ -8,6 +8,9 @@ module.exports = (webpackConfig, cliConfig) => {
           it => it.loader === "@angular-devkit/build-optimizer/webpack-loader"
         )
     );
+    if (!loader) {
+      return webpackConfig;
+    }
 
     const originalTest = loader.test;
     loader.test = file => {
