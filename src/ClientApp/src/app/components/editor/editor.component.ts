@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as monaco from 'monaco-editor';
+import { MONACO_LANGUAGES } from 'src/app/monaco-languages';
 
 @Component({
   selector: 'app-editor',
@@ -11,15 +12,12 @@ export class EditorComponent implements OnInit {
   private currentEditor: monaco.editor.IEditor | null = null;
 
   public selectedLanguage = 'markdown';
-
-  public languages = [
-    'markdown',
-    'javascript'
-  ];
+  public languages: string[] = [];
 
   constructor() { }
 
   public ngOnInit() {
+    this.languages = MONACO_LANGUAGES;
   }
 
   public editorCreator = (domElement: HTMLElement): monaco.editor.IEditor => {
