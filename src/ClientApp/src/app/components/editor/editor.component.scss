@@ -2,9 +2,16 @@
   align-self: center;
 }
 
-.controls-container {
+.buttons-container {
   display: flex;
   flex-direction: row;
-  align-self: flex-end;
   height: 100%;
+}
+
+.select-container {
+  align-self: flex-start;
+}
+
+.spacer {
+  flex: 1 1 auto;
 }

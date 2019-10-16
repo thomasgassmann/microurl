@@ -1,6 +1,15 @@
 <div>
   <div class="editor-toolbar">
-    <div class="controls-container">
+    <div class="select-container">
+      <mat-form-field>
+        <mat-label>Select an option</mat-label>
+        <mat-select [(value)]="selectedLanguage" (valueChange)="languageChanged()">
+          <mat-option *ngFor="let language of languages" [value]="language">{{language}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="spacer"></div>
+    <div class="buttons-container">
       <button class="save-button" color="primary" mat-raised-button>SAVE</button>
     </div>
   </div>

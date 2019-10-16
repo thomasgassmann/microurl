@@ -26,6 +26,6 @@ a:hover, a:active {
 .editor-toolbar {
   height: $editor-toolbar-height;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   padding: 10px;
 }

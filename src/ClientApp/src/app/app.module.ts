@@ -17,7 +17,8 @@ import {
   MatProgressSpinnerModule,
   MatGridListModule,
   MatSnackBarModule,
-  MatProgressBarModule
+  MatProgressBarModule,
+  MatSelectModule
 } from '@angular/material';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -71,6 +72,7 @@ import { MicroUrlSharedModule } from './shared/micro-url-shared';
     MatToolbarModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    MatSelectModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     })
