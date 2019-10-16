@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 
+const KEY = 'LAST_STATS_KEY';
+
 @Injectable({
   providedIn: 'root'
 })
 export class StatsKeyStoreService {
 
-  private lastKey: string | null = null;
-
   public storeLastKey(key: string): void {
-    this.lastKey = key;
+    localStorage.setItem(KEY, key);
   }
 
   public getLastKey(): string | null {
-    return this.lastKey;
+    return localStorage.getItem(KEY);
   }
 }
