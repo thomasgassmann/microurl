@@ -10,7 +10,7 @@
     </div>
     <div class="spacer"></div>
     <div class="buttons-container">
-      <button class="save-button" color="primary" mat-raised-button>SAVE</button>
+      <button class="save-button" color="primary" mat-raised-button (click)="save()">SAVE</button>
     </div>
   </div>
   <app-monaco-editor [creator]="editorCreator"></app-monaco-editor>

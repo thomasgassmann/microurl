@@ -20,6 +20,9 @@ export class EditorComponent implements OnInit {
     this.languages = MONACO_LANGUAGES;
   }
 
+  public save(): void {
+  }
+
   public editorCreator = (domElement: HTMLElement): monaco.editor.IEditor => {
     const editor = monaco.editor.create(domElement, {
       theme: 'vs-dark'

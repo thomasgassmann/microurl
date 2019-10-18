@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import normalizeUrl from 'normalize-url';
 import isUrl from 'is-url-superb';
 import { ApiService } from './api.service';
 import { ShortenedUrl, ApiError } from './models';
+import normalizeUrl from 'normalize-url';
 
 @Injectable({
   providedIn: 'root'
@@ -20,34 +20,19 @@ export class UrlShortenService {
 
     const normalizedUrl = normalizeUrl(url);
 
-    try {
-      const response = await this.httpClient
-        .post(
-          '/api/microurl',
-          {
-            Url: normalizedUrl,
-            Key: (key || undefined)
-          },
-          { observe: 'response' }
-        )
-        .toPromise();
-
-      if (response.status === 201) {
-        const newUrl = this.getShortenedUrl((response.body as any).key);
-        return {
-          targetUrl: normalizedUrl,
-          url: newUrl
-        };
-      } else {
-        throw new ApiError([`Unknown response! ${response.status}: ${response.statusText}`]);
-      }
-    } catch (error) {
-      this.apiService.throwErrorResponse(error);
-      throw error;
-    }
-  }
-
-  private getShortenedUrl(key: string): string {
-    return normalizeUrl(window.location.host + '/' + key, { forceHttps: true });
+    const resultUrl = await this.apiService.handleKeyedCreationResult(this.httpClient
+      .post(
+        '/api/microurl',
+        {
+          Url: normalizedUrl,
+          Key: (key || undefined)
+        },
+        { observe: 'response' }
+      )
+      .toPromise());
+    return {
+      targetUrl: normalizedUrl,
+      url: resultUrl
+    };
   }
 }

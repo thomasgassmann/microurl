@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ApiError } from './models';
+import normalizeUrl from 'normalize-url';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,21 @@ import { ApiError } from './models';
 export class ApiService {
 
   constructor() { }
+
+  public async handleKeyedCreationResult(promise: Promise<HttpResponse<Object>>): Promise<string> {
+    try {
+      const response = await promise;
+
+      if (response.status === 201) {
+        return this.getUrlFromkey((response.body as any).key);
+      } else {
+        throw new ApiError([`Unknown response! ${response.status}: ${response.statusText}`]);
+      }
+    } catch (error) {
+      this.throwErrorResponse(error);
+      throw error;
+    }
+  }
 
   public throwErrorResponse(response: HttpErrorResponse): never {
     const errors: string[] = [];
@@ -31,5 +47,9 @@ export class ApiService {
     }
 
     throw new ApiError(errors);
+  }
+
+  public getUrlFromkey(key: string): string {
+    return normalizeUrl(window.location.host + '/' + key, { forceHttps: true });
   }
 }
