@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as monaco from 'monaco-editor';
 import { MONACO_LANGUAGES } from 'src/app/monaco-languages';
+import { TextService } from 'src/app/services';
 
 @Component({
   selector: 'app-editor',
@@ -14,13 +15,20 @@ export class EditorComponent implements OnInit {
   public selectedLanguage = 'markdown';
   public languages: string[] = [];
 
-  constructor() { }
+  constructor(private textService: TextService) { }
 
   public ngOnInit() {
     this.languages = MONACO_LANGUAGES;
   }
 
-  public save(): void {
+  public async save(): Promise<void> {
+    if (!this.currentEditor) {
+      return;
+    }
+
+    const textModel = this.currentEditor.getModel() as monaco.editor.ITextModel;
+    const content = textModel.getValue();
+    await this.textService.create(this.selectedLanguage, content);
   }
 
   public editorCreator = (domElement: HTMLElement): monaco.editor.IEditor => {
