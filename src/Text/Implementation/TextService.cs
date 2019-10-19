@@ -57,7 +57,7 @@ namespace MicroUrl.Text.Implementation
         private async Task<TextWithLanguage> LoadSingleTextWithLanguageAsync(string key)
         {
             var result = await _textStorageService.LoadAsync(key);
-            if (!result.Enabled)
+            if (result == null || !result.Enabled)
             {
                 return null;
             }
