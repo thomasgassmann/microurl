@@ -7,7 +7,7 @@ import {
   DiffComponent,
   StatsInfoComponent
 } from './components';
-import { StatsInfoResolver } from './resolvers';
+import { StatsInfoResolver, TextResolver } from './resolvers';
 
 const routes: Routes = [
   {
@@ -32,8 +32,19 @@ const routes: Routes = [
     component: EditorComponent
   },
   {
+    path: 'editor/:key',
+    component: EditorComponent,
+    resolve: {
+      text: TextResolver
+    }
+  },
+  {
     path: 'diff',
     component: DiffComponent
+  },
+  {
+    path: ':key',
+    redirectTo: 'editor/:key'
   },
   {
     path: '**',
