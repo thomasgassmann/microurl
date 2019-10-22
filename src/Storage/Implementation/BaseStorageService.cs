@@ -37,8 +37,9 @@ namespace MicroUrl.Storage.Implementation
             var newEntity = new Entity { Key = key };
             
             MapToProperties(entity, newEntity.Properties);
-
+            
             await dataStore.InsertAsync(newEntity);
+
             return GetKey(key);
         }
 

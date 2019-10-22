@@ -8,6 +8,8 @@ namespace MicroUrl
     using Microsoft.Extensions.Hosting;
     using MicroUrl.Filters;
     using MicroUrl.Infrastructure.Settings;
+    using MicroUrl.Markdown;
+    using MicroUrl.Markdown.Implementation;
     using MicroUrl.Middlewares;
     using MicroUrl.Raw;
     using MicroUrl.Raw.Implementation;
@@ -62,6 +64,7 @@ namespace MicroUrl
             services.AddScoped<IUrlService, UrlService>();
             services.AddScoped<ITextService, TextService>();
             services.AddScoped<IRawService, RawService>();
+            services.AddScoped<IMarkdownService, MarkdownService>();
 
             services.AddScoped<IStatsService, StatsService>();
 
