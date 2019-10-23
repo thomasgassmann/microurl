@@ -26,7 +26,11 @@ namespace MicroUrl.Storage.Implementation
         {
             base.MapToProperties(entity, properties);
             properties.Add(LanguageKey, entity.Language);
-            properties.Add(TextKey, entity.Text);
+            properties.Add(TextKey, new Value
+            {
+                StringValue = entity.Text,
+                ExcludeFromIndexes = true
+            });
         }
     }
 }
