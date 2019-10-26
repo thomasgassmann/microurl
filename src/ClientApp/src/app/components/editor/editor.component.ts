@@ -23,7 +23,11 @@ export class EditorComponent implements OnInit {
   public ngOnInit() {
     this.languages = MONACO_LANGUAGES;
     this.route.data.subscribe((data: Data) => {
-      const text: Text = data.text;
+      const text: Text | undefined = data.text;
+      if (!text) {
+        return;
+      }
+
       this.selectedLanguage = text.language;
       if (this.currentEditor) {
         const textModel = this.currentEditor.getModel() as monaco.editor.ITextModel;
