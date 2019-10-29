@@ -2,7 +2,7 @@ namespace MicroUrl.Storage.Entities
 {
     using Google.Protobuf.WellKnownTypes;
 
-    public class MicroUrlBaseEntity
+    public class RedirectableEntity
     {
         public string Key { get; set; }
 

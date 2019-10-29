@@ -6,7 +6,6 @@ namespace MicroUrl
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using MicroUrl.Filters;
     using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Markdown;
     using MicroUrl.Markdown.Implementation;
@@ -28,12 +27,12 @@ namespace MicroUrl
 
     public class Startup
     {
+        private readonly IConfiguration _configuration;
+
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            _configuration = configuration;
         }
-
-        private IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -41,7 +40,6 @@ namespace MicroUrl
 
             services.AddMvcCore(x =>
                 {
-                    x.Filters.Add<ModelStateValidationFilter>();
                     x.EnableEndpointRouting = false;
                 })
                 .AddDataAnnotations()
@@ -51,12 +49,13 @@ namespace MicroUrl
                     x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
-            services.Configure<MicroUrlSettings>(Configuration.GetSection(nameof(MicroUrlSettings)));
+            services.Configure<MicroUrlSettings>(_configuration.GetSection(nameof(MicroUrlSettings)));
+
+            services.AddSingleton<IStorageFactory, StorageFactory>();
+            services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<ITextStorageService, TextStorageService>();
-            services.AddSingleton<IStorageFactory, StorageFactory>();
-            services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
             services.AddScoped<IVisitStorageService, VisitStorageService>();
             services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();

@@ -54,7 +54,7 @@ namespace MicroUrl.Urls.Implementation
         {
             var storage = _storageFactory.GetStorage();
             var entity = await storage.LookupAsync(new Key().WithElement(
-                UrlBaseStorageService<MicroUrlBaseEntity>.MicroUrlStorageKey,
+                UrlBaseStorageService<RedirectableEntity>.MicroUrlStorageKey,
                 key));
             return entity != null;
         }
