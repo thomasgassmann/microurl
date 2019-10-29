@@ -1,6 +1,6 @@
 namespace MicroUrl.Storage.Entities
 {
-    using Google.Protobuf.WellKnownTypes;
+    using System;
 
     public class VisitEntity
     {
@@ -10,7 +10,7 @@ namespace MicroUrl.Storage.Entities
 
         public string Headers { get; set; }
 
-        public Timestamp Created { get; set; }
+        public DateTime Created { get; set; }
 
         public string Ip { get; set; }
     }
