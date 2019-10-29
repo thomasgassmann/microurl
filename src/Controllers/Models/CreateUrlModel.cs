@@ -10,7 +10,7 @@ namespace MicroUrl.Controllers.Models
         [DifferentHostAttribute]
         public string Url { get; set; }
 
-        [RegularExpression("[a-z0-9]{1,}")]
+        [RegularExpression("[a-zA-Z0-9]{1,}")]
         public string Key { get; set; }
     }
 }

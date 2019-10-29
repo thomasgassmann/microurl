@@ -23,7 +23,7 @@ namespace MicroUrl.Controllers
         {
             try
             {
-                var key = await _urlService.SaveAsync(urlModel.Url, urlModel.Key);
+                var key = await _urlService.SaveAsync(urlModel.Url, urlModel.Key?.ToLower());
                 return this.CreatedUrl(key);
             }
             catch (KeyGenerationException)
