@@ -32,6 +32,8 @@ namespace MicroUrl.Visit.Implementation
                 "Content-Length"
             };
             
+            // TODO: x-cloud-trace-context, x-forwarded-for
+            
             using var client = new HttpClient {BaseAddress = new Uri("https://www.google-analytics.com")};
             foreach (var (headerKey, headerValue) in context.Request.Headers)
             {
