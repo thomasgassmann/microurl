@@ -2,10 +2,10 @@ namespace MicroUrl.Storage.Abstractions
 {
     using System.Threading.Tasks;
 
-    public interface IStorage
+    public interface IStorage<T> where T : class, IEntity, new()
     {
-        Task SaveAsync(IEntity entity);
+        Task SaveAsync(T entity);
 
-        Task<IEntity> LoadAsync();
+        Task<T> LoadAsync();
     }
 }
