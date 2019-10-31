@@ -44,7 +44,7 @@ namespace MicroUrl.Text.Implementation
 
         public async Task<string> SaveAsync(string language, string content)
         {
-            return await _textStorageService.CreateAsync(new MicroUrlTextEntity
+            return await _textStorageService.CreateAsync(new MicroTextEntity
             {
                 Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,

@@ -22,7 +22,6 @@
                 return null;
             }
 
-            
             var processor = new HeyRed.MarkdownSharp.Markdown();
             return processor.Transform(entity.Text);
         }

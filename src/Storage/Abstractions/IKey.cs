@@ -1,7 +1,11 @@
-namespace MicroUrl.Storage.Abstractions
+﻿namespace MicroUrl.Storage.Abstractions
 {
     public interface IKey
     {
-        bool AutoGenerate { get; }
+        string StringValue { get; set; }
+
+        long? LongValue { get; set; }
+
+        public bool IsNew => StringValue == null && LongValue == null;
     }
 }

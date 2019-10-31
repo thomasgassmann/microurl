@@ -3,6 +3,7 @@
     using AutoMapper;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
+    using System.Linq;
     using Timestamp = Google.Protobuf.WellKnownTypes.Timestamp;
 
     public class RedirectableEntityMap : Profile
@@ -13,18 +14,22 @@
 
         public RedirectableEntityMap()
         {
-            CreateMap<MapField<string, Value>, RedirectableEntity>()
-                .ForMember(x => x.Created, x => x.MapFrom(p => p[CreatedKey].ToDateTimeFromProjection()))
-                .ForMember(x => x.Enabled, x => x.MapFrom(p => p[EnabledKey].BooleanValue))
-                .ForMember(x => x.Key, x => x.MapFrom(p => p[KeyKey].StringValue));
+            CreateMap<Entity, RedirectableEntity>()
+                .ForMember(x => x.Created, x => x.MapFrom(p => p.Properties[CreatedKey].ToDateTimeFromProjection()))
+                .ForMember(x => x.Enabled, x => x.MapFrom(p => p.Properties[EnabledKey].BooleanValue))
+                .ForMember(x => x.Key, x => x.MapFrom(p => p.Key.Path.First().Name));
 
-            CreateMap<RedirectableEntity, MapField<string, Value>>()
+            CreateMap<RedirectableEntity, Entity>()
                 .ConvertUsing<RedirectableEntityDictionaryTypeConvertor>();
         }
 
         private class RedirectableEntityDictionaryTypeConvertor : DictionaryTypeConvertor<RedirectableEntity>
         {
-            public override void Map(RedirectableEntity source, MapField<string, Value> destination)
+            public override void MapKey(RedirectableEntity source, Entity entity)
+            {
+            }
+
+            public override void MapProperties(RedirectableEntity source, MapField<string, Value> destination)
             {
                 destination.Add(CreatedKey, Timestamp.FromDateTime(source.Created));
                 destination.Add(EnabledKey, source.Enabled);

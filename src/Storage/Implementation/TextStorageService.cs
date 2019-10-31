@@ -4,7 +4,7 @@ namespace MicroUrl.Storage.Implementation
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
 
-    public class TextStorageService : UrlBaseStorageService<MicroUrlTextEntity>, ITextStorageService
+    public class TextStorageService : UrlBaseStorageService<MicroTextEntity>, ITextStorageService
     {
         private const string LanguageKey = "language";
         private const string TextKey = "text";
@@ -15,14 +15,14 @@ namespace MicroUrl.Storage.Implementation
 
         protected override string UrlKind => "text";
 
-        protected override void MapToEntity(MapField<string, Value> properties, MicroUrlTextEntity entity, Key key)
+        protected override void MapToEntity(MapField<string, Value> properties, MicroTextEntity entity, Key key)
         {
             base.MapToEntity(properties, entity, key);
             entity.Language = properties[LanguageKey].StringValue;
             entity.Text = properties[TextKey].StringValue;
         }
 
-        protected override void MapToProperties(MicroUrlTextEntity entity, MapField<string, Value> properties)
+        protected override void MapToProperties(MicroTextEntity entity, MapField<string, Value> properties)
         {
             base.MapToProperties(entity, properties);
             properties.Add(LanguageKey, entity.Language);

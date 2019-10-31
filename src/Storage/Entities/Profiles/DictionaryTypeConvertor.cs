@@ -4,18 +4,21 @@
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
 
-    public abstract class DictionaryTypeConvertor<T> : ITypeConverter<T, MapField<string, Value>>
+    public abstract class DictionaryTypeConvertor<T> : ITypeConverter<T, Entity>
     {
-        public abstract void Map(T source, MapField<string, Value> destination);
+        public abstract void MapProperties(T source, MapField<string, Value> destination);
 
-        public MapField<string, Value> Convert(T source, MapField<string, Value> destination, ResolutionContext context)
+        public abstract void MapKey(T source, Entity entity);
+
+        public Entity Convert(T source, Entity destination, ResolutionContext context)
         {
             if (destination == null)
             {
-                destination = new MapField<string, Value>();
+                destination = new Entity();
             }
 
-            Map(source, destination);
+            MapProperties(source, destination.Properties);
+            MapKey(source, destination);
             return destination;
         }
     }

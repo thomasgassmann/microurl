@@ -1,6 +1,6 @@
 namespace MicroUrl.Storage.Entities
 {
-    public class MicroUrlTextEntity : RedirectableEntity
+    public class MicroTextEntity : RedirectableEntity
     {
         public string Language { get; set; }
 
