@@ -3,7 +3,6 @@ namespace MicroUrl.Storage.Implementation
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using System.Threading.Tasks;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.Collections;
     using MicroUrl.Storage.Entities;
