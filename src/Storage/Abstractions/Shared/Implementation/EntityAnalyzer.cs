@@ -6,36 +6,44 @@
 
     public class EntityAnalyzer : IEntityAnalyzer
     {
-        private readonly IDictionary<Type, KeyType> _keyTypeMap = new Dictionary<Type, KeyType>();
+        private readonly IDictionary<Type, KeyAttribute> _keyTypeMap = new Dictionary<Type, KeyAttribute>();
+        private readonly IDictionary<Type, EntityNameAttribute> _entityNameMap = new Dictionary<Type, EntityNameAttribute>();
 
         public IKey GetKeyValue<T>(T entity)
         {
 
         }
 
-        public string GetEntityName<T>()
-        {
+        public string GetEntityName<T>() =>
+            LoadAndCacheInDictionary<T, EntityNameAttribute, string>(
+                _entityNameMap,
+                () => typeof(T).GetCustomAttributes(true).FirstOrDefault(x => x is EntityNameAttribute) as EntityNameAttribute,
+                x => x.Name);
 
-        }
+        public KeyType GetKeyType<T>() =>
+            LoadAndCacheInDictionary<T, KeyAttribute, KeyType>(
+                _keyTypeMap, 
+                () => typeof(T).GetProperties()
+                   .Select(x => x.GetCustomAttributes(true))
+                   .SelectMany(x => x.Select(p => p as KeyAttribute))
+                   .FirstOrDefault(x => x != null),
+                x => x.KeyType);
 
-        public KeyType GetKeyType<T>()
+        private TResult LoadAndCacheInDictionary<T, TSave, TResult>(IDictionary<Type, TSave> cache, Func<TSave> load, Func<TSave, TResult> convert) where TSave : class
         {
-            if (_keyTypeMap.TryGetValue(typeof(T), out var keyType))
+            if (cache.TryGetValue(typeof(T), out var res))
             {
-                return keyType;
+                return convert(res);
             }
 
-            var property = typeof(T).GetProperties()
-                .Select(x => x.GetCustomAttributes(true))
-                .SelectMany(x => x.Select(p => p as KeyAttribute))
-                .FirstOrDefault(x => x != null);
-            if (property == null)
+            var result = load();
+            if (result == null)
             {
-                throw new InvalidOperationException("Cannot operate on entity without key");
+                throw new InvalidOperationException("Result cannot be null.");
             }
 
-            _keyTypeMap.Add(typeof(T), property.KeyType);
-            return property.KeyType;
+            cache.Add(typeof(T), result);
+            return convert(result);
         }
     }
 }

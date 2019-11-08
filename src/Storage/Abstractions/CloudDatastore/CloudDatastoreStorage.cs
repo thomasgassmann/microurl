@@ -35,7 +35,7 @@
         public Task<IKey> SaveAsync(T entity)
         {
             var keyValue = _entityAnalyzer.GetKeyValue(entity);
-            keyValue.
+            
         }
 
         private Key GetKey(KeyType keyType, IKey key, KeyFactory keyFactory)
