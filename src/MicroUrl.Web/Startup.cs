@@ -65,7 +65,6 @@ namespace MicroUrl
             services.AddScoped<ITextStorageService, TextStorageService>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
             services.AddScoped<IVisitStorageService, VisitStorageService>();
-            services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
 
             services.AddScoped<IUrlService, UrlService>();
             services.AddScoped<ITextService, TextService>();

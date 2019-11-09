@@ -8,6 +8,7 @@ namespace MicroUrl.Storage
     using MicroUrl.Storage.Abstractions.Shared;
     using MicroUrl.Storage.Abstractions.Shared.Implementation;
     using MicroUrl.Storage.Configuration;
+    using MicroUrl.Storage.Implementation;
 
     public static class CollectionExtensions
     {
@@ -19,6 +20,7 @@ namespace MicroUrl.Storage
             services.AddSingleton<IEntityAnalyzer, EntityAnalyzer>();
             services.AddSingleton<IKeyFactory, DefaultKeyFactory>();
             services.AddScoped<IStorageFactory, CloudDatastoreStorageFactory>();
+            services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
         }
     }
 }
