@@ -8,6 +8,7 @@
     public class EntityAnalyzer : IEntityAnalyzer
     {
         private readonly IDictionary<Type, PropertyInfo> _keyPropertyMap = new Dictionary<Type, PropertyInfo>();
+        private readonly IDictionary<Type, IList<object>> _serializationInfoMap = new Dictionary<Type, IList<object>>();
         private readonly IDictionary<Type, EntityNameAttribute> _entityNameMap = new Dictionary<Type, EntityNameAttribute>();
 
         private readonly IKeyFactory _keyFactory;
@@ -40,6 +41,30 @@
             }
         }
 
+        public IList<PropertySerializationInfo<T>> GetSerializationInfo<T>() =>
+            LoadAndCacheInDictionary<T, IList<object>, IList<PropertySerializationInfo<T>>>(
+                _serializationInfoMap,
+                () =>
+                {
+                    var list = new List<object>();
+
+                    var keyProperty = GetKeyProperty<T>();
+                    var properties = typeof(T).GetProperties()
+                        .Where(x => x.Name != keyProperty.Name)
+                        .Select(x => new PropertySerializationInfo<T>
+                        {
+                            Get = obj => x.GetValue(obj),
+                            Set = (obj, value) => x.SetValue(obj, value),
+                            Property = x.Name,
+                            ExcludeFromIndexes = x.GetCustomAttribute<ExcludeFromIndexesAttribute>() != null,
+                            PropertyType = GetPropertyType(x)
+                        });
+                    
+                    list.AddRange(properties);
+                    return list;
+                },
+                x => x.Select(x => (PropertySerializationInfo<T>)x).ToList());
+
         public string GetEntityName<T>() =>
             LoadAndCacheInDictionary<T, EntityNameAttribute, string>(
                 _entityNameMap,
@@ -49,6 +74,31 @@
         public KeyType GetKeyType<T>() =>
             ((KeyAttribute) GetKeyProperty<T>().GetCustomAttributes(typeof(KeyAttribute)).First()).KeyType;
 
+        private PropertyType GetPropertyType(PropertyInfo info)
+        {
+            if (info.PropertyType == typeof(string))
+            {
+                return PropertyType.String;
+            }
+
+            if (info.PropertyType == typeof(int) || info.PropertyType == typeof(long))
+            {
+                return PropertyType.Long;
+            }
+
+            if (info.PropertyType == typeof(float) || info.PropertyType == typeof(double))
+            {
+                return PropertyType.Double;
+            }
+
+            if (info.PropertyType == typeof(DateTime))
+            {
+                return PropertyType.DateTime;
+            }
+
+            throw new ArgumentException();
+        }
+        
         private PropertyInfo GetKeyProperty<T>() =>
             LoadAndCacheInDictionary<T, PropertyInfo, PropertyInfo>(
                 _keyPropertyMap,
