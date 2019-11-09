@@ -29,6 +29,10 @@
         public async Task<T> LoadAsync(IKey key)
         {
             var resultEntity = await LookupEntityAsync(key);
+            if (resultEntity == null)
+            {
+                return null;
+            }
 
             var result = new T();
             
