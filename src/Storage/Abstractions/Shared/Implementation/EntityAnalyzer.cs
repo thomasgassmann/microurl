@@ -96,6 +96,11 @@
                 return PropertyType.DateTime;
             }
 
+            if (info.PropertyType == typeof(bool))
+            {
+                return PropertyType.Boolean;
+            }
+
             throw new ArgumentException();
         }
         

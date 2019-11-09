@@ -54,15 +54,16 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 _ => throw new ArgumentException()
             });
         }
-        
+
         private object GetPropertyValueFromValue(PropertyType type, Value value) =>
             type switch
             {
-                PropertyType.Double => (object)value.DoubleValue,
-                PropertyType.Long => (object)value.IntegerValue,
-                PropertyType.String => (object)value.StringValue,
-                PropertyType.DateTime => (object)value.TimestampValue.ToDateTime()
-            };
+                PropertyType.Double => (object) value.DoubleValue,
+                PropertyType.Long => (object) value.IntegerValue,
+                PropertyType.String => (object) value.StringValue,
+                PropertyType.DateTime => (object) value.TimestampValue.ToDateTime(),
+                PropertyType.Boolean => (object) value.BooleanValue
+    };
 
         private Value GetValueFromPropertyValue(PropertyType type, object value) =>
             type switch
@@ -82,6 +83,10 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 PropertyType.DateTime => new Value
                 {
                     TimestampValue = Timestamp.FromDateTime((DateTime) value)
+                },
+                PropertyType.Boolean => new Value
+                {
+                    BooleanValue = (boolean)value
                 }
             };
     }
