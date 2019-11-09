@@ -57,14 +57,11 @@ namespace MicroUrl
 
             services.Configure<MicroUrlSettings>(_configuration.GetSection(nameof(MicroUrlSettings)));
 
-            services.AddStorage();
+            services.AddStorage(_configuration);
 
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
 
-            services.AddScoped<IUrlStorageService, UrlStorageService>();
-            services.AddScoped<ITextStorageService, TextStorageService>();
             services.AddScoped<IVisitorTracker, VisitorTracker>();
-            services.AddScoped<IVisitStorageService, VisitStorageService>();
 
             services.AddScoped<IUrlService, UrlService>();
             services.AddScoped<ITextService, TextService>();

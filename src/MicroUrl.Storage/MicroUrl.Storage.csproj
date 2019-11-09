@@ -15,10 +15,6 @@
     </ItemGroup>
     
     <ItemGroup>
-      <Folder Include="Logical" />
-    </ItemGroup>
-    
-    <ItemGroup>
       <ProjectReference Include="..\MicroUrl.Common\MicroUrl.Common.csproj" />
     </ItemGroup>
 
