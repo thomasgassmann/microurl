@@ -3,7 +3,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
     using Google.Cloud.Datastore.V1;
     using MicroUrl.Storage.Abstractions.Shared;
 
-    public class CloudDatastoreEntitySerializer<T>
+    public class CloudDatastoreEntitySerializer<T> : IEntitySerializer<T, Entity>
     {
         private readonly IEntityAnalyzer _analyzer;
         
@@ -30,7 +30,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
 
         public void Deserialize(Entity source, T destination)
         {
-            
+            throw new System.NotImplementedException();
         }
     }
 }
