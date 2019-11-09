@@ -16,6 +16,11 @@ namespace MicroUrl
     using MicroUrl.Stats;
     using MicroUrl.Stats.Implementation;
     using MicroUrl.Storage;
+    using MicroUrl.Storage.Abstractions;
+    using MicroUrl.Storage.Abstractions.CloudDatastore;
+    using MicroUrl.Storage.Abstractions.Implementation;
+    using MicroUrl.Storage.Abstractions.Shared;
+    using MicroUrl.Storage.Abstractions.Shared.Implementation;
     using MicroUrl.Storage.Implementation;
     using MicroUrl.Text;
     using MicroUrl.Text.Implementation;
@@ -52,8 +57,11 @@ namespace MicroUrl
 
             services.Configure<MicroUrlSettings>(_configuration.GetSection(nameof(MicroUrlSettings)));
 
-            services.AddSingleton<IStorageFactory, StorageFactory>();
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
+
+            services.AddSingleton<IEntityAnalyzer, EntityAnalyzer>();
+            services.AddSingleton<IKeyFactory, DefaultKeyFactory>();
+            services.AddScoped<IStorageFactory, CloudDatastoreStorageFactory>();
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<ITextStorageService, TextStorageService>();

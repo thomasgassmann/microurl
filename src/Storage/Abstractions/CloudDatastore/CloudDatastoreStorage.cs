@@ -23,6 +23,7 @@
             _options = options;
             _entityAnalyzer = entityAnalyzer;
             _serializer = new CloudDatastoreEntitySerializer<T>(entityAnalyzer);
+            _keyFactory = keyFactory;
         }
 
         public async Task<T> LoadAsync(IKey key)
