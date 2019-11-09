@@ -28,15 +28,19 @@
 
         public async Task<T> LoadAsync(IKey key)
         {
-            var (storage, keyFactory) = GetStorageAndKeyFactory();
-            var dataStoreKey = GetKey(key, keyFactory);
-            var resultEntity = await storage.LookupAsync(dataStoreKey);
+            var resultEntity = await LookupEntityAsync(key);
 
             var result = new T();
             
             _serializer.Deserialize(resultEntity, result);
 
             return result;
+        }
+
+        public async Task<bool> ExistsAsync(IKey key)
+        {
+            var resultEntity = await LookupEntityAsync(key);
+            return resultEntity != null;
         }
 
         public async Task<IKey> SaveAsync(T entity)
@@ -66,6 +70,14 @@
             
             await storage.UpdateAsync(newEntity);
             return keyValue;
+        }
+
+        private async Task<Entity> LookupEntityAsync(IKey key)
+        {
+            var (storage, keyFactory) = GetStorageAndKeyFactory();
+            var dataStoreKey = GetKey(key, keyFactory);
+            var resultEntity = await storage.LookupAsync(dataStoreKey);
+            return resultEntity;
         }
 
         private (DatastoreDb, KeyFactory) GetStorageAndKeyFactory()

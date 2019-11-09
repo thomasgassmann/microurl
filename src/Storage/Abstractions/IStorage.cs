@@ -7,5 +7,7 @@ namespace MicroUrl.Storage.Abstractions
         Task<IKey> SaveAsync(T entity);
 
         Task<T> LoadAsync(IKey key);
+
+        Task<bool> ExistsAsync(IKey key);
     }
 }
