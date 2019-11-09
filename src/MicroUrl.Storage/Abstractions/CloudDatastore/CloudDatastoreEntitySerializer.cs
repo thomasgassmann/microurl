@@ -2,7 +2,6 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
 {
     using System;
     using System.Linq;
-    using Google.Apis.Auth.OAuth2.Web;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.WellKnownTypes;
     using MicroUrl.Storage.Abstractions.Shared;
