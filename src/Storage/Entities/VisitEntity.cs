@@ -11,6 +11,7 @@ namespace MicroUrl.Storage.Entities
         
         public string Key { get; set; }
 
+        [ExcludeFromIndexes]
         public string Headers { get; set; }
 
         public DateTime Created { get; set; }
