@@ -1,9 +1,12 @@
 namespace MicroUrl.Storage.Entities
 {
     using System;
+    using MicroUrl.Storage.Abstractions;
 
+    [EntityName("visit")]
     public class VisitEntity
     {
+        [Key(KeyType.AutoId)]
         public long Id { get; set; }
         
         public string Key { get; set; }
