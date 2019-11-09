@@ -1,4 +1,4 @@
-namespace MicroUrl.Urls.Implementation
+namespace MicroUrl.Storage.Implementation
 {
     using System;
     using System.Text;
@@ -53,7 +53,7 @@ namespace MicroUrl.Urls.Implementation
 
         private async Task<bool> ExistsAsync(string key)
         {
-            var storage = _storageFactory.CreateStorage<RedirectableEntity>();
+            var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
             return await storage.ExistsAsync(_keyFactory.CreateFromString(key));
         }
     }

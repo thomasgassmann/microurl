@@ -1,4 +1,4 @@
-namespace MicroUrl.Infrastructure
+namespace MicroUrl.Common
 {
     using System;
 

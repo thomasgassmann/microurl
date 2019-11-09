@@ -1,6 +1,6 @@
-namespace MicroUrl.Urls
+namespace MicroUrl.Storage
 {
-    using MicroUrl.Infrastructure;
+    using MicroUrl.Common;
 
     public class KeyGenerationException : MicroUrlException
     {

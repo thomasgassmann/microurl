@@ -2,21 +2,21 @@
 {
     using Google.Cloud.Datastore.V1;
     using Microsoft.Extensions.Options;
-    using MicroUrl.Infrastructure.Settings;
     using MicroUrl.Storage.Abstractions.Shared;
     using System;
     using System.Linq;
     using System.Threading.Tasks;
+    using MicroUrl.Storage.Configuration;
 
     public class CloudDatastoreStorage<T> : IStorage<T> where T : class, new()
     {
-        private readonly IOptions<MicroUrlSettings> _options;
+        private readonly IOptions<MicroUrlStorageConfiguration> _options;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
         private readonly IEntitySerializer<T, Entity> _serializer;
 
         public CloudDatastoreStorage(
-            IOptions<MicroUrlSettings> options,
+            IOptions<MicroUrlStorageConfiguration> options,
             IEntityAnalyzer entityAnalyzer,
             IKeyFactory keyFactory)
         {
@@ -108,13 +108,13 @@
                 case KeyType.AutoId:
                     return key.LongValue == default
                         ? keyFactory.CreateIncompleteKey()
-                        : keyFactory.CreateKey(key.LongValue.Value);
+                        : keyFactory.CreateKey(key.LongValue);
                 default:
                     throw new InvalidOperationException("No key type specified");
             }
         }
 
         private DatastoreDb CreateStorage() =>
-            DatastoreDb.Create(_options.Value.Storage.Project);
+            DatastoreDb.Create(_options.Value.Project);
     }
 }

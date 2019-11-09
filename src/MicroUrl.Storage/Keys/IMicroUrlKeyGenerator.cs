@@ -1,4 +1,4 @@
-namespace MicroUrl.Urls
+namespace MicroUrl.Storage
 {
     using System.Threading.Tasks;
 

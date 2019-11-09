@@ -57,11 +57,9 @@ namespace MicroUrl
 
             services.Configure<MicroUrlSettings>(_configuration.GetSection(nameof(MicroUrlSettings)));
 
-            services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
+            services.AddStorage();
 
-            services.AddSingleton<IEntityAnalyzer, EntityAnalyzer>();
-            services.AddSingleton<IKeyFactory, DefaultKeyFactory>();
-            services.AddScoped<IStorageFactory, CloudDatastoreStorageFactory>();
+            services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
 
             services.AddScoped<IUrlStorageService, UrlStorageService>();
             services.AddScoped<ITextStorageService, TextStorageService>();

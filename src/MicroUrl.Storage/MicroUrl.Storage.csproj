@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.0</TargetFramework>
+    </PropertyGroup>
+    
+    <ItemGroup>
+        <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.0.0" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
+        <PackageReference Include="Google.Cloud.Datastore.V1" Version="2.2.0-beta02" />
+        <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <Folder Include="Logical" />
+    </ItemGroup>
+    
+    <ItemGroup>
+      <ProjectReference Include="..\MicroUrl.Common\MicroUrl.Common.csproj" />
+    </ItemGroup>
+
+</Project>

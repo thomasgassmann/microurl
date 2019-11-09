@@ -1,3 +1,3 @@
 #!/bin/bash
 
-gcloud datastore indexes create src/index.yml
+gcloud datastore indexes create src/MicroUrl.Web/index.yml

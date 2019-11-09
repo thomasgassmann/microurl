@@ -2,9 +2,9 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
 {
     using System;
     using System.Linq;
+    using Google.Apis.Auth.OAuth2.Web;
     using Google.Cloud.Datastore.V1;
     using Google.Protobuf.WellKnownTypes;
-    using Microsoft.AspNetCore.Server.IIS.Core;
     using MicroUrl.Storage.Abstractions.Shared;
     using Value = Google.Cloud.Datastore.V1.Value;
 
@@ -62,8 +62,9 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 PropertyType.Long => (object) value.IntegerValue,
                 PropertyType.String => (object) value.StringValue,
                 PropertyType.DateTime => (object) value.TimestampValue.ToDateTime(),
-                PropertyType.Boolean => (object) value.BooleanValue
-    };
+                PropertyType.Boolean => (object) value.BooleanValue,
+                _ => throw new ArgumentException(type.ToString())
+            };
 
         private Value GetValueFromPropertyValue(PropertyType type, object value) =>
             type switch
@@ -86,8 +87,9 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 },
                 PropertyType.Boolean => new Value
                 {
-                    BooleanValue = (boolean)value
-                }
+                    BooleanValue = (bool)value
+                },
+                _ => throw new ArgumentException(type.ToString())
             };
     }
 }
