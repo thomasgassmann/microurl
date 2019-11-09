@@ -2,7 +2,7 @@ namespace MicroUrl.Storage.Dto
 {
     using System;
 
-    public abstract class RedirectableEntity
+    public abstract class Redirectable
     {
         public string Key { get; set; }
 

@@ -10,11 +10,12 @@
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="3.0.0" />
         <PackageReference Include="Google.Cloud.Datastore.V1" Version="2.2.0-beta02" />
         <PackageReference Include="Microsoft.Extensions.Options" Version="3.0.0" />
+        <PackageReference Include="AutoMapper" Version="9.0.0" />
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
     </ItemGroup>
     
     <ItemGroup>
       <Folder Include="Logical" />
-      <Folder Include="Profiles" />
     </ItemGroup>
     
     <ItemGroup>

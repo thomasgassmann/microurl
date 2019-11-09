@@ -1,6 +1,6 @@
 namespace MicroUrl.Storage.Dto
 {
-    public class MicroText : RedirectableEntity
+    public class MicroText : Redirectable
     {
         public string Language { get; set; }
 
