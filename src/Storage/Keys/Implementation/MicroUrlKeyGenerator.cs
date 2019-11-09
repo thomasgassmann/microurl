@@ -3,21 +3,22 @@ namespace MicroUrl.Urls.Implementation
     using System;
     using System.Text;
     using System.Threading.Tasks;
-    using Google.Cloud.Datastore.V1;
-    using MicroUrl.Storage;
+    using MicroUrl.Storage.Abstractions;
     using MicroUrl.Storage.Entities;
-    using MicroUrl.Storage.Implementation;
 
     public class MicroUrlKeyGenerator : IMicroUrlKeyGenerator
     {
         private const string Characters = "abcdefghiklmnopqrstuvwxyz0123456789";
         
         private readonly Random _random = new Random();
+        
         private readonly IStorageFactory _storageFactory;
+        private readonly IKeyFactory _keyFactory;
 
-        public MicroUrlKeyGenerator(IStorageFactory storageFactory)
+        public MicroUrlKeyGenerator(IStorageFactory storageFactory, IKeyFactory keyFactory)
         {
             _storageFactory = storageFactory;
+            _keyFactory = keyFactory;
         }
         
         public async Task<string> GenerateKeyAsync(string customKey = null)
@@ -52,11 +53,8 @@ namespace MicroUrl.Urls.Implementation
 
         private async Task<bool> ExistsAsync(string key)
         {
-            var storage = _storageFactory.GetStorage();
-            var entity = await storage.LookupAsync(new Key().WithElement(
-                UrlBaseStorageService<RedirectableEntity>.MicroUrlStorageKey,
-                key));
-            return entity != null;
+            var storage = _storageFactory.CreateStorage<RedirectableEntity>();
+            return await storage.ExistsAsync(_keyFactory.CreateFromString(key));
         }
     }
 }
