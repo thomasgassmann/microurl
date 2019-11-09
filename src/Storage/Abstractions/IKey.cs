@@ -2,10 +2,10 @@
 {
     public interface IKey
     {
-        string StringValue { get; set; }
+        string StringValue { get; }
 
-        long? LongValue { get; set; }
-
-        public bool IsNew => StringValue == null && LongValue == null;
+        long? LongValue { get; }
+        
+        KeyType KeyType { get; }
     }
 }

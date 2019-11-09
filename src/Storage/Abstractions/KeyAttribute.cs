@@ -8,6 +8,6 @@
         public KeyAttribute(KeyType keyType) =>
             KeyType = keyType;
 
-        public KeyType KeyType { get; set; }
+        public KeyType KeyType { get; }
     }
 }

@@ -20,13 +20,8 @@
 
         public async Task<T> LoadAsync(IKey key)
         {
-            var keyType = _entityAnalyzer.GetKeyType<T>();
-            var entityName = _entityAnalyzer.GetEntityName<T>();
-
-            var storage = CreateStorage();
-            var keyFactory = storage.CreateKeyFactory(entityName);
-
-            var dataStoreKey = GetKey(keyType, key, keyFactory);
+            var (storage, keyFactory) = GetStorageAndKeyFactory();
+            var dataStoreKey = GetKey(key, keyFactory);
             var results = await storage.LookupAsync(dataStoreKey);
 
             
@@ -34,13 +29,26 @@
 
         public Task<IKey> SaveAsync(T entity)
         {
+            var (storage, keyFactory) = GetStorageAndKeyFactory();
             var keyValue = _entityAnalyzer.GetKeyValue(entity);
+            var isNew = keyValue.LongValue == null && keyValue.StringValue == null;
+            var key = GetKey(keyValue, keyFactory);
             
         }
 
-        private Key GetKey(KeyType keyType, IKey key, KeyFactory keyFactory)
+        private (DatastoreDb, KeyFactory) GetStorageAndKeyFactory()
         {
-            switch (keyType)
+            var entityName = _entityAnalyzer.GetEntityName<T>();
+
+            var storage = CreateStorage();
+            var keyFactory = storage.CreateKeyFactory(entityName);
+
+            return (storage, keyFactory);
+        }
+
+        private Key GetKey(IKey key, KeyFactory keyFactory)
+        {
+            switch (key.KeyType)
             {
                 case KeyType.StringId:
                     if (key.StringValue == null)
@@ -50,7 +58,9 @@
 
                     return keyFactory.CreateKey(key.StringValue);
                 case KeyType.AutoId:
-                    return key.IsNew ? keyFactory.CreateIncompleteKey() : keyFactory.CreateKey(key.LongValue.Value);
+                    return !key.LongValue.HasValue 
+                        ? keyFactory.CreateIncompleteKey()
+                        : keyFactory.CreateKey(key.LongValue.Value);
                 default:
                     throw new InvalidOperationException("No key type specified");
             }
