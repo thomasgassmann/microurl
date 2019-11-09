@@ -4,7 +4,7 @@
     {
         string StringValue { get; }
 
-        long? LongValue { get; }
+        long LongValue { get; }
         
         KeyType KeyType { get; }
     }

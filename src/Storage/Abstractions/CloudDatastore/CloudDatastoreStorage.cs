@@ -13,6 +13,7 @@
         private readonly IOptions<MicroUrlSettings> _options;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
+        private readonly IEntitySerializer<T, Entity> _serializer;
 
         public CloudDatastoreStorage(
             IOptions<MicroUrlSettings> options,
@@ -21,15 +22,20 @@
         {
             _options = options;
             _entityAnalyzer = entityAnalyzer;
+            _serializer = new CloudDatastoreEntitySerializer<T>(entityAnalyzer);
         }
 
         public async Task<T> LoadAsync(IKey key)
         {
             var (storage, keyFactory) = GetStorageAndKeyFactory();
             var dataStoreKey = GetKey(key, keyFactory);
-            var results = await storage.LookupAsync(dataStoreKey);
+            var resultEntity = await storage.LookupAsync(dataStoreKey);
 
+            var result = new T();
             
+            _serializer.Deserialize(resultEntity, result);
+
+            return result;
         }
 
         public async Task<IKey> SaveAsync(T entity)
@@ -37,10 +43,11 @@
             var (storage, keyFactory) = GetStorageAndKeyFactory();
             
             var keyValue = _entityAnalyzer.GetKeyValue(entity);
-            var isNew = keyValue.LongValue == null && keyValue.StringValue == null;
+            var isNew = keyValue.LongValue == default && keyValue.StringValue == null;
             var key = GetKey(keyValue, keyFactory);
 
             var newEntity = new Entity { Key = key };
+            _serializer.Serialize(entity, newEntity);
             if (isNew)
             {
                 var newKey = await storage.InsertAsync(newEntity);
@@ -82,7 +89,7 @@
 
                     return keyFactory.CreateKey(key.StringValue);
                 case KeyType.AutoId:
-                    return !key.LongValue.HasValue 
+                    return key.LongValue == default
                         ? keyFactory.CreateIncompleteKey()
                         : keyFactory.CreateKey(key.LongValue.Value);
                 default:

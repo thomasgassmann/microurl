@@ -50,14 +50,14 @@
 
                     var keyProperty = GetKeyProperty<T>();
                     var properties = typeof(T).GetProperties()
-                        .Where(x => x.Name != keyProperty.Name)
                         .Select(x => new PropertySerializationInfo<T>
                         {
                             Get = obj => x.GetValue(obj),
                             Set = (obj, value) => x.SetValue(obj, value),
                             Property = x.Name,
                             ExcludeFromIndexes = x.GetCustomAttribute<ExcludeFromIndexesAttribute>() != null,
-                            PropertyType = GetPropertyType(x)
+                            PropertyType = GetPropertyType(x),
+                            IsKey = keyProperty.Name == x.Name
                         });
                     
                     list.AddRange(properties);

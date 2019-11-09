@@ -6,6 +6,8 @@ namespace MicroUrl.Storage.Abstractions.Shared
     {
         public string Property { get; set; }
 
+        public bool IsKey { get; set; }
+
         public Action<T, object> Set { get; set; }
 
         public Func<T, object> Get { get; set; }
