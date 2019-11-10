@@ -27,6 +27,8 @@ namespace MicroUrl.Storage
 
             services.AddScoped<IRedirectableStore, RedirectableStore>();
             services.AddScoped<IMicroTextStore, MicroTextStore>();
+            services.AddScoped<IVisitStore, VisitStore>();
+            services.AddScoped<IMicroUrlStore, MicroUrlStore>();
         }
     }
 }

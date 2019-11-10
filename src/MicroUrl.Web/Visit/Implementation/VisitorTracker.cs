@@ -1,33 +1,30 @@
 namespace MicroUrl.Visit.Implementation
 {
-    using System;
     using System.Text;
     using System.Threading.Tasks;
-    using Google.Protobuf.WellKnownTypes;
     using Microsoft.AspNetCore.Http;
-    using MicroUrl.Storage;
-    using MicroUrl.Storage.Entities;
+    using MicroUrl.Storage.Dto;
+    using MicroUrl.Storage.Stores;
 
     public class VisitorTracker : IVisitorTracker
     {
-        private readonly IVisitStorageService _visitStorageService;
+        private readonly IVisitStore _visitStore;
 
         private readonly IGoogleAnalyticsTracker _googleAnalyticsTracker;
         
         public VisitorTracker(
-            IVisitStorageService visitStorageService,
+            IVisitStore visitStore,
             IGoogleAnalyticsTracker googleAnalyticsTracker)
         {
-            _visitStorageService = visitStorageService;
+            _visitStore = visitStore;
             _googleAnalyticsTracker = googleAnalyticsTracker;
         }
         
         public async Task SaveVisitAsync(string key, HttpContext context)
         {
             var gaTask = TrackGoogleAnalytics(key, context);
-            var storageTask = _visitStorageService.CreateAsync(new VisitEntity
+            var storageTask = _visitStore.CreateAsync(new Visit
             {
-                Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Headers = GetHeaders(context),
                 Ip = GetIpAddress(context),
                 Key = key

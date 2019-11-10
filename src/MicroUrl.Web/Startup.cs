@@ -1,7 +1,6 @@
 namespace MicroUrl
 {
     using Microsoft.AspNetCore.Builder;
-    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
     using Microsoft.Extensions.Configuration;
@@ -16,12 +15,6 @@ namespace MicroUrl
     using MicroUrl.Stats;
     using MicroUrl.Stats.Implementation;
     using MicroUrl.Storage;
-    using MicroUrl.Storage.Abstractions;
-    using MicroUrl.Storage.Abstractions.CloudDatastore;
-    using MicroUrl.Storage.Abstractions.Implementation;
-    using MicroUrl.Storage.Abstractions.Shared;
-    using MicroUrl.Storage.Abstractions.Shared.Implementation;
-    using MicroUrl.Storage.Implementation;
     using MicroUrl.Text;
     using MicroUrl.Text.Implementation;
     using MicroUrl.Urls;
