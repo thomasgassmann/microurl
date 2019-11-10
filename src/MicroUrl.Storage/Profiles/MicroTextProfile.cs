@@ -11,7 +11,8 @@ namespace MicroUrl.Storage.Profiles
             CreateMap<MicroUrlEntity, MicroText>()
                 .IncludeBase<MicroUrlEntity, Redirectable>()
                 .ForMember(x => x.Language, x => x.MapFrom(p => p.Language))
-                .ForMember(x => x.Text, x => x.MapFrom(p => p.Text));
+                .ForMember(x => x.Text, x => x.MapFrom(p => p.Text))
+                .ReverseMap();
         }
     }
 }

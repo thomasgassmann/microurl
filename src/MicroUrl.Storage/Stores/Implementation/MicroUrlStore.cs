@@ -3,21 +3,21 @@ namespace MicroUrl.Storage.Stores.Implementation
     using System.Threading.Tasks;
     using MicroUrl.Storage.Dto;
 
-    public class MicroTextStore : IMicroTextStore
+    public class MicroUrlStore : IMicroUrlStore
     {
         private readonly IRedirectableStore _redirectableStore;
-
-        public MicroTextStore(IRedirectableStore redirectableStore)
+        
+        public MicroUrlStore(IRedirectableStore redirectableStore)
         {
             _redirectableStore = redirectableStore;
         }
-
-        public async Task<MicroText> LoadAsync(string key)
+        
+        public async Task<MicroUrl> LoadAsync(string key)
         {
             var result = await _redirectableStore.LoadAsync(key);
-            if (result is MicroText text)
+            if (result is MicroUrl url)
             {
-                return text;
+                return url;
             }
 
             return null;

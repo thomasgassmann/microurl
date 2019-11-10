@@ -26,6 +26,7 @@ namespace MicroUrl.Storage
             services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
 
             services.AddScoped<IRedirectableStore, RedirectableStore>();
+            services.AddScoped<IMicroTextStore, MicroTextStore>();
         }
     }
 }

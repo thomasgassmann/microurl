@@ -11,7 +11,8 @@ namespace MicroUrl.Storage.Profiles
             CreateMap<MicroUrlEntity, Redirectable>()
                 .ForMember(x => x.Created, x => x.MapFrom(p => p.Created))
                 .ForMember(x => x.Enabled, x => x.MapFrom(p => p.Enabled))
-                .ForMember(x => x.Key, x => x.MapFrom(p => p.Key));
+                .ForMember(x => x.Key, x => x.MapFrom(p => p.Key))
+                .ReverseMap();
         }
     }
 }

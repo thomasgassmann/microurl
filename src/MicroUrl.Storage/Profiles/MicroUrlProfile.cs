@@ -10,7 +10,8 @@ namespace MicroUrl.Storage.Profiles
         {
             CreateMap<MicroUrlEntity, MicroUrl>()
                 .IncludeBase<MicroUrlEntity, Redirectable>()
-                .ForMember(x => x.Url, x => x.MapFrom(p => p.Url));
+                .ForMember(x => x.Url, x => x.MapFrom(p => p.Url))
+                .ReverseMap();
         }
     }
 }

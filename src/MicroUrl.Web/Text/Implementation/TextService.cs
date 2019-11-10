@@ -5,19 +5,18 @@ namespace MicroUrl.Text.Implementation
     using Google.Protobuf.WellKnownTypes;
     using MicroUrl.Storage;
     using MicroUrl.Storage.Entities;
+    using MicroUrl.Storage.Stores;
     using MicroUrl.Urls;
 
     public class TextService : ITextService
     {
-        private readonly ITextStorageService _textStorageService;
-        private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
+        private readonly IMicroTextStore _microTextStore;
 
         public TextService(
-            ITextStorageService textStorageService,
+            IMicroTextStore microTextStore,
             IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
-            _textStorageService = textStorageService;
-            _microUrlKeyGenerator = microUrlKeyGenerator;
+            _microTextStore = microTextStore;
         }
 
         public async Task<TextWithLanguage> LoadAsync(string key) =>
@@ -56,7 +55,7 @@ namespace MicroUrl.Text.Implementation
 
         private async Task<TextWithLanguage> LoadSingleTextWithLanguageAsync(string key)
         {
-            var result = await _textStorageService.LoadAsync(key);
+            var result = await _microTextStore.LoadAsync(key);
             if (result == null || !result.Enabled)
             {
                 return null;

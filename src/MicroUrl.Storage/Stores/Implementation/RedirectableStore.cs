@@ -37,5 +37,27 @@ namespace MicroUrl.Storage.Stores.Implementation
                     throw new ArgumentException("Invalid entity type");
             }
         }
+
+        public async Task<string> SaveAsync(Redirectable redirectable)
+        {
+            var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
+            var entityToSave = _mapper.Map<MicroUrlEntity>(redirectable);
+            var type = redirectable.GetType();
+            if (type == typeof(MicroText))
+            {
+                entityToSave.Type = MicroUrlEntity.TextType;
+            }
+            else if (type == typeof(MicroUrl))
+            {
+                entityToSave.Type = MicroUrlEntity.UrlType;
+            }
+            else
+            {
+                throw new ArgumentException(type.FullName);
+            }
+
+            var key = await storage.SaveAsync(entityToSave);
+            return key.StringValue;
+        }
     }
 }
