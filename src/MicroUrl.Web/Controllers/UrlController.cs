@@ -20,11 +20,11 @@ namespace MicroUrl.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> SaveAsync([FromBody] CreateUrlModel urlModel)
+        public async Task<IActionResult> CreateAsync([FromBody] CreateUrlModel urlModel)
         {
             try
             {
-                var key = await _urlService.SaveAsync(urlModel.Url, urlModel.Key?.ToLower());
+                var key = await _urlService.CreateAsync(urlModel.Url, urlModel.Key?.ToLower());
                 return this.CreatedUrl(key);
             }
             catch (KeyGenerationException)

@@ -20,7 +20,7 @@ namespace MicroUrl.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromBody] CreateTextModel createTextModel)
         {
-            var result = await _textService.SaveAsync(createTextModel.Language, createTextModel.Content);
+            var result = await _textService.CreateAsync(createTextModel.Language, createTextModel.Content);
             return this.CreatedUrl(result);
         }
 

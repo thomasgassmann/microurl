@@ -41,7 +41,7 @@ namespace MicroUrl.Web.Visit.Implementation
                 return forwardedFor;
             }
 
-            context.Connection.RemoteIpAddress.ToString();
+            return context.Connection.RemoteIpAddress.ToString();
         }
 
         private async Task TrackGoogleAnalytics(string key, HttpContext context)

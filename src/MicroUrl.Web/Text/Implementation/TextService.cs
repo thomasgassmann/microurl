@@ -36,9 +36,9 @@ namespace MicroUrl.Web.Text.Implementation
             };
         }
 
-        public async Task<string> SaveAsync(string language, string content)
+        public async Task<string> CreateAsync(string language, string content)
         {
-            return await _microTextStore.SaveAsync(new MicroText
+            return await _microTextStore.CreateAsync(new MicroText
             {
                 Enabled = true,
                 Language = language,

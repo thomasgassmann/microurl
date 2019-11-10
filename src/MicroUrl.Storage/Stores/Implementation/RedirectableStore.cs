@@ -46,7 +46,7 @@ namespace MicroUrl.Storage.Stores.Implementation
             }
         }
 
-        public async Task<string> SaveAsync(Redirectable redirectable)
+        public async Task<string> CreateAsync(Redirectable redirectable)
         {
             var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
             var entityToSave = _mapper.Map<MicroUrlEntity>(redirectable);
@@ -68,15 +68,11 @@ namespace MicroUrl.Storage.Stores.Implementation
             {
                 var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync();
                 entityToSave.Key = generatedKey;
-                entityToSave.Created = DateTime.Now;
-                var key = await storage.CreateAsync(entityToSave);
-                return key.StringValue;
             }
-            else
-            {
-                var key = await storage.UpdateAsync(entityToSave);
-                return key.StringValue;
-            }
+            
+            entityToSave.Created = DateTime.Now;
+            var key = await storage.CreateAsync(entityToSave);
+            return key.StringValue;
         }
     }
 }

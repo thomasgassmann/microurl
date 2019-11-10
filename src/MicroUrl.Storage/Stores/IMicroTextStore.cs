@@ -5,7 +5,7 @@ namespace MicroUrl.Storage.Stores
 
     public interface IMicroTextStore
     {
-        Task<string> SaveAsync(MicroText microText);
+        Task<string> CreateAsync(MicroText microText);
         
         Task<MicroText> LoadAsync(string key);
     }

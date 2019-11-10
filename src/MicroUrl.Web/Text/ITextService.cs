@@ -4,7 +4,7 @@ namespace MicroUrl.Web.Text
 
     public interface ITextService
     {
-        Task<string> SaveAsync(string language, string content);
+        Task<string> CreateAsync(string language, string content);
 
         Task<TextWithLanguage> LoadAsync(string key);
 
