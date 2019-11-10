@@ -23,6 +23,7 @@ namespace MicroUrl.Web.Visit.Implementation
         
         public async Task TrackAsync(string key, HttpContext context)
         {
+            // TODO: this solution seems quite ugly
             var blockedHeaderList = new[]
             {
                 "Connection",

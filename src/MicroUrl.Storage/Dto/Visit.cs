@@ -10,6 +10,8 @@ namespace MicroUrl.Storage.Dto
         
         public string Headers { get; set; }
 
+        public string Ip { get; set; }
+
         public DateTime Created { get; set; }
     }
 }

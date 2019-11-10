@@ -26,9 +26,22 @@ namespace MicroUrl.Web.Visit.Implementation
             var storageTask = _visitStore.CreateAsync(new Visit
             {
                 Headers = GetHeaders(context),
+                Ip = GetIpAddress(context),
                 Key = key
             });
             await Task.WhenAll(gaTask, storageTask);
+        }
+
+        private string GetIpAddress(HttpContext context)
+        {
+            const string forwardedForHeader = "x-forwarded-for";
+            
+            if (context.Request.Headers.TryGetValue(forwardedForHeader, out var forwardedFor))
+            {
+                return forwardedFor;
+            }
+
+            context.Connection.RemoteIpAddress.ToString();
         }
 
         private async Task TrackGoogleAnalytics(string key, HttpContext context)

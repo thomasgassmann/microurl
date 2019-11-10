@@ -65,14 +65,15 @@ namespace MicroUrl.Web.Stats.Implementation
                 .ToList();
             var stats = new List<StatCount> { allTimeStats };
             dayStats.ForEach(stats.Add);
+            
             await foreach (var item in _visitStore.GetVisitsOfRediretableBetween(key, from, to))
             {
                 foreach (var stat in stats.Where(stat => stat.VisitApplies(item)))
                 {
-                    stat.Visitors += 1;
+                    stat.Visitors++;
                     if (!stat.SeenVisitors.Contains(item.Ip))
                     {
-                        stat.UniqueVisitors += 1;
+                        stat.UniqueVisitors++;
                         stat.SeenVisitors.Add(item.Ip);
                     }
                 }

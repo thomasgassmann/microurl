@@ -10,3 +10,5 @@ Url shortener
 - stats for texts
 - google adwords
 - user authentication
+- add custom keys back
+- use hostedservice to send google analytics requests, won't work with cloud run?
