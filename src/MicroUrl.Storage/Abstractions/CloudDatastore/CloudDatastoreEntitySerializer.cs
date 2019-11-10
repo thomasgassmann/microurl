@@ -83,7 +83,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 },
                 PropertyType.DateTime => new Value
                 {
-                    TimestampValue = Timestamp.FromDateTime((DateTime) value)
+                    TimestampValue = Timestamp.FromDateTime(((DateTime) value).ToUniversalTime())
                 },
                 PropertyType.Boolean => new Value
                 {
