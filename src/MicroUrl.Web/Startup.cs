@@ -1,5 +1,8 @@
 namespace MicroUrl.Web
 {
+    using System.Linq;
+    using System.Reflection;
+    using AutoMapper;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.SpaServices.AngularCli;
@@ -50,6 +53,12 @@ namespace MicroUrl.Web
 
             services.Configure<MicroUrlSettings>(_configuration.GetSection(nameof(MicroUrlSettings)));
 
+            var executingAssembly = Assembly.GetExecutingAssembly();
+            var referenced = executingAssembly.GetReferencedAssemblies().Where(x => x.Name.StartsWith("MicroUrl"));
+            var loadedReferences = referenced.Select(Assembly.Load).ToList();
+            loadedReferences.Add(executingAssembly);
+            services.AddAutoMapper(loadedReferences, ServiceLifetime.Singleton);
+            
             services.AddStorage(_configuration);
 
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
