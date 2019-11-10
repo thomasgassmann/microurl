@@ -55,7 +55,7 @@
                         {
                             Get = obj => x.GetValue(obj),
                             Set = (obj, value) => x.SetValue(obj, value),
-                            Property = x.Name,
+                            Property = TransformPropertyName(x.Name),
                             ExcludeFromIndexes = x.GetCustomAttribute<ExcludeFromIndexesAttribute>() != null,
                             PropertyType = GetPropertyType(x),
                             IsKey = keyProperty.Name == x.Name
@@ -73,7 +73,7 @@
                 throw new ArgumentException("Must be member expression");
             }
 
-            var memberName = memberExpression.Member.Name;
+            var memberName = TransformPropertyName(memberExpression.Member.Name);
             var allSerializationInfo = GetSerializationInfo<T>();
             return allSerializationInfo.FirstOrDefault(x => x.Property == memberName);
         }
@@ -86,6 +86,9 @@
 
         public KeyType GetKeyType<T>() =>
             ((KeyAttribute) GetKeyProperty<T>().GetCustomAttributes(typeof(KeyAttribute)).First()).KeyType;
+
+        private string TransformPropertyName(string input) =>
+            input.ToLowerInvariant();
 
         private PropertyType GetPropertyType(PropertyInfo info)
         {

@@ -36,7 +36,8 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
             {
                 if (!source.Properties.TryGetValue(info.Property, out Value value))
                 {
-                    throw new ArgumentNullException();
+                    // TODO: log
+                    continue;
                 }
 
                 var propValue = GetPropertyValueFromValue(info.PropertyType, value);
