@@ -10,17 +10,20 @@ namespace MicroUrl.Storage.Stores.Implementation
     public class RedirectableStore : IRedirectableStore
     {
         private readonly IStorageFactory _storageFactory;
+        private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
         private readonly IKeyFactory _keyFactory;
         private readonly IMapper _mapper;
 
         public RedirectableStore(
             IStorageFactory storageFactory,
             IKeyFactory keyFactory,
-            IMapper mapper)
+            IMapper mapper,
+            IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
             _storageFactory = storageFactory;
             _keyFactory = keyFactory;
             _mapper = mapper;
+            _microUrlKeyGenerator = microUrlKeyGenerator;
         }
         
         public async Task<Redirectable> LoadAsync(string key)
@@ -56,8 +59,18 @@ namespace MicroUrl.Storage.Stores.Implementation
                 throw new ArgumentException(type.FullName);
             }
 
-            var key = await storage.SaveAsync(entityToSave);
-            return key.StringValue;
+            if (string.IsNullOrEmpty(redirectable.Key))
+            {
+                var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync();
+                entityToSave.Key = generatedKey;
+                var key = await storage.CreateAsync(entityToSave);
+                return key.StringValue;
+            }
+            else
+            {
+                var key = await storage.UpdateAsync(entityToSave);
+                return key.StringValue;
+            }
         }
     }
 }

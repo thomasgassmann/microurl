@@ -4,7 +4,9 @@ namespace MicroUrl.Storage.Abstractions
 
     public interface IStorage<T> where T : class, new()
     {
-        Task<IKey> SaveAsync(T entity);
+        Task<IKey> CreateAsync(T entity);
+
+        Task<IKey> UpdateAsync(T entity);
 
         Task<T> LoadAsync(IKey key);
 

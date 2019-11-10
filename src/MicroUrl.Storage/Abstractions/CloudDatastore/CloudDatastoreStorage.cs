@@ -26,6 +26,12 @@
             _keyFactory = keyFactory;
         }
 
+        public Task<IKey> CreateAsync(T entity) =>
+            SaveAsync(entity, true);
+
+        public Task<IKey> UpdateAsync(T entity) =>
+            SaveAsync(entity, false);
+
         public async Task<T> LoadAsync(IKey key)
         {
             var resultEntity = await LookupEntityAsync(key);
@@ -47,12 +53,11 @@
             return resultEntity != null;
         }
 
-        public async Task<IKey> SaveAsync(T entity)
+        private async Task<IKey> SaveAsync(T entity, bool isNew)
         {
             var (storage, keyFactory) = GetStorageAndKeyFactory();
             
             var keyValue = _entityAnalyzer.GetKeyValue(entity);
-            var isNew = keyValue.LongValue == default && keyValue.StringValue == null;
             var key = GetKey(keyValue, keyFactory);
 
             var newEntity = new Entity { Key = key };
