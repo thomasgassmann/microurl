@@ -22,6 +22,8 @@ namespace MicroUrl.Web.Visit.Implementation
         
         public async Task SaveVisitAsync(string key, HttpContext context)
         {
+            // TODO: google analytics task could be done in background
+            // maybe queued through HostedService, might not work with Cloud Run though
             var gaTask = TrackGoogleAnalytics(key, context);
             var storageTask = _visitStore.CreateAsync(new Visit
             {
