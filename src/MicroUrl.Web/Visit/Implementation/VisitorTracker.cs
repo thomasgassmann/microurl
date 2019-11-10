@@ -1,10 +1,10 @@
-namespace MicroUrl.Visit.Implementation
+namespace MicroUrl.Web.Visit.Implementation
 {
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
-    using MicroUrl.Storage.Dto;
-    using MicroUrl.Storage.Stores;
+    using MicroUrl.Web.Storage.Dto;
+    using MicroUrl.Web.Storage.Stores;
 
     public class VisitorTracker : IVisitorTracker
     {

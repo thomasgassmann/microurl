@@ -1,4 +1,4 @@
-namespace MicroUrl.Controllers.Models
+namespace MicroUrl.Web.Controllers.Models
 {
     using System.ComponentModel.DataAnnotations;
 

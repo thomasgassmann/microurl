@@ -1,4 +1,4 @@
-﻿namespace MicroUrl.Markdown
+﻿namespace MicroUrl.Web.Markdown
 {
     using System.Threading.Tasks;
 

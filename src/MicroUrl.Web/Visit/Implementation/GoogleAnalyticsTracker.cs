@@ -1,4 +1,4 @@
-namespace MicroUrl.Visit.Implementation
+namespace MicroUrl.Web.Visit.Implementation
 {
     using System;
     using System.Linq;
@@ -8,7 +8,7 @@ namespace MicroUrl.Visit.Implementation
     using Microsoft.AspNetCore.Http;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using MicroUrl.Infrastructure.Settings;
+    using MicroUrl.Web.Infrastructure.Settings;
 
     public class GoogleAnalyticsTracker : IGoogleAnalyticsTracker
     {

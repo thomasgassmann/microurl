@@ -1,4 +1,4 @@
-namespace MicroUrl.Controllers.Validation
+namespace MicroUrl.Web.Controllers.Validation
 {
     using System;
     using System.ComponentModel.DataAnnotations;

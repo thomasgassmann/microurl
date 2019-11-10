@@ -1,4 +1,4 @@
-namespace MicroUrl
+namespace MicroUrl.Web
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Mvc;
@@ -6,21 +6,21 @@ namespace MicroUrl
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using MicroUrl.Infrastructure.Settings;
-    using MicroUrl.Markdown;
-    using MicroUrl.Markdown.Implementation;
-    using MicroUrl.Middlewares;
-    using MicroUrl.Raw;
-    using MicroUrl.Raw.Implementation;
-    using MicroUrl.Stats;
-    using MicroUrl.Stats.Implementation;
-    using MicroUrl.Storage;
-    using MicroUrl.Text;
-    using MicroUrl.Text.Implementation;
-    using MicroUrl.Urls;
-    using MicroUrl.Urls.Implementation;
-    using MicroUrl.Visit;
-    using MicroUrl.Visit.Implementation;
+    using MicroUrl.Web.Storage;
+    using MicroUrl.Web.Infrastructure.Settings;
+    using MicroUrl.Web.Markdown;
+    using MicroUrl.Web.Markdown.Implementation;
+    using MicroUrl.Web.Middlewares;
+    using MicroUrl.Web.Raw;
+    using MicroUrl.Web.Raw.Implementation;
+    using MicroUrl.Web.Stats;
+    using MicroUrl.Web.Stats.Implementation;
+    using MicroUrl.Web.Text;
+    using MicroUrl.Web.Text.Implementation;
+    using MicroUrl.Web.Urls;
+    using MicroUrl.Web.Urls.Implementation;
+    using MicroUrl.Web.Visit;
+    using MicroUrl.Web.Visit.Implementation;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
 

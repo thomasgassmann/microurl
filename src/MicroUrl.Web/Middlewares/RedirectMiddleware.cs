@@ -1,8 +1,8 @@
-namespace MicroUrl.Middlewares
+namespace MicroUrl.Web.Middlewares
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
-    using MicroUrl.Urls;
+    using MicroUrl.Web.Urls;
 
     public class RedirectMiddleware
     {

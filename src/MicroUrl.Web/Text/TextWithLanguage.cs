@@ -1,4 +1,4 @@
-﻿namespace MicroUrl.Text
+﻿namespace MicroUrl.Web.Text
 {
     public class TextWithLanguage
     {

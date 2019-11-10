@@ -1,13 +1,13 @@
-namespace MicroUrl.Controllers.Models
+namespace MicroUrl.Web.Controllers.Models
 {
     using System.ComponentModel.DataAnnotations;
-    using MicroUrl.Controllers.Validation;
+    using MicroUrl.Web.Controllers.Validation;
 
     public class CreateUrlModel
     {
         [Required]
         [Url]
-        [DifferentHostAttribute]
+        [DifferentHost]
         public string Url { get; set; }
 
         [RegularExpression("[a-zA-Z0-9]{1,}")]

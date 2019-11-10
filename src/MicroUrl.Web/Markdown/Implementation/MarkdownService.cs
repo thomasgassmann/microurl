@@ -1,8 +1,8 @@
-﻿namespace MicroUrl.Markdown.Implementation
+﻿namespace MicroUrl.Web.Markdown.Implementation
 {
     using System.Threading.Tasks;
-    using MicroUrl.Storage.Abstractions;
-    using MicroUrl.Storage.Stores;
+    using MicroUrl.Web.Storage.Abstractions;
+    using MicroUrl.Web.Storage.Stores;
 
     public class MarkdownService : IMarkdownService
     {

@@ -1,8 +1,8 @@
-﻿namespace MicroUrl.Raw.Implementation
+﻿namespace MicroUrl.Web.Raw.Implementation
 {
     using System.Threading.Tasks;
-    using MicroUrl.Storage.Dto;
-    using MicroUrl.Storage.Stores;
+    using MicroUrl.Web.Storage.Dto;
+    using MicroUrl.Web.Storage.Stores;
 
     public class RawService : IRawService
     {

@@ -1,4 +1,4 @@
-namespace MicroUrl.Infrastructure.Settings
+namespace MicroUrl.Web.Infrastructure.Settings
 {
     public class MicroUrlSettings
     {

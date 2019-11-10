@@ -1,8 +1,8 @@
-namespace MicroUrl.Controllers
+namespace MicroUrl.Web.Controllers
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using MicroUrl.Stats;
+    using MicroUrl.Web.Stats;
 
     [Route("api/microurl")]
     public class StatsController : Controller

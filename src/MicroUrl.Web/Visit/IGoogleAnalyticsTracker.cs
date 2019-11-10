@@ -1,4 +1,4 @@
-namespace MicroUrl.Visit
+namespace MicroUrl.Web.Visit
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;

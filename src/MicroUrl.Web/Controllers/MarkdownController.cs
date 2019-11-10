@@ -1,8 +1,8 @@
-﻿namespace MicroUrl.Controllers
+﻿namespace MicroUrl.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using MicroUrl.Markdown;
     using System.Threading.Tasks;
+    using MicroUrl.Web.Markdown;
 
     [Route("md")]
     [ApiController]

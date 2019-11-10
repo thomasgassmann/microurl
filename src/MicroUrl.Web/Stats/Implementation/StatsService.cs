@@ -1,7 +1,7 @@
-namespace MicroUrl.Stats.Implementation
+namespace MicroUrl.Web.Stats.Implementation
 {
-    using MicroUrl.Storage;
-    using MicroUrl.Storage.Entities;
+    using MicroUrl.Web.Storage;
+    using MicroUrl.Web.Storage.Entities;
     using System;
     using System.Collections.Generic;
     using System.Linq;

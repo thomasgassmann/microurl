@@ -1,4 +1,4 @@
-namespace MicroUrl
+namespace MicroUrl.Web
 {
     using System;
     using Microsoft.AspNetCore.Hosting;

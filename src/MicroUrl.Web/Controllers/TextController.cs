@@ -1,10 +1,10 @@
-namespace MicroUrl.Controllers
+namespace MicroUrl.Web.Controllers
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
-    using MicroUrl.Controllers.Extensions;
-    using MicroUrl.Controllers.Models;
-    using MicroUrl.Text;
+    using MicroUrl.Web.Controllers.Extensions;
+    using MicroUrl.Web.Controllers.Models;
+    using MicroUrl.Web.Text;
 
     [Route("api/microtext")]
     [ApiController]

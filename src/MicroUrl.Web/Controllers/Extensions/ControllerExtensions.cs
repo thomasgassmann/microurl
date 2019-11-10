@@ -1,4 +1,4 @@
-namespace MicroUrl.Controllers.Extensions
+namespace MicroUrl.Web.Controllers.Extensions
 {
     using System.Net;
     using Microsoft.AspNetCore.Mvc;

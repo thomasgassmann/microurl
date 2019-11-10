@@ -1,4 +1,4 @@
-namespace MicroUrl.Stats
+namespace MicroUrl.Web.Stats
 {
     using System.Threading.Tasks;
 

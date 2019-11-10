@@ -1,4 +1,4 @@
-namespace MicroUrl.Urls
+namespace MicroUrl.Web.Urls
 {
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
