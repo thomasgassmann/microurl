@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0 as build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.0.100-bionic as build
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && apt-get install -y nodejs
 
 COPY ./src/MicroUrl.Web/ClientApp/package.json /microurl/src/MicroUrl.Web/ClientApp/package.json 
@@ -7,7 +7,9 @@ WORKDIR /microurl/src/MicroUrl.Web/ClientApp
 RUN npm ci
 
 WORKDIR /microurl
-COPY ./ /microurl
+COPY ./MicroUrl.sln ./
+COPY ./global.json ./
+COPY ./src ./src
 RUN dotnet publish -c Release
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-disco
