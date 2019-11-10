@@ -71,12 +71,13 @@
 
         public PropertySerializationInfo<T> GetSerializationInfo<T>(Expression<Func<T, object>> property)
         {
-            if (!(property.Body is MemberExpression memberExpression))
+            var expr = property.Body as MemberExpression;
+            if (expr == null)
             {
                 throw new ArgumentException("Must be member expression");
             }
 
-            var memberName = TransformPropertyName(memberExpression.Member.Name);
+            var memberName = TransformPropertyName(expr.Member.Name);
             var allSerializationInfo = GetSerializationInfo<T>();
             return allSerializationInfo.FirstOrDefault(x => x.Property == memberName);
         }
