@@ -1,8 +1,6 @@
 indexes:
 
-- kind: Visit
+- kind: visit
   properties:
   - name: created
-    direction: desc
   - name: key
-    direction: asc
