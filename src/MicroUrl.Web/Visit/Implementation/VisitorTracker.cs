@@ -26,14 +26,10 @@ namespace MicroUrl.Web.Visit.Implementation
             var storageTask = _visitStore.CreateAsync(new Visit
             {
                 Headers = GetHeaders(context),
-                Ip = GetIpAddress(context),
                 Key = key
             });
             await Task.WhenAll(gaTask, storageTask);
         }
-
-        private string GetIpAddress(HttpContext context) =>
-            context.Connection.RemoteIpAddress.ToString();
 
         private async Task TrackGoogleAnalytics(string key, HttpContext context)
         {

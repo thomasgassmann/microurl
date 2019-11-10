@@ -6,11 +6,7 @@ Url shortener
 
 # TODOs
 - use GA Cookie to track unique users
+- replace icon
 - stats for texts
 - google adwords
 - user authentication
-- abstract cloud datastore away
-
-
-
-

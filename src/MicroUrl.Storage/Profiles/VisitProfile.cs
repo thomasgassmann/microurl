@@ -12,7 +12,6 @@ namespace MicroUrl.Storage.Profiles
                 .ForMember(x => x.Created, x => x.MapFrom(p => p.Created))
                 .ForMember(x => x.Headers, x => x.MapFrom(p => p.Headers))
                 .ForMember(x => x.Id, x => x.MapFrom(p => p.Id))
-                .ForMember(x => x.Ip, x => x.MapFrom(p => p.Ip))
                 .ForMember(x => x.Key, x => x.MapFrom(p => p.Key))
                 .ReverseMap();
         }

@@ -15,7 +15,5 @@ namespace MicroUrl.Storage.Entities
         public string Headers { get; set; }
 
         public DateTime Created { get; set; }
-
-        public string Ip { get; set; }
     }
 }
