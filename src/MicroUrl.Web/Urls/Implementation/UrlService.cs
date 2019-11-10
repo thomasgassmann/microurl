@@ -5,38 +5,37 @@ namespace MicroUrl.Urls.Implementation
     using Google.Protobuf.WellKnownTypes;
     using Microsoft.AspNetCore.Http;
     using MicroUrl.Storage;
+    using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Entities;
+    using MicroUrl.Storage.Stores;
     using MicroUrl.Visit;
 
     public class UrlService : IUrlService
     {
-        private readonly IUrlStorageService _storageService;
+        private readonly IMicroUrlStore _microUrlStore;
         private readonly IVisitorTracker _visitorTracker;
         private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
         
-        public UrlService(IUrlStorageService storageService, IVisitorTracker visitorTracker, IMicroUrlKeyGenerator microUrlKeyGenerator)
+        public UrlService(IMicroUrlStore microUrlStore, IVisitorTracker visitorTracker, IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
-            _storageService = storageService;
+            _microUrlStore = microUrlStore;
             _visitorTracker = visitorTracker;
             _microUrlKeyGenerator = microUrlKeyGenerator;
         }
 
         public async Task<string> SaveAsync(string url, string key = null)
         {
-            var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync(key);
-            var createdKey = await _storageService.CreateAsync(new MicroUrlEntity
+            var createdKey = await _microUrlStore.SaveAsync(new MicroUrl
             {
-                Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,
-                Url = url,
-                Key = generatedKey
+                Url = url
             });
             return createdKey;
         }
 
         public async Task<string> GetRedirectUrlAndTrackAsync(string key, HttpContext context)
         {
-            var microUrl = await _storageService.LoadAsync(key);
+            var microUrl = await _microUrlStore.LoadAsync(key);
             if (microUrl == null)
             {
                 return null;
