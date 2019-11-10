@@ -1,20 +1,15 @@
 namespace MicroUrl.Text.Implementation
 {
-    using System;
     using System.Threading.Tasks;
-    using Google.Protobuf.WellKnownTypes;
-    using MicroUrl.Storage;
-    using MicroUrl.Storage.Entities;
+    using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Stores;
-    using MicroUrl.Urls;
 
     public class TextService : ITextService
     {
         private readonly IMicroTextStore _microTextStore;
 
         public TextService(
-            IMicroTextStore microTextStore,
-            IMicroUrlKeyGenerator microUrlKeyGenerator)
+            IMicroTextStore microTextStore)
         {
             _microTextStore = microTextStore;
         }
@@ -43,11 +38,9 @@ namespace MicroUrl.Text.Implementation
 
         public async Task<string> SaveAsync(string language, string content)
         {
-            return await _textStorageService.CreateAsync(new MicroTextEntity
+            return await _microTextStore.SaveAsync(new MicroText
             {
-                Created = Timestamp.FromDateTime(DateTime.UtcNow),
                 Enabled = true,
-                Key = await _microUrlKeyGenerator.GenerateKeyAsync(),
                 Language = language,
                 Text = content
             });

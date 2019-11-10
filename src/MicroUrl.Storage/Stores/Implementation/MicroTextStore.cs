@@ -12,6 +12,9 @@ namespace MicroUrl.Storage.Stores.Implementation
             _redirectableStore = redirectableStore;
         }
 
+        public async Task<string> SaveAsync(MicroText microText) =>
+            await _redirectableStore.SaveAsync(microText);
+
         public async Task<MicroText> LoadAsync(string key)
         {
             var result = await _redirectableStore.LoadAsync(key);

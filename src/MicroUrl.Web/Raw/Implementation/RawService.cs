@@ -1,23 +1,27 @@
 ﻿namespace MicroUrl.Raw.Implementation
 {
-    using MicroUrl.Storage;
     using System.Threading.Tasks;
+    using MicroUrl.Storage.Dto;
+    using MicroUrl.Storage.Stores;
 
     public class RawService : IRawService
     {
-        private readonly IUrlStorageService _urlStorageService;
-        private readonly ITextStorageService _textStorageService;
+        private readonly IRedirectableStore _redirectableStore;
 
-        public RawService(IUrlStorageService urlStorageService, ITextStorageService textStorageService)
+        public RawService(IRedirectableStore redirectableStore)
         {
-            _urlStorageService = urlStorageService;
-            _textStorageService = textStorageService;
+            _redirectableStore = redirectableStore;
         }
 
         public async Task<string> GetRawContentAsync(string key)
         {
-            var result = await _textStorageService.LoadAsync(key);
-            return result?.Text ?? (await _urlStorageService.LoadAsync(key))?.Url;
+            var redirectable = await _redirectableStore.LoadAsync(key);
+            return redirectable switch
+            {
+                MicroText text => text.Text,
+                MicroUrl url => url.Url,
+                _ => null
+            };
         }
     }
 }

@@ -63,6 +63,7 @@ namespace MicroUrl.Storage.Stores.Implementation
             {
                 var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync();
                 entityToSave.Key = generatedKey;
+                entityToSave.Created = DateTime.Now;
                 var key = await storage.CreateAsync(entityToSave);
                 return key.StringValue;
             }
