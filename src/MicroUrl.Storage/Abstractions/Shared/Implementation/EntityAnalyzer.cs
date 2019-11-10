@@ -151,7 +151,7 @@
                 throw new InvalidOperationException("Result cannot be null.");
             }
 
-            cache.Add(typeof(T), result);
+            cache.TryAdd(typeof(T), result);
             return convert(result);
         }
     }
