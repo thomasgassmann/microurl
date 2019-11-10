@@ -12,6 +12,8 @@
         private readonly IDictionary<Type, IList<object>> _serializationInfoMap = new Dictionary<Type, IList<object>>();
         private readonly IDictionary<Type, EntityNameAttribute> _entityNameMap = new Dictionary<Type, EntityNameAttribute>();
 
+        private static object _lock = new object();
+        
         private readonly IKeyFactory _keyFactory;
         
         public EntityAnalyzer(IKeyFactory keyFactory) =>
@@ -129,19 +131,22 @@
 
         private TResult LoadAndCacheInDictionary<T, TSave, TResult>(IDictionary<Type, TSave> cache, Func<TSave> load, Func<TSave, TResult> convert) where TSave : class
         {
-            if (cache.TryGetValue(typeof(T), out var res))
+            lock (_lock)
             {
-                return convert(res);
-            }
+                if (cache.TryGetValue(typeof(T), out var res))
+                {
+                    return convert(res);
+                }
 
-            var result = load();
-            if (result == null)
-            {
-                throw new InvalidOperationException("Result cannot be null.");
-            }
+                var result = load();
+                if (result == null)
+                {
+                    throw new InvalidOperationException("Result cannot be null.");
+                }
 
-            cache.Add(typeof(T), result);
-            return convert(result);
+                cache.Add(typeof(T), result);
+                return convert(result);
+            }
         }
     }
 }
