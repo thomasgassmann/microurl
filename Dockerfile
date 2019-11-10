@@ -15,5 +15,5 @@ RUN dotnet publish -c Release
 
 FROM mcr.microsoft.com/dotnet/core/aspnet:3.0.0-disco
 WORKDIR /microurl
-COPY --from=build /microurl /microurl
+COPY --from=build /microurl/src/MicroUrl.Web/bin/Release/netcoreapp3.0/publish /microurl
 ENTRYPOINT ["dotnet", "/microurl/MicroUrl.Web.dll"]
