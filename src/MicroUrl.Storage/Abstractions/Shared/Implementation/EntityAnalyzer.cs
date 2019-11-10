@@ -74,7 +74,12 @@
             var expr = property.Body as MemberExpression;
             if (expr == null)
             {
-                throw new ArgumentException("Must be member expression");
+                var unary = property.Body as UnaryExpression;
+                expr = unary?.Operand as MemberExpression;
+                if (expr == null)
+                {
+                    throw new ArgumentException("Must be member expression");
+                }
             }
 
             var memberName = TransformPropertyName(expr.Member.Name);
