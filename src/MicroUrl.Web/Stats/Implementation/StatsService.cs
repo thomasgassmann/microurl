@@ -6,6 +6,7 @@ namespace MicroUrl.Web.Stats.Implementation
     using System.Threading.Tasks;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Stores;
+    using MicroUrl.Web.Redirects;
 
     internal class StatCount
     {
@@ -24,26 +25,29 @@ namespace MicroUrl.Web.Stats.Implementation
     {
         private const int LastXDays = 7;
 
-        private readonly IMicroUrlStore _microUrlStore;
+        private readonly IRedirectableStore _redirectableStore;
         private readonly IVisitStore _visitStore;
+        private readonly IRedirectService _redirectService;
 
         public StatsService(
-            IMicroUrlStore microUrlStore,
-            IVisitStore visitStore)
+            IRedirectableStore redirectableStore,
+            IVisitStore visitStore,
+            IRedirectService redirectService)
         {
-            _microUrlStore = microUrlStore;
+            _redirectableStore = redirectableStore;
             _visitStore = visitStore;
+            _redirectService = redirectService;
         }
 
         public async Task<MicroUrlStats> GetStatsAsync(string key)
         {
-            var microUrl = await _microUrlStore.LoadAsync(key);
-            if (microUrl == null)
+            var redirectable = await _redirectableStore.LoadAsync(key);
+            if (redirectable == null)
             {
                 return null;
             }
 
-            var from = microUrl.Created;
+            var from = redirectable.Created;
             var to = DateTime.UtcNow;
 
             var allTimeStats = new StatCount
@@ -82,7 +86,7 @@ namespace MicroUrl.Web.Stats.Implementation
             return new MicroUrlStats
             {
                 Key = key,
-                TargetUrl = microUrl.Url,
+                TargetUrl = _redirectService.ComputeTargetUrl(redirectable),
                 AllTime = new HitStats
                 {
                     From = from,

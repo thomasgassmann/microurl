@@ -32,10 +32,10 @@ namespace MicroUrl.Web.Redirects.Implementation
             }
 
             await _visitorTracker.SaveVisitAsync(key, context);           
-            return !redirectable.Enabled ? null : GetRedirectUrl(redirectable);
+            return !redirectable.Enabled ? null : ComputeTargetUrl(redirectable);
         }
 
-        private string GetRedirectUrl(Redirectable redirectable)
+        public string ComputeTargetUrl(Redirectable redirectable)
         {
             if (redirectable is MicroUrl url)
             {
