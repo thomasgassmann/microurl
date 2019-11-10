@@ -30,12 +30,17 @@ namespace MicroUrl.Storage.Stores.Implementation
         {
             var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
             var loaded = await storage.LoadAsync(_keyFactory.CreateFromString(key));
+            if (loaded == null)
+            {
+                return null;
+            }
+            
             switch (loaded.Type)
             {
                 case MicroUrlEntity.TextType:
-                    return _mapper.Map<MicroUrl>(loaded);
-                case MicroUrlEntity.UrlType:
                     return _mapper.Map<MicroText>(loaded);
+                case MicroUrlEntity.UrlType:
+                    return _mapper.Map<MicroUrl>(loaded);
                 default:
                     throw new ArgumentException("Invalid entity type");
             }
