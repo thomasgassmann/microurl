@@ -16,6 +16,8 @@ namespace MicroUrl.Web
     using MicroUrl.Web.Middlewares;
     using MicroUrl.Web.Raw;
     using MicroUrl.Web.Raw.Implementation;
+    using MicroUrl.Web.Redirects;
+    using MicroUrl.Web.Redirects.Implementation;
     using MicroUrl.Web.Stats;
     using MicroUrl.Web.Stats.Implementation;
     using MicroUrl.Web.Text;
@@ -69,6 +71,9 @@ namespace MicroUrl.Web
             services.AddScoped<ITextService, TextService>();
             services.AddScoped<IRawService, RawService>();
             services.AddScoped<IMarkdownService, MarkdownService>();
+            services.AddScoped<IRedirectService, RedirectService>();
+
+            services.AddSingleton<IClientUrlService, ClientUrlService>();
 
             services.AddScoped<IStatsService, StatsService>();
 

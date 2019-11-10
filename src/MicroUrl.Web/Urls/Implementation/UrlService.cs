@@ -9,12 +9,10 @@ namespace MicroUrl.Web.Urls.Implementation
     public class UrlService : IUrlService
     {
         private readonly IMicroUrlStore _microUrlStore;
-        private readonly IVisitorTracker _visitorTracker;
         
-        public UrlService(IMicroUrlStore microUrlStore, IVisitorTracker visitorTracker)
+        public UrlService(IMicroUrlStore microUrlStore)
         {
             _microUrlStore = microUrlStore;
-            _visitorTracker = visitorTracker;
         }
 
         public Task<string> CreateAsync(string url, string key = null) =>
@@ -24,17 +22,5 @@ namespace MicroUrl.Web.Urls.Implementation
                 Enabled = true,
                 Url = url
             });
-
-        public async Task<string> GetRedirectUrlAndTrackAsync(string key, HttpContext context)
-        {
-            var microUrl = await _microUrlStore.LoadAsync(key);
-            if (microUrl == null)
-            {
-                return null;
-            }
-
-            await _visitorTracker.SaveVisitAsync(key, context);           
-            return !microUrl.Enabled ? null : microUrl.Url;
-        }
     }
 }
