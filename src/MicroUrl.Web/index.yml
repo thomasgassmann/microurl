@@ -2,5 +2,5 @@ indexes:
 
 - kind: visit
   properties:
-  - name: created
   - name: key
+  - name: created

@@ -108,13 +108,13 @@
             if (isNew)
             {
                 var newKey = await storage.InsertAsync(newEntity);
-                var first = newKey.Path.First();
-                switch (first.IdTypeCase)
+                switch (keyValue.KeyType)
                 {
-                    case Key.Types.PathElement.IdTypeOneofCase.Id:
+                    case KeyType.AutoId:
+                        var first = newKey.Path.First();
                         return _keyFactory.CreateFromId(first.Id);
-                    case Key.Types.PathElement.IdTypeOneofCase.Name:
-                        return _keyFactory.CreateFromString(first.Name);
+                    case KeyType.StringId:
+                        return _keyFactory.CreateFromString(keyValue.StringValue);
                     default:
                         throw new ArgumentException();
                 }

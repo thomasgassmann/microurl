@@ -22,9 +22,14 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
             foreach (var info in serializationInfo.Where(x => !x.IsKey))
             {
                 var sourceValue = info.Get(source);
+                if (sourceValue == null)
+                {
+                    continue;
+                }
+                
                 var propertyValue = GetValueFromPropertyValue(info.PropertyType, sourceValue);
                 propertyValue.ExcludeFromIndexes = info.ExcludeFromIndexes;
-                
+
                 destination.Properties.Add(info.Property, propertyValue);
             }
         }
