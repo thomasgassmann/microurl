@@ -1,6 +1,7 @@
 ﻿namespace MicroUrl.Storage.Abstractions.Shared.Implementation
 {
     using System;
+    using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Linq.Expressions;
@@ -8,17 +9,17 @@
 
     public class EntityAnalyzer : IEntityAnalyzer
     {
-        private readonly IDictionary<Type, PropertyInfo> _keyPropertyMap = new Dictionary<Type, PropertyInfo>();
-        private readonly IDictionary<Type, IList<object>> _serializationInfoMap = new Dictionary<Type, IList<object>>();
-        private readonly IDictionary<Type, EntityNameAttribute> _entityNameMap = new Dictionary<Type, EntityNameAttribute>();
+        private readonly IDictionary<Type, PropertyInfo> _keyPropertyMap = new ConcurrentDictionary<Type, PropertyInfo>();
+        private readonly IDictionary<Type, IList<object>> _serializationInfoMap = new ConcurrentDictionary<Type, IList<object>>();
 
-        private static object _lock = new object();
-        
+        private readonly IDictionary<Type, EntityNameAttribute> _entityNameMap =
+            new ConcurrentDictionary<Type, EntityNameAttribute>();
+
         private readonly IKeyFactory _keyFactory;
-        
+
         public EntityAnalyzer(IKeyFactory keyFactory) =>
             _keyFactory = keyFactory;
-        
+
         public IKey GetKeyValue<T>(T entity)
         {
             var propertyValue = GetKeyProperty<T>().GetValue(entity);
@@ -32,7 +33,7 @@
             {
                 throw new InvalidOperationException();
             }
-            
+
             switch (keyType)
             {
                 case KeyType.AutoId:
@@ -62,11 +63,11 @@
                             PropertyType = GetPropertyType(x),
                             IsKey = keyProperty.Name == x.Name
                         });
-                    
+
                     list.AddRange(properties);
                     return list;
                 },
-                x => x.Select(x => (PropertySerializationInfo<T>)x).ToList());
+                x => x.Select(x => (PropertySerializationInfo<T>) x).ToList());
 
         public PropertySerializationInfo<T> GetSerializationInfo<T>(Expression<Func<T, object>> property)
         {
@@ -83,7 +84,8 @@
         public string GetEntityName<T>() =>
             LoadAndCacheInDictionary<T, EntityNameAttribute, string>(
                 _entityNameMap,
-                () => typeof(T).GetCustomAttributes(true).FirstOrDefault(x => x is EntityNameAttribute) as EntityNameAttribute,
+                () => typeof(T).GetCustomAttributes(true).FirstOrDefault(x => x is EntityNameAttribute) as
+                    EntityNameAttribute,
                 x => x.Name);
 
         public KeyType GetKeyType<T>() =>
@@ -121,7 +123,7 @@
 
             throw new ArgumentException();
         }
-        
+
         private PropertyInfo GetKeyProperty<T>() =>
             LoadAndCacheInDictionary<T, PropertyInfo, PropertyInfo>(
                 _keyPropertyMap,
@@ -129,24 +131,22 @@
                     .FirstOrDefault(x => x.GetCustomAttributes(true).Any(x => x is KeyAttribute)),
                 x => x);
 
-        private TResult LoadAndCacheInDictionary<T, TSave, TResult>(IDictionary<Type, TSave> cache, Func<TSave> load, Func<TSave, TResult> convert) where TSave : class
+        private TResult LoadAndCacheInDictionary<T, TSave, TResult>(IDictionary<Type, TSave> cache, Func<TSave> load,
+            Func<TSave, TResult> convert) where TSave : class
         {
-            lock (_lock)
+            if (cache.TryGetValue(typeof(T), out var res))
             {
-                if (cache.TryGetValue(typeof(T), out var res))
-                {
-                    return convert(res);
-                }
-
-                var result = load();
-                if (result == null)
-                {
-                    throw new InvalidOperationException("Result cannot be null.");
-                }
-
-                cache.Add(typeof(T), result);
-                return convert(result);
+                return convert(res);
             }
+
+            var result = load();
+            if (result == null)
+            {
+                throw new InvalidOperationException("Result cannot be null.");
+            }
+
+            cache.Add(typeof(T), result);
+            return convert(result);
         }
     }
 }
