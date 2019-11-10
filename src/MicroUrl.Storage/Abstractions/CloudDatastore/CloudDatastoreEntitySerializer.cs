@@ -7,7 +7,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
     using MicroUrl.Storage.Abstractions.Shared;
     using Value = Google.Cloud.Datastore.V1.Value;
 
-    public class CloudDatastoreEntitySerializer<T> : IEntitySerializer<T, Entity>
+    public class CloudDatastoreEntitySerializer<T>
     {
         private readonly IEntityAnalyzer _analyzer;
         
@@ -54,7 +54,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
             });
         }
 
-        private object GetPropertyValueFromValue(PropertyType type, Value value) =>
+        public object GetPropertyValueFromValue(PropertyType type, Value value) =>
             type switch
             {
                 PropertyType.Double => (object) value.DoubleValue,
@@ -65,7 +65,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 _ => throw new ArgumentException(type.ToString())
             };
 
-        private Value GetValueFromPropertyValue(PropertyType type, object value) =>
+        public Value GetValueFromPropertyValue(PropertyType type, object value) =>
             type switch
             {
                 PropertyType.Double => new Value

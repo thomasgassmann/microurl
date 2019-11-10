@@ -1,18 +1,21 @@
 namespace MicroUrl.Storage.Abstractions.Filters
 {
-    public class ComparisonFilter : StorageFilter
+    using System;
+    using System.Linq.Expressions;
+
+    public class ComparisonFilter<T> : StorageFilter
     {
-        public ComparisonFilter(StorageFilter left, StorageFilter right, ComparisonType type)
+        public ComparisonFilter(Expression<Func<T, object>> property, object value, ComparisonType type)
         {
-            Left = left;
-            Right = right;
+            Property = property;
+            Value = value;
             ComparisonType = type;
         }
 
-        public StorageFilter Left { get; }
+        public Expression<Func<T, object>> Property { get; }
         
         public ComparisonType ComparisonType { get; }
 
-        public StorageFilter Right { get; }
+        public object Value { get; }
     }
 }

@@ -1,8 +1,8 @@
 namespace MicroUrl.Web.Text.Implementation
 {
     using System.Threading.Tasks;
-    using MicroUrl.Web.Storage.Dto;
-    using MicroUrl.Web.Storage.Stores;
+    using MicroUrl.Storage.Dto;
+    using MicroUrl.Storage.Stores;
 
     public class TextService : ITextService
     {

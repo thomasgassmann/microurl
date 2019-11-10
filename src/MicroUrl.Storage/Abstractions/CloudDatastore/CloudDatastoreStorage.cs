@@ -6,6 +6,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Threading;
     using System.Threading.Tasks;
     using MicroUrl.Storage.Abstractions.Filters;
     using MicroUrl.Storage.Configuration;
@@ -15,7 +16,7 @@
         private readonly IOptions<MicroUrlStorageConfiguration> _options;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
-        private readonly IEntitySerializer<T, Entity> _serializer;
+        private readonly CloudDatastoreEntitySerializer<T> _serializer;
 
         public CloudDatastoreStorage(
             IOptions<MicroUrlStorageConfiguration> options,
@@ -43,9 +44,7 @@
             }
 
             var result = new T();
-            
             _serializer.Deserialize(resultEntity, result);
-
             return result;
         }
 
@@ -54,16 +53,18 @@
             var store = CreateStorage();
             var asyncEnumerable = store.RunQueryLazilyAsync(new Query
             {
-
+                Kind =
+                {
+                    new KindExpression(_entityAnalyzer.GetEntityName<T>())
+                },
+                Filter = ConvertFilter(filter)
             });
 
             var asyncEnumerator = asyncEnumerable.GetEnumerator();
-            while (await asyncEnumerator.MoveNext())
+            while (await asyncEnumerator.MoveNext(CancellationToken.None))
             {
                 var t = new T();
-                
                 _serializer.Deserialize(asyncEnumerator.Current, t);
-
                 yield return t;
             }
         }
@@ -72,6 +73,27 @@
         {
             var resultEntity = await LookupEntityAsync(key);
             return resultEntity != null;
+        }
+
+        private Filter ConvertFilter(StorageFilter filter)
+        {
+            switch (filter)
+            {
+                case AndFilter and:
+                    return Filter.And(and.Filters.Select(ConvertFilter));
+                case ComparisonFilter<T> comparisonFilter:
+                    var serializationInfo = _entityAnalyzer.GetSerializationInfo(comparisonFilter.Property);
+                    var compareValue = _serializer.GetValueFromPropertyValue(serializationInfo.PropertyType, comparisonFilter.Value);
+                    return comparisonFilter.ComparisonType switch
+                    {
+                        ComparisonType.Equals => Filter.Equal(serializationInfo.Property, compareValue),
+                        ComparisonType.GreaterThan => Filter.GreaterThan(serializationInfo.Property, compareValue),
+                        ComparisonType.LessThan => Filter.LessThan(serializationInfo.Property, compareValue),
+                        _ => throw new ArgumentOutOfRangeException()
+                    };
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
         }
 
         private async Task<IKey> SaveAsync(T entity, bool isNew)

@@ -1,13 +1,10 @@
 namespace MicroUrl.Web.Urls.Implementation
 {
-    using System;
     using System.Threading.Tasks;
-    using Google.Protobuf.WellKnownTypes;
     using Microsoft.AspNetCore.Http;
-    using MicroUrl.Web.Storage;
-    using MicroUrl.Web.Storage.Dto;
-    using MicroUrl.Web.Storage.Entities;
-    using MicroUrl.Web.Storage.Stores;
+    using MicroUrl.Storage;
+    using MicroUrl.Storage.Dto;
+    using MicroUrl.Storage.Stores;
     using MicroUrl.Web.Visit;
 
     public class UrlService : IUrlService

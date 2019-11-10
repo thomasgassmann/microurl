@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Linq.Expressions;
     using System.Reflection;
 
     public class EntityAnalyzer : IEntityAnalyzer
@@ -64,6 +65,18 @@
                     return list;
                 },
                 x => x.Select(x => (PropertySerializationInfo<T>)x).ToList());
+
+        public PropertySerializationInfo<T> GetSerializationInfo<T>(Expression<Func<T, object>> property)
+        {
+            if (!(property.Body is MemberExpression memberExpression))
+            {
+                throw new ArgumentException("Must be member expression");
+            }
+
+            var memberName = memberExpression.Member.Name;
+            var allSerializationInfo = GetSerializationInfo<T>();
+            return allSerializationInfo.FirstOrDefault(x => x.Property == memberName);
+        }
 
         public string GetEntityName<T>() =>
             LoadAndCacheInDictionary<T, EntityNameAttribute, string>(

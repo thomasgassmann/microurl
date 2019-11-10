@@ -2,6 +2,8 @@ namespace MicroUrl.Storage.Abstractions.Filters
 {
     public enum ComparisonType
     {
-        Equals
+        Equals,
+        GreaterThan,
+        LessThan
     }
 }

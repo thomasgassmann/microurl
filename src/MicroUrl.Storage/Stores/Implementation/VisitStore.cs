@@ -1,9 +1,11 @@
 namespace MicroUrl.Storage.Stores.Implementation
 {
     using System;
+    using System.Collections.Generic;
     using System.Threading.Tasks;
     using AutoMapper;
     using MicroUrl.Storage.Abstractions;
+    using MicroUrl.Storage.Abstractions.Filters;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Entities;
 
@@ -25,6 +27,20 @@ namespace MicroUrl.Storage.Stores.Implementation
             entity.Created = DateTime.Now;
             var key = await storage.CreateAsync(entity);
             return key.LongValue;
+        }
+
+        public async IAsyncEnumerable<Visit> GetVisitsOfRediretableBetween(string redirectableKey, DateTime @from, DateTime to)
+        {
+            var storage = _storageFactory.CreateStorage<VisitEntity>();
+            var result = storage.QueryAsync(StorageFilter.And(
+                StorageFilter.Equals<VisitEntity>(x => x.Key, redirectableKey),
+                StorageFilter.LessThan<VisitEntity>(x => x.Created, to),
+                StorageFilter.GreaterThan<VisitEntity>(x => x.Created, from)));
+
+            await foreach (var item in result)
+            {
+                yield return _mapper.Map<Visit>(item);
+            }
         }
     }
 }
