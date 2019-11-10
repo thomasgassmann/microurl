@@ -2,21 +2,22 @@
 {
     using System.Threading.Tasks;
     using MicroUrl.Storage.Abstractions;
+    using MicroUrl.Storage.Stores;
 
     public class MarkdownService : IMarkdownService
     {
-        private readonly IStorageFactory _storageFactory;
+        private readonly IMicroTextStore _microTextStore;
 
-        public const string Markdown = "markdown";
+        private const string Markdown = "markdown";
 
-        public MarkdownService(IStorageFactory storageFactory)
+        public MarkdownService(IMicroTextStore microTextStore)
         {
-            _storageFactory = storageFactory;
+            _microTextStore = microTextStore;
         }
 
         public async Task<string> GetMarkdownStringAsync(string key)
         {
-            var entity = await .LoadAsync(key);
+            var entity = await _microTextStore.LoadAsync(key);
             if (entity == null || entity.Language != Markdown)
             {
                 return null;
