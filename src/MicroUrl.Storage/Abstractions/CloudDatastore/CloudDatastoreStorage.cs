@@ -4,8 +4,10 @@
     using Microsoft.Extensions.Options;
     using MicroUrl.Storage.Abstractions.Shared;
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+    using MicroUrl.Storage.Abstractions.Filters;
     using MicroUrl.Storage.Configuration;
 
     public class CloudDatastoreStorage<T> : IStorage<T> where T : class, new()
@@ -45,6 +47,25 @@
             _serializer.Deserialize(resultEntity, result);
 
             return result;
+        }
+
+        public async IAsyncEnumerable<T> QueryAsync(StorageFilter filter)
+        {
+            var store = CreateStorage();
+            var asyncEnumerable = store.RunQueryLazilyAsync(new Query
+            {
+
+            });
+
+            var asyncEnumerator = asyncEnumerable.GetEnumerator();
+            while (await asyncEnumerator.MoveNext())
+            {
+                var t = new T();
+                
+                _serializer.Deserialize(asyncEnumerator.Current, t);
+
+                yield return t;
+            }
         }
 
         public async Task<bool> ExistsAsync(IKey key)
