@@ -6,7 +6,7 @@ namespace MicroUrl.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
-    using MicroUrl.Web.Storage;
+    using MicroUrl.Storage;
     using MicroUrl.Web.Infrastructure.Settings;
     using MicroUrl.Web.Markdown;
     using MicroUrl.Web.Markdown.Implementation;
