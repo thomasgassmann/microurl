@@ -9,6 +9,7 @@ RUN npm ci
 WORKDIR /microurl
 COPY ./MicroUrl.sln ./
 COPY ./global.json ./
+COPY ./Directory.Build.targets ./
 COPY ./src ./src
 RUN dotnet publish -c Release
 
