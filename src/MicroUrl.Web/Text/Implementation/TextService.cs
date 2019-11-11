@@ -3,15 +3,19 @@ namespace MicroUrl.Web.Text.Implementation
     using System.Threading.Tasks;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Stores;
+    using MicroUrl.Web.Keys;
 
     public class TextService : ITextService
     {
         private readonly IMicroTextStore _microTextStore;
+        private readonly IMicroUrlKeyGenerator _keyGenerator;
 
         public TextService(
-            IMicroTextStore microTextStore)
+            IMicroTextStore microTextStore,
+            IMicroUrlKeyGenerator keyGenerator)
         {
             _microTextStore = microTextStore;
+            _keyGenerator = keyGenerator;
         }
 
         public async Task<TextWithLanguage> LoadAsync(string key) =>
@@ -40,6 +44,7 @@ namespace MicroUrl.Web.Text.Implementation
         {
             return await _microTextStore.CreateAsync(new MicroText
             {
+                Key = await _keyGenerator.GenerateKeyAsync(),
                 Enabled = true,
                 Language = language,
                 Text = content
