@@ -1,0 +1,11 @@
+{
+  "name": "microurl",
+  "env": {
+    "GCP_PROJECT": {
+      "description": "GCP Project to use for Cloud Datastore"
+    },
+    "GA_ID": {
+      "description": "Google Analytics ID"
+    }
+  }
+}
