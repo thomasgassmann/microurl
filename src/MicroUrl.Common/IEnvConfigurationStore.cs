@@ -1,6 +1,6 @@
 namespace MicroUrl.Common
 {
-    public interface IConfigurationStore
+    public interface IEnvConfigurationStore
     {
         MicroUrlSettings GetMicroUrlSettings();
 

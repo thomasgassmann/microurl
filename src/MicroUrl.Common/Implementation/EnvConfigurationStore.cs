@@ -2,14 +2,14 @@ namespace MicroUrl.Common.Implementation
 {
     using Microsoft.Extensions.Configuration;
 
-    public class ConfigurationStore : IConfigurationStore
+    public class EnvConfigurationStore : IEnvConfigurationStore
     {
         private const string AnalyticsIdKey = "ANALYTICS_ID";
         private const string GcpProjectKey = "GCP_PROJECT";
 
         private readonly IConfiguration _configuration;
         
-        public ConfigurationStore(IConfiguration configuration) =>
+        public EnvConfigurationStore(IConfiguration configuration) =>
             _configuration = configuration;
         
         public MicroUrlSettings GetMicroUrlSettings() => new MicroUrlSettings

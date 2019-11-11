@@ -11,6 +11,7 @@ namespace MicroUrl.Web
     using Microsoft.Extensions.Hosting;
     using MicroUrl.Common;
     using MicroUrl.Storage;
+    using MicroUrl.Web.Configuration;
     using MicroUrl.Web.Keys;
     using MicroUrl.Web.Keys.Implementation;
     using MicroUrl.Web.Markdown;
@@ -55,6 +56,8 @@ namespace MicroUrl.Web
                     x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
             
+            services.Configure<UrlConfig>(_configuration.GetSection(nameof(UrlConfig)));
+            
             var executingAssembly = Assembly.GetExecutingAssembly();
             var referenced = executingAssembly.GetReferencedAssemblies().Where(x => x.Name.StartsWith("MicroUrl"));
             var loadedReferences = referenced.Select(Assembly.Load).ToList();
@@ -66,6 +69,7 @@ namespace MicroUrl.Web
             services.AddStorage(_configuration);
 
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
+            services.AddSingleton<IKeyValidationService, KeyValidationService>();
 
             services.AddScoped<IVisitorTracker, VisitorTracker>();
 

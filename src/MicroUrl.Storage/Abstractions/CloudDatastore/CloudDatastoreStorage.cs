@@ -12,13 +12,13 @@
 
     public class CloudDatastoreStorage<T> : IStorage<T> where T : class, new()
     {
-        private readonly IConfigurationStore _configurationStore;
+        private readonly IEnvConfigurationStore _configurationStore;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
         private readonly CloudDatastoreEntitySerializer<T> _serializer;
 
         public CloudDatastoreStorage(
-            IConfigurationStore configurationStore,
+            IEnvConfigurationStore configurationStore,
             IEntityAnalyzer entityAnalyzer,
             IKeyFactory keyFactory)
         {

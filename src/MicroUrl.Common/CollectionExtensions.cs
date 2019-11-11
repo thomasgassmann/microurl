@@ -7,7 +7,7 @@ namespace MicroUrl.Common
     {
         public static void AddCommon(this IServiceCollection serviceCollection)
         {
-            serviceCollection.AddSingleton<IConfigurationStore, ConfigurationStore>();
+            serviceCollection.AddSingleton<IEnvConfigurationStore, EnvConfigurationStore>();
         }
     }
 }
