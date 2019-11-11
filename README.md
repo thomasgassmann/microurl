@@ -2,7 +2,7 @@
 
 A personal url shortener and code snippet sharing tool
 
-[![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.svg)](https://deploy.cloud.run?git_repo=https://github.com/thomasgassmann/microurl&revision=initial-documentation)
+[![Run on Google Cloud](https://storage.googleapis.com/cloudrun/button.svg)](https://deploy.cloud.run?git_repo=https://github.com/thomasgassmann/microurl&revision=master)
 
 ## Overview
 
