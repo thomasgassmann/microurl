@@ -11,6 +11,7 @@ namespace MicroUrl.Web.Controllers.Models
         public string Url { get; set; }
 
         [RegularExpression("[a-zA-Z0-9]{1,}")]
+        [CustomKeyValidation]
         public string Key { get; set; }
     }
 }
