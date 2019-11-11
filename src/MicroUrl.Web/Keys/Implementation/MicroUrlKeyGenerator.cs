@@ -1,4 +1,4 @@
-namespace MicroUrl.Storage.Keys.Implementation
+namespace MicroUrl.Web.Keys.Implementation
 {
     using System;
     using System.Text;

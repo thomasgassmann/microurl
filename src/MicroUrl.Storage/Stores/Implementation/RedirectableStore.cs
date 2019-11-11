@@ -6,25 +6,21 @@ namespace MicroUrl.Storage.Stores.Implementation
     using MicroUrl.Storage.Abstractions;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Entities;
-    using MicroUrl.Storage.Keys;
 
     public class RedirectableStore : IRedirectableStore
     {
         private readonly IStorageFactory _storageFactory;
-        private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
         private readonly IKeyFactory _keyFactory;
         private readonly IMapper _mapper;
 
         public RedirectableStore(
             IStorageFactory storageFactory,
             IKeyFactory keyFactory,
-            IMapper mapper,
-            IMicroUrlKeyGenerator microUrlKeyGenerator)
+            IMapper mapper)
         {
             _storageFactory = storageFactory;
             _keyFactory = keyFactory;
             _mapper = mapper;
-            _microUrlKeyGenerator = microUrlKeyGenerator;
         }
         
         public async Task<Redirectable> LoadAsync(string key)
@@ -63,12 +59,6 @@ namespace MicroUrl.Storage.Stores.Implementation
             else
             {
                 throw new ArgumentException(type.FullName);
-            }
-
-            if (string.IsNullOrEmpty(redirectable.Key))
-            {
-                var generatedKey = await _microUrlKeyGenerator.GenerateKeyAsync();
-                entityToSave.Key = generatedKey;
             }
             
             entityToSave.Created = DateTime.Now;

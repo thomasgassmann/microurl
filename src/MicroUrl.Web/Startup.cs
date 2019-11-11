@@ -11,6 +11,8 @@ namespace MicroUrl.Web
     using Microsoft.Extensions.Hosting;
     using MicroUrl.Common;
     using MicroUrl.Storage;
+    using MicroUrl.Web.Keys;
+    using MicroUrl.Web.Keys.Implementation;
     using MicroUrl.Web.Markdown;
     using MicroUrl.Web.Markdown.Implementation;
     using MicroUrl.Web.Middlewares;
@@ -72,6 +74,7 @@ namespace MicroUrl.Web
             services.AddScoped<IRawService, RawService>();
             services.AddScoped<IMarkdownService, MarkdownService>();
             services.AddScoped<IRedirectService, RedirectService>();
+            services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
 
             services.AddSingleton<IClientUrlService, ClientUrlService>();
 

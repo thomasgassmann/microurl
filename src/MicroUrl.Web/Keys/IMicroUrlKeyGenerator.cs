@@ -1,4 +1,4 @@
-namespace MicroUrl.Storage.Keys
+namespace MicroUrl.Web.Keys
 {
     using System.Threading.Tasks;
 
