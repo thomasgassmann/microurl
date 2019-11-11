@@ -13,9 +13,8 @@ To edit code snippets it currently uses [Monaco Editor](https://github.com/micro
 ## Configuration
 
 1. [Setup Authentication](https://cloud.google.com/docs/authentication/production) for Google Cloud Datastore (run `gcloud auth application-default login`)
-2. Edit `src/MicroUrl.Web/appsettings.json` and update `Storage.Project` to your Google Cloud project.
-3. Edit `src/MicroUrl.Web/appsettings.json` and update `MicroUrlSettings.AnalyticsId` with your Google Analytics Id.
-4. Apply indicies using the `applyIndicies.sh` script
+2. Edit `src/MicroUrl.Web/Properties/launchSettings.json` and update `Storage:Project` to your Google Cloud project and `MicroUrl:AnalyticsId` to your Google Analytics ID.
+3. Apply indicies using the `applyIndicies.sh` script
 
 ## Run microurl
 
