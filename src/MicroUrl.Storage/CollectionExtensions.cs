@@ -7,7 +7,6 @@ namespace MicroUrl.Storage
     using MicroUrl.Storage.Abstractions.Implementation;
     using MicroUrl.Storage.Abstractions.Shared;
     using MicroUrl.Storage.Abstractions.Shared.Implementation;
-    using MicroUrl.Storage.Configuration;
     using MicroUrl.Storage.Implementation;
     using MicroUrl.Storage.Stores;
     using MicroUrl.Storage.Stores.Implementation;
@@ -16,9 +15,6 @@ namespace MicroUrl.Storage
     {
         public static void AddStorage(this IServiceCollection services, IConfiguration configuration)
         {
-            const string SettingsKey = "Storage";
-            services.Configure<MicroUrlStorageConfiguration>(configuration.GetSection(SettingsKey).Bind);
-        
             services.AddSingleton<IEntityAnalyzer, EntityAnalyzer>();
             services.AddSingleton<IKeyFactory, DefaultKeyFactory>();
             

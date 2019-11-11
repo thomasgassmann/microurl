@@ -5,6 +5,7 @@ namespace MicroUrl.Web.Controllers
     using MicroUrl.Web.Stats;
 
     [Route("api/microurl")]
+    [ApiController]
     public class StatsController : Controller
     {
         private readonly IStatsService _statsService;

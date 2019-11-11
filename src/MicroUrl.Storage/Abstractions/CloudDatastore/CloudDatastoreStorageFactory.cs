@@ -2,24 +2,23 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
 {
     using System;
     using System.Collections.Generic;
-    using Microsoft.Extensions.Options;
+    using MicroUrl.Common;
     using MicroUrl.Storage.Abstractions.Shared;
-    using MicroUrl.Storage.Configuration;
 
     public class CloudDatastoreStorageFactory : IStorageFactory
     {
-        private readonly IOptions<MicroUrlStorageConfiguration> _options;
+        private readonly IConfigurationStore _configurationStore;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
 
         private readonly IDictionary<Type, object> _storageMap = new Dictionary<Type, object>();
         
         public CloudDatastoreStorageFactory(
-            IOptions<MicroUrlStorageConfiguration> options,
+            IConfigurationStore configurationStore,
             IEntityAnalyzer entityAnalyzer,
             IKeyFactory keyFactory)
         {
-            _options = options;
+            _configurationStore = configurationStore;
             _entityAnalyzer = entityAnalyzer;
             _keyFactory = keyFactory;
         }
@@ -32,7 +31,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
             }
             
             var instance = new CloudDatastoreStorage<T>(
-                _options,
+                _configurationStore,
                 _entityAnalyzer,
                 _keyFactory);
             _storageMap.Add(typeof(T), instance);

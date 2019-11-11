@@ -1,29 +1,28 @@
 ﻿namespace MicroUrl.Storage.Abstractions.CloudDatastore
 {
     using Google.Cloud.Datastore.V1;
-    using Microsoft.Extensions.Options;
     using MicroUrl.Storage.Abstractions.Shared;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using MicroUrl.Common;
     using MicroUrl.Storage.Abstractions.Filters;
-    using MicroUrl.Storage.Configuration;
 
     public class CloudDatastoreStorage<T> : IStorage<T> where T : class, new()
     {
-        private readonly IOptions<MicroUrlStorageConfiguration> _options;
+        private readonly IConfigurationStore _configurationStore;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
         private readonly CloudDatastoreEntitySerializer<T> _serializer;
 
         public CloudDatastoreStorage(
-            IOptions<MicroUrlStorageConfiguration> options,
+            IConfigurationStore configurationStore,
             IEntityAnalyzer entityAnalyzer,
             IKeyFactory keyFactory)
         {
-            _options = options;
+            _configurationStore = configurationStore;
             _entityAnalyzer = entityAnalyzer;
             _serializer = new CloudDatastoreEntitySerializer<T>(entityAnalyzer);
             _keyFactory = keyFactory;
@@ -163,6 +162,6 @@
         }
 
         private DatastoreDb CreateStorage() =>
-            DatastoreDb.Create(_options.Value.Project);
+            DatastoreDb.Create(_configurationStore.GetStorageSettings().Project);
     }
 }

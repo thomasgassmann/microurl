@@ -2,11 +2,11 @@
   "profiles": {
     "MicroUrl": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:5001;http://localhost:5000",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "GOOGLE_APPLICATION_CREDENTIALS": "/home/thomas/thomas-gcloud.json"
+        "PORT": 8080,
+        "GCP_PROJECT": "thomas-default",
+        "ANALYTICS_ID": "UA-114259199-3"
       }
     }
   }

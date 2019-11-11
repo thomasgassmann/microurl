@@ -3,16 +3,18 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
-import { CONFIG_TOKEN, Config } from './environments';
-
-import appSettings from '../../appsettings.json';
+import { MicroUrlSettings } from './environments';
 
 if (environment.production) {
   enableProdMode();
 }
 
-ga('create', (appSettings as Config).MicroUrlSettings.AnalyticsId, 'auto');
+// initialize google analytics async for now
+fetch('/settings').then(async (response: Response) => {
+  const settings: MicroUrlSettings = await response.json();
+  ga('create', settings.analyticsId, 'auto');
+});
 
-platformBrowserDynamic([{ provide: CONFIG_TOKEN, useValue: appSettings }])
+platformBrowserDynamic()
   .bootstrapModule(AppModule)
   .catch(err => console.error(err));
