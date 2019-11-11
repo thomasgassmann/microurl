@@ -1,24 +1,19 @@
 namespace MicroUrl.Web.Controllers
 {
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Options;
-    using MicroUrl.Web.Infrastructure.Settings;
+    using MicroUrl.Common;
 
     [ApiController]
     [Route("settings")]
     public class SettingsController : Controller
     {
-        private readonly IOptions<MicroUrlSettings> _options;
-        
-        public SettingsController(IOptions<MicroUrlSettings> options)
-        {
-            _options = options;
-        }
+        private readonly IConfigurationStore _configurationStore;
+
+        public SettingsController(IConfigurationStore configurationStore) =>
+            _configurationStore = configurationStore;
 
         [HttpGet]
-        public IActionResult Get()
-        {
-            return Ok(_options.Value);
-        }
+        public IActionResult Get() =>
+            Ok(_configurationStore.GetMicroUrlSettings());
     }
 }

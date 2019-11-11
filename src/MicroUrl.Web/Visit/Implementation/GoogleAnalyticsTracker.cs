@@ -6,23 +6,29 @@ namespace MicroUrl.Web.Visit.Implementation
     using System.Net.Http;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
-    using Microsoft.Extensions.Options;
-    using MicroUrl.Web.Infrastructure.Settings;
+    using MicroUrl.Common;
 
     public class GoogleAnalyticsTracker : IGoogleAnalyticsTracker
     {
-        private readonly IOptions<MicroUrlSettings> _options;
+        private readonly IConfigurationStore _configurationStore;
         private readonly ILogger<GoogleAnalyticsTracker> _logger;
         
-        public GoogleAnalyticsTracker(IOptions<MicroUrlSettings> options, ILogger<GoogleAnalyticsTracker> logger)
+        public GoogleAnalyticsTracker(IConfigurationStore configurationStore, ILogger<GoogleAnalyticsTracker> logger)
         {
-            _options = options;
+            _configurationStore = configurationStore;
             _logger = logger;
         }
         
         public async Task TrackAsync(string key, HttpContext context)
         {
+            var analyticsId = _configurationStore.GetMicroUrlSettings().AnalyticsId;
+            if (string.IsNullOrEmpty(analyticsId))
+            {
+                return;
+            }
+            
             // TODO: this solution seems quite ugly
             var blockedHeaderList = new[]
             {
@@ -52,11 +58,11 @@ namespace MicroUrl.Web.Visit.Implementation
                     _logger.LogError($"{key} is not a valid header value (set manually)!");
                 }
             }
-            
+
             var host = context.Request.Host.Host;
             var connectionId = context.Connection.Id;
             var trackingUrl =
-                $"/collect?v=1&t=pageview&tid={_options.Value.AnalyticsId}&cid={connectionId}&dh={host}&dp={key}";
+                $"/collect?v=1&t=pageview&tid={analyticsId}&cid={connectionId}&dh={host}&dp={key}";
             var response = await client.GetAsync(trackingUrl);
             if (response.StatusCode != HttpStatusCode.OK)
             {

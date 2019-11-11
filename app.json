@@ -1,10 +1,10 @@
 {
   "name": "microurl",
   "env": {
-    "Storage:Project": {
+    "GCP_PROJECT": {
       "description": "GCP Project to use for Cloud Datastore"
     },
-    "MicroUrl:AnalyticsId": {
+    "ANALYTICS_ID": {
       "description": "Google Analytics ID"
     },
     "ASPNETCORE_ENVIRONMENT": {

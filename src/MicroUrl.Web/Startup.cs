@@ -9,8 +9,8 @@ namespace MicroUrl.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using MicroUrl.Common;
     using MicroUrl.Storage;
-    using MicroUrl.Web.Infrastructure.Settings;
     using MicroUrl.Web.Markdown;
     using MicroUrl.Web.Markdown.Implementation;
     using MicroUrl.Web.Middlewares;
@@ -52,15 +52,15 @@ namespace MicroUrl.Web
                     x.SerializerSettings.Formatting = Formatting.Indented;
                     x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
-
-            services.Configure<MicroUrlSettings>(_configuration.GetSection("MicroUrl"));
-
+            
             var executingAssembly = Assembly.GetExecutingAssembly();
             var referenced = executingAssembly.GetReferencedAssemblies().Where(x => x.Name.StartsWith("MicroUrl"));
             var loadedReferences = referenced.Select(Assembly.Load).ToList();
             loadedReferences.Add(executingAssembly);
             services.AddAutoMapper(loadedReferences, ServiceLifetime.Singleton);
             
+            services.AddCommon();
+
             services.AddStorage(_configuration);
 
             services.AddSingleton<IGoogleAnalyticsTracker, GoogleAnalyticsTracker>();
