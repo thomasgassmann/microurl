@@ -6,7 +6,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PORT": 8080,
         "Storage:Project": "thomas-default",
-        "MicroUrlSettings:AnalyticsId": "UA-114259199-3"
+        "MicroUrl:AnalyticsId": "UA-114259199-3"
       }
     }
   }

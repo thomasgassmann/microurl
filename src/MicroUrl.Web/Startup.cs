@@ -53,7 +53,7 @@ namespace MicroUrl.Web
                     x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
 
-            services.Configure<MicroUrlSettings>(_configuration.GetSection(nameof(MicroUrlSettings)));
+            services.Configure<MicroUrlSettings>(_configuration.GetSection("MicroUrl"));
 
             var executingAssembly = Assembly.GetExecutingAssembly();
             var referenced = executingAssembly.GetReferencedAssemblies().Where(x => x.Name.StartsWith("MicroUrl"));
