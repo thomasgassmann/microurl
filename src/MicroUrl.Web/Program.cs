@@ -2,6 +2,7 @@ namespace MicroUrl.Web
 {
     using System;
     using Microsoft.AspNetCore.Hosting;
+    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Hosting;
 
     public static class Program
@@ -16,6 +17,7 @@ namespace MicroUrl.Web
             var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
             var url = string.Concat("http://0.0.0.0:", port);
             return Host.CreateDefaultBuilder(args)
+                .ConfigureAppConfiguration(configuration => { configuration.AddEnvironmentVariables(); })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
