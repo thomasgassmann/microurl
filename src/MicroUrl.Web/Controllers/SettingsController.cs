@@ -5,7 +5,7 @@ namespace MicroUrl.Web.Controllers
     using MicroUrl.Web.Infrastructure.Settings;
 
     [ApiController]
-    [Route("api/settings")]
+    [Route("settings")]
     public class SettingsController : Controller
     {
         private readonly IOptions<MicroUrlSettings> _options;
