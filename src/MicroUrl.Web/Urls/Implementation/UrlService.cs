@@ -19,7 +19,7 @@ namespace MicroUrl.Web.Urls.Implementation
         public async Task<string> CreateAsync(string url, string key = null) =>
             await _microUrlStore.CreateAsync(new MicroUrl
             {
-                Key = key ?? await _microUrlKeyGenerator.GenerateKeyAsync(),
+                Key = await _microUrlKeyGenerator.GenerateKeyAsync(key),
                 Enabled = true,
                 Url = url
             });
