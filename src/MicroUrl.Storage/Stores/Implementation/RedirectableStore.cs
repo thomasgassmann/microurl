@@ -6,6 +6,7 @@ namespace MicroUrl.Storage.Stores.Implementation
     using MicroUrl.Storage.Abstractions;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Entities;
+    using MicroUrl.Storage.Keys;
 
     public class RedirectableStore : IRedirectableStore
     {

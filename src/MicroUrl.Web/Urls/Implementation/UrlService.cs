@@ -1,10 +1,8 @@
 namespace MicroUrl.Web.Urls.Implementation
 {
     using System.Threading.Tasks;
-    using Microsoft.AspNetCore.Http;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Stores;
-    using MicroUrl.Web.Visit;
 
     public class UrlService : IUrlService
     {

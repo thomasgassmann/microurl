@@ -1,4 +1,4 @@
-namespace MicroUrl.Storage
+namespace MicroUrl.Storage.Keys
 {
     using MicroUrl.Common;
 
