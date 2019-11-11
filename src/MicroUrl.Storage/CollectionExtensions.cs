@@ -7,7 +7,6 @@ namespace MicroUrl.Storage
     using MicroUrl.Storage.Abstractions.Implementation;
     using MicroUrl.Storage.Abstractions.Shared;
     using MicroUrl.Storage.Abstractions.Shared.Implementation;
-    using MicroUrl.Storage.Implementation;
     using MicroUrl.Storage.Stores;
     using MicroUrl.Storage.Stores.Implementation;
 
@@ -19,7 +18,6 @@ namespace MicroUrl.Storage
             services.AddSingleton<IKeyFactory, DefaultKeyFactory>();
             
             services.AddScoped<IStorageFactory, CloudDatastoreStorageFactory>();
-            services.AddScoped<IMicroUrlKeyGenerator, MicroUrlKeyGenerator>();
 
             services.AddScoped<IRedirectableStore, RedirectableStore>();
             services.AddScoped<IMicroTextStore, MicroTextStore>();

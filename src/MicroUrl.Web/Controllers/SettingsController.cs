@@ -7,9 +7,9 @@ namespace MicroUrl.Web.Controllers
     [Route("settings")]
     public class SettingsController : Controller
     {
-        private readonly IConfigurationStore _configurationStore;
+        private readonly IEnvConfigurationStore _configurationStore;
 
-        public SettingsController(IConfigurationStore configurationStore) =>
+        public SettingsController(IEnvConfigurationStore configurationStore) =>
             _configurationStore = configurationStore;
 
         [HttpGet]

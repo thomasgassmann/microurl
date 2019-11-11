@@ -12,10 +12,10 @@ namespace MicroUrl.Web.Visit.Implementation
 
     public class GoogleAnalyticsTracker : IGoogleAnalyticsTracker
     {
-        private readonly IConfigurationStore _configurationStore;
+        private readonly IEnvConfigurationStore _configurationStore;
         private readonly ILogger<GoogleAnalyticsTracker> _logger;
         
-        public GoogleAnalyticsTracker(IConfigurationStore configurationStore, ILogger<GoogleAnalyticsTracker> logger)
+        public GoogleAnalyticsTracker(IEnvConfigurationStore configurationStore, ILogger<GoogleAnalyticsTracker> logger)
         {
             _configurationStore = configurationStore;
             _logger = logger;

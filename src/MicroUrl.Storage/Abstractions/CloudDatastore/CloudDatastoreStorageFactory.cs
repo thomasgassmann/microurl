@@ -7,14 +7,14 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
 
     public class CloudDatastoreStorageFactory : IStorageFactory
     {
-        private readonly IConfigurationStore _configurationStore;
+        private readonly IEnvConfigurationStore _configurationStore;
         private readonly IEntityAnalyzer _entityAnalyzer;
         private readonly IKeyFactory _keyFactory;
 
         private readonly IDictionary<Type, object> _storageMap = new Dictionary<Type, object>();
         
         public CloudDatastoreStorageFactory(
-            IConfigurationStore configurationStore,
+            IEnvConfigurationStore configurationStore,
             IEntityAnalyzer entityAnalyzer,
             IKeyFactory keyFactory)
         {

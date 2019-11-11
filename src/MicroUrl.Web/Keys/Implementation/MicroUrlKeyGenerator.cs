@@ -1,4 +1,4 @@
-namespace MicroUrl.Storage.Implementation
+namespace MicroUrl.Web.Keys.Implementation
 {
     using System;
     using System.Text;
@@ -14,11 +14,13 @@ namespace MicroUrl.Storage.Implementation
         
         private readonly IStorageFactory _storageFactory;
         private readonly IKeyFactory _keyFactory;
+        private readonly IKeyValidationService _keyValidationService;
 
-        public MicroUrlKeyGenerator(IStorageFactory storageFactory, IKeyFactory keyFactory)
+        public MicroUrlKeyGenerator(IStorageFactory storageFactory, IKeyFactory keyFactory, IKeyValidationService keyValidationService)
         {
             _storageFactory = storageFactory;
             _keyFactory = keyFactory;
+            _keyValidationService = keyValidationService;
         }
         
         public async Task<string> GenerateKeyAsync(string customKey = null)
@@ -33,7 +35,7 @@ namespace MicroUrl.Storage.Implementation
             for (var i = 1;; i++)
             {
                 var key = GenerateKeyOfLength(i);
-                if (!await ExistsAsync(key))
+                if (_keyValidationService.IsKeyValid(key) && !await ExistsAsync(key))
                 {
                     return key;
                 }
