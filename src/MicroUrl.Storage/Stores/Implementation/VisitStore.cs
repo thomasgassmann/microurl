@@ -29,7 +29,7 @@ namespace MicroUrl.Storage.Stores.Implementation
             return key.LongValue;
         }
 
-        public async IAsyncEnumerable<Visit> GetVisitsOfRediretableBetween(string redirectableKey, DateTime @from, DateTime to)
+        public async IAsyncEnumerable<Visit> GetVisitsOfRedirectableBetween(string redirectableKey, DateTime @from, DateTime to)
         {
             var storage = _storageFactory.CreateStorage<VisitEntity>();
             var result = storage.QueryAsync(StorageFilter.And(

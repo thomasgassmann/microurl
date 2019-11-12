@@ -70,7 +70,7 @@ namespace MicroUrl.Web.Stats.Implementation
             var stats = new List<StatCount> { allTimeStats };
             dayStats.ForEach(stats.Add);
             
-            await foreach (var item in _visitStore.GetVisitsOfRediretableBetween(key, from, to))
+            await foreach (var item in _visitStore.GetVisitsOfRedirectableBetween(key, from, to))
             {
                 foreach (var stat in stats.Where(stat => stat.VisitApplies(item)))
                 {

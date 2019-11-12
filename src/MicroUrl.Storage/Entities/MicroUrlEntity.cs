@@ -4,7 +4,7 @@ namespace MicroUrl.Storage.Entities
     using MicroUrl.Storage.Abstractions;
 
     [EntityName("microurl")]
-    public class MicroUrlEntity
+    internal class MicroUrlEntity
     {
         public const string UrlType = "url";
         public const string TextType = "text";

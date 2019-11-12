@@ -4,7 +4,7 @@ namespace MicroUrl.Storage.Entities
     using MicroUrl.Storage.Abstractions;
 
     [EntityName("visit")]
-    public class VisitEntity
+    internal class VisitEntity
     {
         [Key(KeyType.AutoId)]
         public long Id { get; set; }

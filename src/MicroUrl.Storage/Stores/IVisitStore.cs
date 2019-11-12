@@ -9,6 +9,6 @@ namespace MicroUrl.Storage.Stores
     {
         Task<long> CreateAsync(Visit visit);
 
-        IAsyncEnumerable<Visit> GetVisitsOfRediretableBetween(string redirectableKey, DateTime from, DateTime to);
+        IAsyncEnumerable<Visit> GetVisitsOfRedirectableBetween(string redirectableKey, DateTime from, DateTime to);
     }
 }
