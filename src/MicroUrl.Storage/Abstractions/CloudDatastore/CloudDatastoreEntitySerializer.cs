@@ -3,6 +3,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
     using System;
     using System.Linq;
     using Google.Cloud.Datastore.V1;
+    using Google.Protobuf;
     using Google.Protobuf.WellKnownTypes;
     using MicroUrl.Storage.Abstractions.Shared;
     using Value = Google.Cloud.Datastore.V1.Value;
@@ -68,6 +69,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 PropertyType.String => (object) value.StringValue,
                 PropertyType.DateTime => (object) value.TimestampValue.ToDateTime(),
                 PropertyType.Boolean => (object) value.BooleanValue,
+                PropertyType.Blob => (object)value.BlobValue.ToByteArray(),
                 _ => throw new ArgumentException(type.ToString())
             };
 
@@ -93,6 +95,10 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 PropertyType.Boolean => new Value
                 {
                     BooleanValue = (bool)value
+                },
+                PropertyType.Blob => new Value
+                {
+                    BlobValue = ByteString.CopyFrom((byte[])value)
                 },
                 _ => throw new ArgumentException(type.ToString())
             };

@@ -5,6 +5,7 @@ namespace MicroUrl.Web.Keys.Implementation
     using System.Threading.Tasks;
     using MicroUrl.Storage.Abstractions;
     using MicroUrl.Storage.Entities;
+    using MicroUrl.Storage.Stores;
 
     public class MicroUrlKeyGenerator : IMicroUrlKeyGenerator
     {
@@ -12,13 +13,13 @@ namespace MicroUrl.Web.Keys.Implementation
         
         private readonly Random _random = new Random();
         
-        private readonly IStorageFactory _storageFactory;
+        private readonly IRedirectableStore _redirectableStore;
         private readonly IKeyFactory _keyFactory;
         private readonly IKeyValidationService _keyValidationService;
 
-        public MicroUrlKeyGenerator(IStorageFactory storageFactory, IKeyFactory keyFactory, IKeyValidationService keyValidationService)
+        public MicroUrlKeyGenerator(IRedirectableStore redirectableStore, IKeyFactory keyFactory, IKeyValidationService keyValidationService)
         {
-            _storageFactory = storageFactory;
+            _redirectableStore = redirectableStore;
             _keyFactory = keyFactory;
             _keyValidationService = keyValidationService;
         }
@@ -27,7 +28,7 @@ namespace MicroUrl.Web.Keys.Implementation
         {
             if (customKey != null)
             {
-                return await ExistsAsync(customKey)
+                return await _redirectableStore.ExistsAsync(customKey)
                     ? throw new KeyGenerationException($"Key already exists {customKey}.")
                     : customKey;
             }
@@ -35,7 +36,7 @@ namespace MicroUrl.Web.Keys.Implementation
             for (var i = 1;; i++)
             {
                 var key = GenerateKeyOfLength(i);
-                if (_keyValidationService.IsKeyValid(key) && !await ExistsAsync(key))
+                if (_keyValidationService.IsKeyValid(key) && !(await _redirectableStore.ExistsAsync(key)))
                 {
                     return key;
                 }
@@ -51,12 +52,6 @@ namespace MicroUrl.Web.Keys.Implementation
             }
 
             return stringBuilder.ToString();
-        }
-
-        private async Task<bool> ExistsAsync(string key)
-        {
-            var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
-            return await storage.ExistsAsync(_keyFactory.CreateFromString(key));
         }
     }
 }

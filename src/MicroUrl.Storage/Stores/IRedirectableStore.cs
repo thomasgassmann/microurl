@@ -8,5 +8,7 @@ namespace MicroUrl.Storage.Stores
         Task<Redirectable> LoadAsync(string key);
 
         Task<string> CreateAsync(Redirectable redirectable);
+
+        Task<bool> ExistsAsync(string key);
     }
 }

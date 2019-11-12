@@ -6,7 +6,7 @@
     {
         public string UserName { get; set; }
 
-        public string PasswordHash { get; set; }
+        public UserPassword Password { get; set; }
 
         public DateTime Created { get; set; }
     }

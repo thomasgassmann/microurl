@@ -127,6 +127,11 @@
                 return PropertyType.Boolean;
             }
 
+            if (info.PropertyType == typeof(byte[]))
+            {
+                return PropertyType.Blob;
+            }
+
             throw new ArgumentException();
         }
 

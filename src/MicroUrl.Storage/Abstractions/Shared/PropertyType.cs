@@ -6,6 +6,7 @@ namespace MicroUrl.Storage.Abstractions.Shared
         Long,
         String,
         DateTime,
-        Boolean
+        Boolean,
+        Blob
     }
 }

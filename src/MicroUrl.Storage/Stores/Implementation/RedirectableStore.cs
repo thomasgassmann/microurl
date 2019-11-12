@@ -22,6 +22,13 @@ namespace MicroUrl.Storage.Stores.Implementation
             _keyFactory = keyFactory;
             _mapper = mapper;
         }
+
+        public async Task<bool> ExistsAsync(string key)
+        {
+            var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
+            var item = await storage.LoadAsync(_keyFactory.CreateFromString(key));
+            return item != null;
+        }
         
         public async Task<Redirectable> LoadAsync(string key)
         {
