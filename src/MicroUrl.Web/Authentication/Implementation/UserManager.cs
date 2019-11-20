@@ -8,9 +8,9 @@
 
     public class UserManager : IUserManager
     {
-        private const int Iterations = 100000;
-        private const int SaltSize = 128;
-        private const int HashSize = 128;
+        private const int DefaultIterations = 100000;
+        private const int DefaultSaltSize = 128;
+        private const int DefaultHashSize = 128;
 
         private readonly IUserStore _userStore;
 
@@ -38,15 +38,15 @@
 
         private UserPassword DeriveNewPassword(string password)
         {
-            var salt = new byte[SaltSize];
+            var salt = new byte[DefaultSaltSize];
             using var randomNumberGenerator = RandomNumberGenerator.Create();
             randomNumberGenerator.GetBytes(salt);
-            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Iterations);
-            var hashedPassword = pbkdf2.GetBytes(HashSize);
+            using var pbkdf2 = new Rfc2898DeriveBytes(password, salt, DefaultIterations);
+            var hashedPassword = pbkdf2.GetBytes(DefaultHashSize);
             return new UserPassword
             {
                 Hash = hashedPassword,
-                Iterations = Iterations,
+                Iterations = DefaultIterations,
                 Salt = salt
             };
         }
