@@ -19,10 +19,15 @@
             _userStore = userStore;
         }
 
-        public Task SignUpAsync(string username, string password)
+        public async Task SignUpAsync(string username, string password)
         {
+            if (await _userStore.ExistsAsync(username))
+            {
+                throw new UserAlreadyExistsException(username);
+            }
+
             var userPassword = DeriveNewPassword(password);
-            return _userStore.CreateAsync(new User
+            await _userStore.CreateAsync(new User
             {
                 Created = DateTime.Now,
                 Password = userPassword,

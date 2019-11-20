@@ -8,5 +8,7 @@
         Task CreateAsync(User user);
 
         Task<User> LoadAsync(string userName);
+
+        Task<bool> ExistsAsync(string username);
     }
 }

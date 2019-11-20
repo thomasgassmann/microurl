@@ -19,6 +19,12 @@
             _mapper = mapper;
         }
 
+        public Task<bool> ExistsAsync(string username)
+        {
+            var storage = _storageFactory.CreateStorage<UserEntity>();
+            return storage.ExistsAsync(_keyFactory.CreateFromString(username));
+        }
+
         public async Task CreateAsync(User user)
         {
             var storage = _storageFactory.CreateStorage<UserEntity>();
