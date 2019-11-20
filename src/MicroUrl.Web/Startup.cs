@@ -10,6 +10,7 @@ namespace MicroUrl.Web
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using MicroUrl.Common;
+    using MicroUrl.Common.Implementation;
     using MicroUrl.Storage;
     using MicroUrl.Web.Authentication;
     using MicroUrl.Web.Authentication.Implementation;
@@ -45,6 +46,20 @@ namespace MicroUrl.Web
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var initialSettings = new EnvConfigurationStore(_configuration).GetMicroUrlSettings();
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder =>
+                {
+                    builder
+                        .WithOrigins(initialSettings.HostedOrigin)
+                        .AllowCredentials()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+
             services.AddHttpContextAccessor();
 
             services.AddMvcCore(x =>
@@ -102,7 +117,7 @@ namespace MicroUrl.Web
 
             app.UseSpaStaticFiles(new StaticFileOptions { ServeUnknownFileTypes = true });
 
-            // TODO: consider cors
+            app.UseCors();
             app.UseMvc();
 
             // TODO: don't redirect SPA routes

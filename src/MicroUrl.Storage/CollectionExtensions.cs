@@ -23,6 +23,7 @@ namespace MicroUrl.Storage
             services.AddScoped<IMicroTextStore, MicroTextStore>();
             services.AddScoped<IVisitStore, VisitStore>();
             services.AddScoped<IMicroUrlStore, MicroUrlStore>();
+            services.AddScoped<IUserStore, UserStore>();
         }
     }
 }

@@ -7,6 +7,9 @@
     "ANALYTICS_ID": {
       "description": "Google Analytics ID"
     },
+    "HOSTED_ORIGIN": {
+      "description": "Origin on which microurl is run"
+    },
     "ASPNETCORE_ENVIRONMENT": {
       "description": "ASP.NET Core Environment",
       "value": "Production",
