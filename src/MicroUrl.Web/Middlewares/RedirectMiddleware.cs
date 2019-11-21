@@ -3,7 +3,6 @@ namespace MicroUrl.Web.Middlewares
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
     using MicroUrl.Web.Redirects;
-    using MicroUrl.Web.Urls;
 
     public class RedirectMiddleware
     {
@@ -21,10 +20,10 @@ namespace MicroUrl.Web.Middlewares
                 await _next(context);
                 return;
             }
-            
+
             var path = context.Request.Path.Value?.TrimStart('/');
-            var redirectUrl = !string.IsNullOrEmpty(path) 
-                ? await redirectService.GetRedirectUrlAndTrackAsync(path, context) 
+            var redirectUrl = !string.IsNullOrEmpty(path)
+                ? await redirectService.GetRedirectUrlAndTrackAsync(path, context)
                 : null;
             if (redirectUrl != null)
             {

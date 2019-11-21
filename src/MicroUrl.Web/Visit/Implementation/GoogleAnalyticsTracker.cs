@@ -6,7 +6,6 @@ namespace MicroUrl.Web.Visit.Implementation
     using System.Net.Http;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Http;
-    using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.Logging;
     using MicroUrl.Common;
 
@@ -14,13 +13,13 @@ namespace MicroUrl.Web.Visit.Implementation
     {
         private readonly IEnvConfigurationStore _configurationStore;
         private readonly ILogger<GoogleAnalyticsTracker> _logger;
-        
+
         public GoogleAnalyticsTracker(IEnvConfigurationStore configurationStore, ILogger<GoogleAnalyticsTracker> logger)
         {
             _configurationStore = configurationStore;
             _logger = logger;
         }
-        
+
         public async Task TrackAsync(string key, HttpContext context)
         {
             var analyticsId = _configurationStore.GetMicroUrlSettings().AnalyticsId;
@@ -28,7 +27,7 @@ namespace MicroUrl.Web.Visit.Implementation
             {
                 return;
             }
-            
+
             // TODO: this solution seems quite ugly
             var blockedHeaderList = new[]
             {
@@ -38,10 +37,10 @@ namespace MicroUrl.Web.Visit.Implementation
                 "Host",
                 "Content-Length"
             };
-            
+
             // TODO: x-cloud-trace-context, x-forwarded-for
-            
-            using var client = new HttpClient {BaseAddress = new Uri("https://www.google-analytics.com")};
+
+            using var client = new HttpClient { BaseAddress = new Uri("https://www.google-analytics.com") };
             foreach (var (headerKey, headerValue) in context.Request.Headers)
             {
                 if (blockedHeaderList.Contains(headerKey))

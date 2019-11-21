@@ -6,7 +6,7 @@ namespace MicroUrl.Storage.Stores.Implementation
     public class MicroUrlStore : IMicroUrlStore
     {
         private readonly IRedirectableStore _redirectableStore;
-        
+
         public MicroUrlStore(IRedirectableStore redirectableStore)
         {
             _redirectableStore = redirectableStore;

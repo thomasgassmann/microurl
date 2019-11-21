@@ -9,10 +9,10 @@ namespace MicroUrl.Common.Implementation
         private const string HostedOrigin = "HOSTED_ORIGIN";
 
         private readonly IConfiguration _configuration;
-        
+
         public EnvConfigurationStore(IConfiguration configuration) =>
             _configuration = configuration;
-        
+
         public MicroUrlSettings GetMicroUrlSettings() => new MicroUrlSettings
         {
             AnalyticsId = _configuration.GetValue<string>(AnalyticsIdKey),

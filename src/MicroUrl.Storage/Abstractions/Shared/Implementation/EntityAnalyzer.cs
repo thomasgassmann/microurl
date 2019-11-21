@@ -37,9 +37,9 @@
             switch (keyType)
             {
                 case KeyType.AutoId:
-                    return _keyFactory.CreateFromId((long) propertyValue);
+                    return _keyFactory.CreateFromId((long)propertyValue);
                 case KeyType.StringId:
-                    return _keyFactory.CreateFromString((string) propertyValue);
+                    return _keyFactory.CreateFromString((string)propertyValue);
                 default:
                     throw new ArgumentException();
             }
@@ -67,7 +67,7 @@
                     list.AddRange(properties);
                     return list;
                 },
-                x => x.Select(x => (PropertySerializationInfo<T>) x).ToList());
+                x => x.Select(x => (PropertySerializationInfo<T>)x).ToList());
 
         public PropertySerializationInfo<T> GetSerializationInfo<T>(Expression<Func<T, object>> property)
         {
@@ -95,7 +95,7 @@
                 x => x.Name);
 
         public KeyType GetKeyType<T>() =>
-            ((KeyAttribute) GetKeyProperty<T>().GetCustomAttributes(typeof(KeyAttribute)).First()).KeyType;
+            ((KeyAttribute)GetKeyProperty<T>().GetCustomAttributes(typeof(KeyAttribute)).First()).KeyType;
 
         private string TransformPropertyName(string input) =>
             input.ToLowerInvariant();

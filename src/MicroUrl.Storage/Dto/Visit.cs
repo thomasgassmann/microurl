@@ -7,7 +7,7 @@ namespace MicroUrl.Storage.Dto
         public long Id { get; set; }
 
         public string Key { get; set; }
-        
+
         public string Headers { get; set; }
 
         public string Ip { get; set; }

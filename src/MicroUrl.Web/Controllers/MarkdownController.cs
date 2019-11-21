@@ -1,7 +1,7 @@
 ﻿namespace MicroUrl.Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
     using MicroUrl.Web.Markdown;
 
     [Route("md")]

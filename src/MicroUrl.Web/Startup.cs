@@ -72,15 +72,15 @@ namespace MicroUrl.Web
                     x.SerializerSettings.Formatting = Formatting.Indented;
                     x.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 });
-            
+
             services.Configure<UrlConfig>(_configuration.GetSection(nameof(UrlConfig)));
-            
+
             var executingAssembly = Assembly.GetExecutingAssembly();
             var referenced = executingAssembly.GetReferencedAssemblies().Where(x => x.Name.StartsWith("MicroUrl"));
             var loadedReferences = referenced.Select(Assembly.Load).ToList();
             loadedReferences.Add(executingAssembly);
             services.AddAutoMapper(loadedReferences, ServiceLifetime.Singleton);
-            
+
             services.AddCommon();
 
             services.AddStorage(_configuration);

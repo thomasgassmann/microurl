@@ -1,10 +1,10 @@
 ﻿namespace MicroUrl.Storage.Stores.Implementation
 {
+    using System.Threading.Tasks;
     using AutoMapper;
     using MicroUrl.Storage.Abstractions;
     using MicroUrl.Storage.Dto;
     using MicroUrl.Storage.Entities;
-    using System.Threading.Tasks;
 
     public class UserStore : IUserStore
     {

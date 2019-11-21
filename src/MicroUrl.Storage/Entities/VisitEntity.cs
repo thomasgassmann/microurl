@@ -8,7 +8,7 @@ namespace MicroUrl.Storage.Entities
     {
         [Key(KeyType.AutoId)]
         public long Id { get; set; }
-        
+
         public string Key { get; set; }
 
         [ExcludeFromIndexes]

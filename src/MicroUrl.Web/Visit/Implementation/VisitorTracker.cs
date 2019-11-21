@@ -11,7 +11,7 @@ namespace MicroUrl.Web.Visit.Implementation
         private readonly IVisitStore _visitStore;
 
         private readonly IGoogleAnalyticsTracker _googleAnalyticsTracker;
-        
+
         public VisitorTracker(
             IVisitStore visitStore,
             IGoogleAnalyticsTracker googleAnalyticsTracker)
@@ -19,7 +19,7 @@ namespace MicroUrl.Web.Visit.Implementation
             _visitStore = visitStore;
             _googleAnalyticsTracker = googleAnalyticsTracker;
         }
-        
+
         public async Task SaveVisitAsync(string key, HttpContext context)
         {
             // TODO: google analytics task could be done in background
@@ -37,7 +37,7 @@ namespace MicroUrl.Web.Visit.Implementation
         private string GetIpAddress(HttpContext context)
         {
             const string forwardedForHeader = "x-forwarded-for";
-            
+
             if (context.Request.Headers.TryGetValue(forwardedForHeader, out var forwardedFor))
             {
                 return forwardedFor;

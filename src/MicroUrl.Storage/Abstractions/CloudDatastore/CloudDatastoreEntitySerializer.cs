@@ -11,7 +11,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
     public class CloudDatastoreEntitySerializer<T>
     {
         private readonly IEntityAnalyzer _analyzer;
-        
+
         public CloudDatastoreEntitySerializer(IEntityAnalyzer analyzer)
         {
             _analyzer = analyzer;
@@ -27,7 +27,7 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
                 {
                     continue;
                 }
-                
+
                 var propertyValue = GetValueFromPropertyValue(info.PropertyType, sourceValue);
                 propertyValue.ExcludeFromIndexes = info.ExcludeFromIndexes;
 
@@ -64,11 +64,11 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
         public object GetPropertyValueFromValue(PropertyType type, Value value) =>
             type switch
             {
-                PropertyType.Double => (object) value.DoubleValue,
-                PropertyType.Long => (object) value.IntegerValue,
-                PropertyType.String => (object) value.StringValue,
-                PropertyType.DateTime => (object) value.TimestampValue.ToDateTime(),
-                PropertyType.Boolean => (object) value.BooleanValue,
+                PropertyType.Double => (object)value.DoubleValue,
+                PropertyType.Long => (object)value.IntegerValue,
+                PropertyType.String => (object)value.StringValue,
+                PropertyType.DateTime => (object)value.TimestampValue.ToDateTime(),
+                PropertyType.Boolean => (object)value.BooleanValue,
                 PropertyType.Blob => (object)value.BlobValue.ToByteArray(),
                 _ => throw new ArgumentException(type.ToString())
             };
@@ -78,19 +78,19 @@ namespace MicroUrl.Storage.Abstractions.CloudDatastore
             {
                 PropertyType.Double => new Value
                 {
-                    DoubleValue = (double) value
+                    DoubleValue = (double)value
                 },
                 PropertyType.Long => new Value
                 {
-                    IntegerValue = (long) value
+                    IntegerValue = (long)value
                 },
                 PropertyType.String => new Value
                 {
-                    StringValue = (string) value
+                    StringValue = (string)value
                 },
                 PropertyType.DateTime => new Value
                 {
-                    TimestampValue = Timestamp.FromDateTime(((DateTime) value).ToUniversalTime())
+                    TimestampValue = Timestamp.FromDateTime(((DateTime)value).ToUniversalTime())
                 },
                 PropertyType.Boolean => new Value
                 {

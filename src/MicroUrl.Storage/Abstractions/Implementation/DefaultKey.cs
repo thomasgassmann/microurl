@@ -13,11 +13,11 @@ namespace MicroUrl.Storage.Abstractions.Implementation
             KeyType = KeyType.AutoId;
             LongValue = value ?? default;
         }
-        
+
         public string StringValue { get; }
-        
+
         public long LongValue { get; }
-        
+
         public KeyType KeyType { get; }
 
         public static DefaultKey FromString(string value) => new DefaultKey(value);

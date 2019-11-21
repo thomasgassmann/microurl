@@ -29,7 +29,7 @@ namespace MicroUrl.Storage.Stores.Implementation
             var item = await storage.LoadAsync(_keyFactory.CreateFromString(key));
             return item != null;
         }
-        
+
         public async Task<Redirectable> LoadAsync(string key)
         {
             var storage = _storageFactory.CreateStorage<MicroUrlEntity>();
@@ -38,7 +38,7 @@ namespace MicroUrl.Storage.Stores.Implementation
             {
                 return null;
             }
-            
+
             switch (loaded.Type)
             {
                 case MicroUrlEntity.TextType:
@@ -67,7 +67,7 @@ namespace MicroUrl.Storage.Stores.Implementation
             {
                 throw new ArgumentException(type.FullName);
             }
-            
+
             entityToSave.Created = DateTime.Now;
             var key = await storage.CreateAsync(entityToSave);
             return key.StringValue;

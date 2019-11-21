@@ -16,7 +16,7 @@ namespace MicroUrl.Storage
         {
             services.AddSingleton<IEntityAnalyzer, EntityAnalyzer>();
             services.AddSingleton<IKeyFactory, DefaultKeyFactory>();
-            
+
             services.AddScoped<IStorageFactory, CloudDatastoreStorageFactory>();
 
             services.AddScoped<IRedirectableStore, RedirectableStore>();

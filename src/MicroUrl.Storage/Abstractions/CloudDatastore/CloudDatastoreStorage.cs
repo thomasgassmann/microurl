@@ -1,14 +1,14 @@
 ﻿namespace MicroUrl.Storage.Abstractions.CloudDatastore
 {
-    using Google.Cloud.Datastore.V1;
-    using MicroUrl.Storage.Abstractions.Shared;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
+    using Google.Cloud.Datastore.V1;
     using MicroUrl.Common;
     using MicroUrl.Storage.Abstractions.Filters;
+    using MicroUrl.Storage.Abstractions.Shared;
 
     public class CloudDatastoreStorage<T> : IStorage<T> where T : class, new()
     {
@@ -98,7 +98,7 @@
         private async Task<IKey> SaveAsync(T entity, bool isNew)
         {
             var (storage, keyFactory) = GetStorageAndKeyFactory();
-            
+
             var keyValue = _entityAnalyzer.GetKeyValue(entity);
             var key = GetKey(keyValue, keyFactory);
 
@@ -118,7 +118,7 @@
                         throw new ArgumentException();
                 }
             }
-            
+
             await storage.UpdateAsync(newEntity);
             return keyValue;
         }

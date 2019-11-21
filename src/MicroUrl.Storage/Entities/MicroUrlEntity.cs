@@ -8,7 +8,7 @@ namespace MicroUrl.Storage.Entities
     {
         public const string UrlType = "url";
         public const string TextType = "text";
-     
+
         // shared
         [Key(KeyType.StringId)]
         public string Key { get; set; }
@@ -18,10 +18,10 @@ namespace MicroUrl.Storage.Entities
         public bool Enabled { get; set; }
 
         public string Type { get; set; }
-        
+
         // url entity
         public string Url { get; set; }
-        
+
         // text entity
         public string Language { get; set; }
 

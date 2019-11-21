@@ -13,7 +13,7 @@ namespace MicroUrl.Storage.Abstractions.Filters
         }
 
         public Expression<Func<T, object>> Property { get; }
-        
+
         public ComparisonType ComparisonType { get; }
 
         public object Value { get; }

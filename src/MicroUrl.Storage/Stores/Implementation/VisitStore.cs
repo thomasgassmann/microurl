@@ -13,13 +13,13 @@ namespace MicroUrl.Storage.Stores.Implementation
     {
         private readonly IStorageFactory _storageFactory;
         private readonly IMapper _mapper;
-        
+
         public VisitStore(IStorageFactory storageFactory, IMapper mapper)
         {
             _storageFactory = storageFactory;
             _mapper = mapper;
         }
-        
+
         public async Task<long> CreateAsync(Visit visit)
         {
             var storage = _storageFactory.CreateStorage<VisitEntity>();

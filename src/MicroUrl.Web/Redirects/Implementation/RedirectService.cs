@@ -12,7 +12,7 @@ namespace MicroUrl.Web.Redirects.Implementation
         private readonly IRedirectableStore _redirectableStore;
         private readonly IVisitorTracker _visitorTracker;
         private readonly IClientUrlService _clientUrlService;
-        
+
         public RedirectService(
             IRedirectableStore redirectableStore,
             IVisitorTracker visitorTracker,
@@ -22,7 +22,7 @@ namespace MicroUrl.Web.Redirects.Implementation
             _visitorTracker = visitorTracker;
             _clientUrlService = clientUrlService;
         }
-        
+
         public async Task<string> GetRedirectUrlAndTrackAsync(string key, HttpContext context)
         {
             var redirectable = await _redirectableStore.LoadAsync(key);
@@ -31,7 +31,7 @@ namespace MicroUrl.Web.Redirects.Implementation
                 return null;
             }
 
-            await _visitorTracker.SaveVisitAsync(key, context);           
+            await _visitorTracker.SaveVisitAsync(key, context);
             return !redirectable.Enabled ? null : ComputeTargetUrl(redirectable);
         }
 
@@ -46,7 +46,7 @@ namespace MicroUrl.Web.Redirects.Implementation
             {
                 return _clientUrlService.ConstructEditorUrl(text.Key);
             }
-            
+
             throw new ArgumentException(redirectable.GetType().FullName);
         }
     }

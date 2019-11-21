@@ -1,7 +1,7 @@
 ﻿namespace MicroUrl.Storage.Stores
 {
-    using MicroUrl.Storage.Dto;
     using System.Threading.Tasks;
+    using MicroUrl.Storage.Dto;
 
     public interface IUserStore
     {

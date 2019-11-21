@@ -1,7 +1,7 @@
 namespace MicroUrl.Web.Controllers
 {
-    using Microsoft.AspNetCore.Mvc;
     using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Mvc;
     using MicroUrl.Web.Raw;
 
     [ApiController]
@@ -14,7 +14,7 @@ namespace MicroUrl.Web.Controllers
         {
             _rawService = rawService;
         }
-        
+
         [HttpGet("{key}")]
         public async Task<IActionResult> GetRawAsync(string key)
         {

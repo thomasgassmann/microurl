@@ -1,7 +1,7 @@
 ﻿namespace MicroUrl.Storage.Entities
 {
-    using MicroUrl.Storage.Abstractions;
     using System;
+    using MicroUrl.Storage.Abstractions;
 
     [EntityName("users")]
     internal class UserEntity

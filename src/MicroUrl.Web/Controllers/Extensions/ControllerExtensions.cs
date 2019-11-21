@@ -7,7 +7,7 @@ namespace MicroUrl.Web.Controllers.Extensions
     {
         public static IActionResult CreatedUrl(this Controller controller, string key)
         {
-            return new JsonResult(new {Key = key}) {StatusCode = (int) HttpStatusCode.Created};
+            return new JsonResult(new { Key = key }) { StatusCode = (int)HttpStatusCode.Created };
         }
     }
 }

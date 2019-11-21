@@ -9,7 +9,7 @@ namespace MicroUrl.Web.Urls.Implementation
     {
         private readonly IMicroUrlStore _microUrlStore;
         private readonly IMicroUrlKeyGenerator _microUrlKeyGenerator;
-        
+
         public UrlService(IMicroUrlStore microUrlStore, IMicroUrlKeyGenerator microUrlKeyGenerator)
         {
             _microUrlStore = microUrlStore;

@@ -6,7 +6,7 @@ namespace MicroUrl.Storage.Stores
     public interface IMicroUrlStore
     {
         Task<string> CreateAsync(MicroUrl microUrl);
-        
+
         Task<MicroUrl> LoadAsync(string key);
     }
 }

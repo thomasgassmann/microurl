@@ -1,10 +1,10 @@
 ﻿namespace MicroUrl.Web.Authentication.Implementation
 {
-    using MicroUrl.Storage.Dto;
-    using MicroUrl.Storage.Stores;
     using System;
     using System.Security.Cryptography;
     using System.Threading.Tasks;
+    using MicroUrl.Storage.Dto;
+    using MicroUrl.Storage.Stores;
 
     public class UserManager : IUserManager
     {
