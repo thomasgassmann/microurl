@@ -12,7 +12,6 @@ if (environment.production) {
 // initialize google analytics async for now
 fetch('/settings').then(async (response: Response) => {
   const settings: MicroUrlSettings = await response.json();
-  ga('create', settings.analyticsId, 'auto');
 });
 
 platformBrowserDynamic()

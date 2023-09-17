@@ -6,7 +6,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development",
         "PORT": 8080,
         "GCP_PROJECT": "thomas-default",
-        "ANALYTICS_ID": "UA-114259199-3"
+        "ANALYTICS_ID": ""
       }
     }
   }

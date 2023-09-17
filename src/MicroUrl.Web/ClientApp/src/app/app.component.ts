@@ -51,11 +51,6 @@ export class AppComponent {
         default:
           break;
       }
-
-      if (event instanceof NavigationEnd) {
-        ga('set', 'page', event.urlAfterRedirects);
-        ga('send', 'pageview');
-      }
     });
   }
 
